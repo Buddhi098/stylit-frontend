@@ -1,0 +1,30 @@
+.section2_icons{
+    font-size: 69px;
+    margin-top: 10px;
+    color: #c0a888;
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 700,
+    'GRAD' 0,
+    'opsz' 24
+}
+
+.topbar-icon{
+    margin-top: 6px;
+    font-size: 25px;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 300,
+    'GRAD' 0,
+    'opsz' 24
+}
+
+.section3_icons{
+    font-size: 40px;
+    color: #c0a888;
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 300,
+    'GRAD' 0,
+    'opsz' 24
+}
