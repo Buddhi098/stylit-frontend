@@ -20,7 +20,7 @@ const Logo = () => {
   
     //  if you want to use image instead of svg uncomment following, and comment out <svg> element.
     <>
-    <Box component="img" src={logo} alt="Mantis" width="90px"/>
+    <Box component="img" src={logo} alt="Mantis" width="80px"/>
     </>
      
     

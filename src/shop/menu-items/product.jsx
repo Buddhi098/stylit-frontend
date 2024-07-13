@@ -27,9 +27,9 @@ const product = {
     },
     {
       id: "add-product",
-      title: "Add Products",
+      title: "Add New Products",
       type: "item",
-      url: "/shop/add_product",
+      url: "/shop/add_new_product",
       icon: icons.AddchartIcon,
       breadcrumbs: false,
     },
