@@ -22,6 +22,7 @@ import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { filterOptions } from "./TableConfig";
 import { filter } from "lodash";
+import { title } from "process";
 
 const FilterComponent = ({
   search,
@@ -35,7 +36,9 @@ const FilterComponent = ({
   filter3,
   setFilter3,
   checked,
-  setChecked
+  setChecked,
+  title,
+  description,
 }) => {
   const [category, setCategory] = useState("");
   const [status, setStatus] = useState("");
@@ -119,10 +122,10 @@ const FilterComponent = ({
             }}
           >
             <Typography variant="h4" ml="2px">
-              Manage Product
+              {title}
             </Typography>
             <Typography variant="h6" ml="2px" color="#8E8B8B">
-              Efficiently organize and update your inventory
+              {description}
             </Typography>
           </Box>
         </Grid>
@@ -182,7 +185,7 @@ const FilterComponent = ({
                 size="small"
                 sx={{ borderRadius: "4px", fontSize: "13px" }}
               >
-                <MenuItem value="">
+                <MenuItem value="" disabled>
                   All
                 </MenuItem>
                 {filterOption.options.map((option, index) => (
@@ -233,9 +236,9 @@ const FilterComponent = ({
             alignItem: "flex-end",
           }}
         >
-          <Button variant="contained" startIcon={<AddIcon />} color="primary">
+          {/* <Button variant="contained" startIcon={<AddIcon />} color="primary">
             Add New Products
-          </Button>
+          </Button> */}
         </Grid>
       </Grid>
     </Box>
