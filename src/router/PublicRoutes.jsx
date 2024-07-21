@@ -9,7 +9,7 @@ const NotFound = Loadable(lazy(() => import('../not_found_page/NotFound')));
 const PartnerWithUs = Loadable(lazy(() => import('../public/pages/partner_with_us_page/PartnerWithUs')));
 const CourierSignUpPage = Loadable(lazy(() => import('../public/pages/courier_sign_up_page/CourierSignUpPage')));
 const ShopSignUpPage = Loadable(lazy(() => import('../public/pages/shop_sign_up_page/ShopSignUpPage')));
-
+const CourierSignUpForm = Loadable(lazy(() => import('../public/pages/courier_sign_up_form/CourierSignUpForm')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 export const BaseRoute={
@@ -39,6 +39,10 @@ const PublicRoutes = {
     {
       path: 'shop_signup',
       element: <ShopSignUpPage />
+    },
+    {
+      path: 'courier_signup_form',
+      element: <CourierSignUpForm />
     },
     {
       path: '*',
