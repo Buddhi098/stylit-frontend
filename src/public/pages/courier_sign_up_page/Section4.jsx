@@ -37,7 +37,7 @@ const Section4 = () => {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      sx={{ height: '80vh', backgroundColor: '#f9f9f9' }}
+      sx={{ height: '80vh' }}
     >
       <IconButton onClick={handlePrev}>
         <ArrowBackIosIcon />
@@ -47,10 +47,9 @@ const Section4 = () => {
         alignItems="center"
         justifyContent="space-between"
         sx={{
-          width: '80%',
+          width: "80%",
           height: '60vh',
           backgroundColor: '#ffffff',
-          boxShadow: 3,
           overflow: 'hidden',
         }}
       >
@@ -59,7 +58,7 @@ const Section4 = () => {
           display="flex"
           justifyContent="center"
           alignItems="center"
-          sx={{ padding: 4 }}
+          sx={{ padding: 4 , backgroundColor: '#f9f9f9' ,height: '100%'}}
         >
           <Typography variant="subtitle_alata" sx={{ textAlign: 'center' }}>
             {slides[currentIndex].text}

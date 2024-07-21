@@ -88,7 +88,7 @@ const PrimaryHeader = () => {
               component="img"
               src={Logo}
               alt="Stylit Logo"
-              sx={{ height: "34px"}}
+              sx={{ height: "28px"}}
             />
           </Stack>
           <Stack
