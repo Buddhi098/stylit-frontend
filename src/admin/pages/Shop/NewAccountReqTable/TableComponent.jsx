@@ -1,7 +1,6 @@
-import * as React from "react";
+import React, { useState } from 'react';
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -23,6 +22,15 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import Button from "@mui/material/Button";
 import { visuallyHidden } from "@mui/utils";
 import { headCells } from "./TableConfig";
+import { Stack } from "@mui/material";
+//import Modal from "@mui/material/Modal";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import Modal from '@mui/joy/Modal';
+import ModalClose from '@mui/joy/ModalClose';
+import Sheet from '@mui/joy/Sheet';
+import Box from '@mui/material/Box';
+import ViewLocation from './ViewLocation';
+import RejectRequest from './RegectRequest';
 
 
 let select = true;
@@ -322,9 +330,28 @@ export default function TableComponent({
                       </TableCell>
                       <TableCell align="right">{row.email}</TableCell>
                       <TableCell align="right">{row.phone}</TableCell>
-                      <TableCell align="right">{row.location}</TableCell>
+                      <TableCell align="center">
+                        {/* <Button
+                            variant="contained"
+                            color="primary"
+                            sx={{ margin: "3px" }}
+                            size="small"
+                            onClick={ViewLocation}
+                        >
+                          View Location on Map
+                        </Button> */}
+                        <ViewLocation/>
+                      </TableCell>
                       <TableCell align="right">{row.owner}</TableCell>
-                      <TableCell align="right">{row.regNo}</TableCell>
+                      <TableCell align="right">{row.regNo}<Button
+                            variant="contained"
+                            color="primary"
+                            sx={{ margin: "3px",marginLeft: "10px"}}
+                            size="small"
+                            // onClick={buttonOneAction}
+                          >
+                          Certificate
+                          </Button></TableCell>
                       {/* <TableCell align="right">{row.status}</TableCell> */}
                       {/* <TableCell align="right">{row.payment}</TableCell> */}
                       {buttonOneText && buttonOneAction && (
@@ -352,6 +379,7 @@ export default function TableComponent({
                             {buttonTwoText}
                           </Button>
                         )}
+                        <RejectRequest/>
                       </TableCell>
                     )}
                     </TableRow>

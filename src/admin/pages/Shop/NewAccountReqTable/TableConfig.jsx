@@ -20,9 +20,9 @@ export const headCells = [
   },
   {
     id: "location",
-    numeric: true,
+    numeric: false,
     disablePadding: false,
-    label: "Store Location",
+    label: "Store Location On Map",
   },
   {
     id: "owner",
@@ -32,9 +32,9 @@ export const headCells = [
   },
   {
     id: "regNo",
-    numeric: false,
+    numeric: true,
     disablePadding: false,
-    label: "Business Reg No",
+    label: "Business Reg No & Certificate",
   },
   // {
   //   id: "color",

@@ -3,6 +3,7 @@ import TableComponent from "./TableComponent";
 import FilterComponent from "./FilterComponent";
 import { Stack } from "@mui/material";
 import { filterOptions, tableData, headCells } from "./TableConfig";
+import RejectRequest from "./RegectRequest";
 
 const NewAccountReqTable = () => {
   // implement search feature
@@ -88,7 +89,9 @@ const NewAccountReqTable = () => {
         rows={finalData} 
         selectable={false}
         buttonOneAction={handleView}
-        buttonOneText="View Details"
+        buttonOneText="Accept"
+        // buttonTwoAction={RejectRequest}
+        // buttonTwoText="Reject"
 />
     </Stack>
   );

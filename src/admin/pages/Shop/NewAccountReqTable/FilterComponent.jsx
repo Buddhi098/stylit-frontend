@@ -200,7 +200,7 @@ const FilterComponent = ({
         ))}
 
         {/* filter button */}
-        <Grid item md={2}>
+        {/* <Grid item md={2}>
           <ToggleButton
             value="check"
             selected={checked}
@@ -225,7 +225,7 @@ const FilterComponent = ({
             />
             <Typography variant="h6">Search</Typography>
           </ToggleButton>
-        </Grid>
+        </Grid> */}
 
         <Grid
           item
