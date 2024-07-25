@@ -50,7 +50,7 @@ const Hero = () => {
                 objectFit: "cover",
               }}
             />
-            <Link>
+            <Link to="/public/men">
               <Box
                 sx={{
                   position: "absolute",
@@ -94,7 +94,7 @@ const Hero = () => {
                 objectFit: "cover",
               }}
             />
-            <Link>
+            <Link to="/public/women">
               <Box
                 sx={{
                   position: "absolute",

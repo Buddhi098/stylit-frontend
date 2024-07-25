@@ -1,6 +1,7 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import React from "react";
-import Banner from "../../assets/images/courier_sign_up/Banner.png";
+import shopCover from "../../assets/images/shop_sign_up/shopCover.png";
+import { Link } from "react-router-dom";
 
 const Section1 = () => {
   return (
@@ -12,7 +13,7 @@ const Section1 = () => {
           height: "400px",
         }}
       >
-        <Box component="img" src={Banner} height="430px" width="100%"></Box>
+        <Box component="img" src={shopCover} height="430px" width="100%"></Box>
         <Stack
           direction="column"
           sx={{
@@ -46,20 +47,24 @@ const Section1 = () => {
           >
             Join Sylit and Showcase Your Fashion!
           </Typography>
-          <Button
-            sx={{
-              backgroundColor: "primary.main",
-              padding: "10px 30px",
-              color: "black.900",
-              "&:hover": {
-                backgroundColor: "primary.600",
+          <Link to="/public/shop_signup_form"> 
+            <Button
+              sx={{
+                backgroundColor: "primary.main",
+                padding: "10px 30px",
                 color: "black.900",
-              },
-              borderRadius: "0",
-            }}
-          >
-            <Typography variant="body2_alata" sx={{fontWeight:500}}>Join Now</Typography>
-          </Button>
+                "&:hover": {
+                  backgroundColor: "primary.600",
+                  color: "black.900",
+                },
+                borderRadius: "0",
+              }}
+            >
+              <Typography variant="body2_alata" sx={{ fontWeight: 500 }}>
+                Join Now
+              </Typography>
+            </Button>
+          </Link>
         </Stack>
       </Box>
     </Stack>

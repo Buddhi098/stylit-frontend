@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import { Box, Typography, TextField, Button, Grid, Alert } from "@mui/material";
-import form2 from "../../assets/images/courier_sign_up_form/form2.png";
+import form2 from "../../assets/images/shop_sign_up_form/form2.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import api from "../../api/api";
 import CheckIcon from "@mui/icons-material/Check";
-import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 
 const Form2 = (props) => {
-  const [otpError, setOtpError] = React.useState(false);
-  const [otherError, setOtherError] = React.useState(false);
+
+  const [otpError , setOtpError] = React.useState(false);
+  const [otherError , setOtherError] = React.useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -26,18 +27,18 @@ const Form2 = (props) => {
 
       try {
         const data = {
-          email: props.courierEmail,
+          email: props.shopEmail,
           otp: values.otp,
         };
         console.log("Data:", data);
 
         const response = await api.post("/public/user/verifyOtp", data);
 
-        if (response.data.data.otpStatus) {
+        if(response.data.data.otpStatus) {
           props.setOtpStatus(response.data.data.otpStatus);
           setOtpError(false);
           setOtherError(false);
-        } else {
+        }else{
           setOtpError(true);
         }
 
@@ -102,7 +103,7 @@ const Form2 = (props) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          paddingLeft: "100px",
+          paddingLeft:'100px'
         }}
       >
         {/* Left part with illustration */}
@@ -117,10 +118,7 @@ const Form2 = (props) => {
           </Alert>
         )}
         {otherError && (
-          <Alert
-            icon={<WarningAmberIcon fontSize="inherit" />}
-            severity="warning"
-          >
+          <Alert icon={<WarningAmberIcon fontSize="inherit" />} severity="warning">
             Something went wrong. Please try again.
           </Alert>
         )}
@@ -146,17 +144,11 @@ const Form2 = (props) => {
               onBlur={formik.handleBlur}
               error={formik.touched.otp && Boolean(formik.errors.otp)}
               helperText={formik.touched.otp && formik.errors.otp}
-              disabled={props.otpStatus}
+              disabled={props.otpStatus==="true" ? true : false }
             />
           </Grid>
           <Grid item xs={12}>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              type="submit"
-              disabled={props.otpStatus}
-            >
+            <Button variant="contained" color="primary" fullWidth type="submit" disabled={props.otpStatus==="true" ? true : false }>
               <Typography variant="body1_nunito" color="black">
                 Verify OTP
               </Typography>

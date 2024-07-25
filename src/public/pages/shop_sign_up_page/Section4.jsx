@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { Box, Typography, IconButton } from '@mui/material';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import Carousel1 from  '../../assets/images/courier_sign_up/Carousel1.jpg'
-import Carousel2 from  '../../assets/images/courier_sign_up/Carousel2.jpg'
-import Carousel3 from  '../../assets/images/courier_sign_up/Carousel3.jpg'
+import React, { useState } from "react";
+import { Box, Typography, IconButton } from "@mui/material";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { useSwipeable } from "react-swipeable";
+import Carousel1 from "../../assets/images/shop_sign_up/pic1.jpg";
+import Carousel2 from "../../assets/images/shop_sign_up/pic2.jpg";
+import Carousel3 from "../../assets/images/shop_sign_up/pic3.jpg";
 
 const slides = [
   {
-    text: '"Being on Sylit has allowed us to express our brand\'s personality fully and connect with customers who love our bohemian style. It\'s been a fantastic journey."',
+    text: "\"Being on Sylit has allowed us to express our brand's personality fully and connect with customers who love our bohemian style. It's been a fantastic journey.\"",
     image: Carousel1,
   },
   {
@@ -16,7 +16,7 @@ const slides = [
     image: Carousel2,
   },
   {
-    text: '"Embracing Stylit has enabled us to embody our brand\'s essence and engage with a community of trendsetters who appreciate our timeless sophistication. It\'s been an inspiring voyage."',
+    text: "\"Embracing Stylit has enabled us to embody our brand's essence and engage with a community of trendsetters who appreciate our timeless sophistication. It's been an inspiring voyage.\"",
     image: Carousel3,
   },
 ];
@@ -29,29 +29,35 @@ const Section4 = () => {
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + slides.length) % slides.length
+    );
   };
+
+  const handlers = useSwipeable({
+    onSwipedRIght: handleNext,
+    onSwipedRight: handlePrev,
+  });
 
   return (
     <Box
+      {...handlers}
       display="flex"
       justifyContent="center"
       alignItems="center"
-      sx={{ height: '80vh', backgroundColor: '#f9f9f9' }}
+      sx={{ height: "80vh", backgroundColor: "#f9f9f9", paddingLeft: "20px" }}
     >
-      <IconButton onClick={handlePrev}>
-        <ArrowBackIosIcon />
-      </IconButton>
       <Box
         display="flex"
         alignItems="center"
         justifyContent="space-between"
         sx={{
-          width: '80%',
-          height: '60vh',
-          backgroundColor: '#ffffff',
-          boxShadow: 3,
-          overflow: 'hidden',
+          width: "80%",
+          height: "60vh",
+          backgroundColor: "#ffffff",
+          boxShadow: 1,
+          overflow: "hidden",
+
         }}
       >
         <Box
@@ -59,20 +65,32 @@ const Section4 = () => {
           display="flex"
           justifyContent="center"
           alignItems="center"
-          sx={{ padding: 4 }}
+          sx={{
+            padding: 4,
+          }}
         >
-          <Typography variant="subtitle_alata" sx={{ textAlign: 'center' }}>
+          <Typography variant="subtitle_nunito" sx={{ textAlign: "center" }}>
             {slides[currentIndex].text}
           </Typography>
         </Box>
         <Box
-          component={'img'}
+          component={"img"}
           src={slides[currentIndex].image}
           width="50%"
           height="100%"
         />
       </Box>
-      <IconButton onClick={handleNext}>
+      <IconButton
+        onClick={handleNext}
+        sx={{
+          height: "60vh",
+          borderRadius: "0",
+          right: "40px",
+          background: "rgba(217, 203, 184,0.6)",
+          "&:hover": { background: "rgba(217, 203, 184,0.8)" },
+          color: "black",
+        }}
+      >
         <ArrowForwardIosIcon />
       </IconButton>
     </Box>

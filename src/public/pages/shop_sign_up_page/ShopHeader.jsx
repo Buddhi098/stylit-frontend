@@ -89,7 +89,7 @@ const ShopHeader = () => {
               component="img"
               src={Logo}
               alt="Stylit Logo"
-              sx={{ height: "34px" }}
+              sx={{ height: "28px" }}
             />
           </Stack>
 
@@ -128,7 +128,7 @@ const ShopHeader = () => {
                 </span>
               </Link>
               <Link
-                to="#"
+                to="/public/shop_login_page"
                 sx={{
                   display: "flex",
                   justifyContent: "center",
@@ -159,7 +159,7 @@ const ShopHeader = () => {
                 <span class="material-symbols-outlined topbar-icon">how_to_reg</span>
               </Link>
               <Link
-                to="#"
+                to="/public/shop_signup_form"
                 sx={{
                   display: "flex",
                   justifyContent: "center",

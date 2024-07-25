@@ -3,6 +3,7 @@ import React from "react";
 import Shop from "../../assets/images/partner_with_us/Shop.png";
 import Courier from "../../assets/images/partner_with_us/Courier.png";
 import { useNavigate, Link } from "react-router-dom";
+import { fontStyle } from "@mui/system";
 const Section3 = () => {
   const navigate = useNavigate();
 
@@ -73,6 +74,7 @@ const Section3 = () => {
         <Typography variant="body1_nunito" color="black.800">
           Already have an account?{" "}
           <Link
+            to="/public/shop_login_page"
             sx={{
               textDecoration: "none",
               color: "black.900",
@@ -137,6 +139,7 @@ const Section3 = () => {
         <Typography variant="body1_nunito" color="black.800">
           Already have an account?{" "}
           <Link
+          to="/public/courier_login_page"
             sx={{
               textDecoration: "none",
               color: "black.900",

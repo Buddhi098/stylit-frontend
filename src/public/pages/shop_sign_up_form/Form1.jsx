@@ -17,14 +17,13 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import formIllustration from "../../assets/images/courier_sign_up_form/form1.png";
+import formIllustration from "../../assets/images/shop_sign_up_form/form1.png";
 import api from "../../api/api";
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import { set } from "lodash";
 
 const isEmailALreadyExistFunc = async (email, setIsEmailALreadyExist) => {
   try {
-    const response = await api.post("/public/user/isExistCourier", {
+    const response = await api.post("/public/user/isExistShop", {
       email: email,
     });
     console.log(response.data);
@@ -56,46 +55,46 @@ const Form1 = forwardRef((props, ref) => {
 
   const formik = useFormik({
     initialValues: {
-      courierName:
-        props.form1Data && props.form1Data.courierName
-          ? props.form1Data.courierName
+      shopName:
+        props.form1Data && props.form1Data.shopName
+          ? props.form1Data.shopName
           : "",
-      courierEmail:
-        props.form1Data && props.form1Data.courierEmail
-          ? props.form1Data.courierEmail
+      shopEmail:
+        props.form1Data && props.form1Data.shopEmail
+          ? props.form1Data.shopEmail
           : "",
-      courierContactNumber:
-        props.form1Data && props.form1Data.courierContactNumber
-          ? props.form1Data.courierContactNumber
+      shopContactNumber:
+        props.form1Data && props.form1Data.shopContactNumber
+          ? props.form1Data.shopContactNumber
           : "",
       password:
         props.form1Data && props.form1Data.password
           ? props.form1Data.password
           : "",
-      confirm_password:
+      confirmPassword:
         props.form1Data && props.form1Data.confirm_password
           ? props.form1Data.confirm_password
           : "",
     },
     validationSchema: Yup.object({
-      courierName: Yup.string().required("Courier Name is required"),
-      courierEmail: Yup.string()
+      shopName: Yup.string().required("shop Name is required"),
+      shopEmail: Yup.string()
         .email("Invalid email address")
         .required("Email is required"),
-      courierContactNumber: Yup.string().required("Contact Number is required"),
+      shopContactNumber: Yup.string().required("Contact Number is required"),
       password: Yup.string()
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
-      confirm_password: Yup.string()
+      confirmPassword: Yup.string()
         .oneOf([Yup.ref("password"), null], "Passwords must match")
         .required("Confirm Password is required"),
     }),
     onSubmit: async (values) => {
-      // console.log("Form data", values);
+      console.log("Form data", values);
       console.log(props.otpStatus, "otpStatus");
 
       props.setLoading(true);
-      const isEmailRegistered = await isEmailALreadyExistFunc(values.courierEmail, setIsEmailALreadyExist);
+      const isEmailRegistered = await isEmailALreadyExistFunc(values.shopEmail, setIsEmailALreadyExist);
       if(isEmailRegistered){
         props.setLoading(false);
         return;
@@ -104,7 +103,7 @@ const Form1 = forwardRef((props, ref) => {
       if (!props.otpStatus && !isEmailALreadyExist) {
         try {
           const otpRequestData = {
-            email: values.courierEmail,
+            email: values.shopEmail,
           };
           console.log(otpRequestData, "otpRequestData");
 
@@ -143,7 +142,7 @@ const Form1 = forwardRef((props, ref) => {
 
   useEffect(() => {
     setIsEmailALreadyExist(false);
-  } , [formik.values.courierEmail])
+  } , [formik.values.shopEmail])
 
   const refEmail = useRef();
 
@@ -171,10 +170,10 @@ const Form1 = forwardRef((props, ref) => {
       >
         <Stack direction="column">
           <Typography variant="subtitle_alata" gutterBottom>
-            Courier Registration
+            Fashion Store Registration
           </Typography>
           <Typography variant="body1_nunito" color="#999999" gutterBottom>
-            Please fill in the details below to register your courier service.
+            Please fill in the details below to register your Fashin Store.
           </Typography>
         </Stack>
         <Divider sx={{ marginBottom: "5px", background: "white" }} />
@@ -204,23 +203,23 @@ const Form1 = forwardRef((props, ref) => {
 
         <Grid container spacing={2} sx={{ marginTop: "15px" }}>
           <Grid item xs={12} sm={6}>
-            <InputLabel htmlFor="courierName" sx={{ mb: "4px" }}>
-              <Typography variant="body1_alata">Courier Name</Typography>
+            <InputLabel htmlFor="shopName" sx={{ mb: "4px" }}>
+              <Typography variant="body1_alata">Shop Name</Typography>
             </InputLabel>
             <TextField
               variant="filled"
               fullWidth
               size="small"
-              id="courierName"
-              name="courierName"
-              value={formik.values.courierName}
+              id="shopName"
+              name="shopName"
+              value={formik.values.shopName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={
-                formik.touched.courierName && Boolean(formik.errors.courierName)
+                formik.touched.shopName && Boolean(formik.errors.shopName)
               }
               helperText={
-                formik.touched.courierName && formik.errors.courierName
+                formik.touched.shopName && formik.errors.shopName
               }
               sx={{
                 "& .MuiInputBase-root": {
@@ -234,7 +233,7 @@ const Form1 = forwardRef((props, ref) => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <InputLabel htmlFor="courierEmail" sx={{ mb: "4px" }}>
+            <InputLabel htmlFor="shopEmail" sx={{ mb: "4px" }}>
               <Typography variant="body1_alata">Email</Typography>
             </InputLabel>
             <TextField
@@ -243,18 +242,18 @@ const Form1 = forwardRef((props, ref) => {
               variant="filled"
               fullWidth
               size="small"
-              id="courierEmail"
-              name="courierEmail"
+              id="shopEmail"
+              name="shopEmail"
               type="email"
-              value={formik.values.courierEmail}
+              value={formik.values.shopEmail}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={
-                formik.touched.courierEmail &&
-                Boolean(formik.errors.courierEmail)
+                formik.touched.shopEmail &&
+                Boolean(formik.errors.shopEmail)
               }
               helperText={
-                formik.touched.courierEmail && formik.errors.courierEmail
+                formik.touched.shopEmail && formik.errors.shopEmail
               }
               sx={{
                 "& .MuiInputBase-root": {
@@ -268,25 +267,25 @@ const Form1 = forwardRef((props, ref) => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <InputLabel htmlFor="courierContactNumber" sx={{ mb: "4px" }}>
+            <InputLabel htmlFor="shopContactNumber" sx={{ mb: "4px" }}>
               <Typography variant="body1_alata">Contact Number</Typography>
             </InputLabel>
             <TextField
               variant="filled"
               fullWidth
               size="small"
-              id="courierContactNumber"
-              name="courierContactNumber"
-              value={formik.values.courierContactNumber}
+              id="shopContactNumber"
+              name="shopContactNumber"
+              value={formik.values.shopContactNumber}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={
-                formik.touched.courierContactNumber &&
-                Boolean(formik.errors.courierContactNumber)
+                formik.touched.shopContactNumber &&
+                Boolean(formik.errors.shopContactNumber)
               }
               helperText={
-                formik.touched.courierContactNumber &&
-                formik.errors.courierContactNumber
+                formik.touched.shopContactNumber &&
+                formik.errors.shopContactNumber
               }
               sx={{
                 "& .MuiInputBase-root": {
@@ -334,19 +333,19 @@ const Form1 = forwardRef((props, ref) => {
               variant="filled"
               fullWidth
               size="small"
-              id="confirm_password"
-              name="confirm_password"
+              id="confirmPassword"
+              name="confirmPassword"
               type="password"
-              value={formik.values.confirm_password}
+              value={formik.values.confirmPassword}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={
-                formik.touched.confirm_password &&
-                Boolean(formik.errors.confirm_password)
+                formik.touched.confirmPassword &&
+                Boolean(formik.errors.confirmPassword)
               }
               helperText={
-                formik.touched.confirm_password &&
-                formik.errors.confirm_password
+                formik.touched.confirmPassword &&
+                formik.errors.confirmPassword
               }
               sx={{
                 "& .MuiInputBase-root": {

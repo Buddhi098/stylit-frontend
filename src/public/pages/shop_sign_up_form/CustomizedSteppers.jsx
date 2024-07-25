@@ -9,9 +9,10 @@ import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import StepLabel from "@mui/material/StepLabel";
-import AppRegistrationOutlinedIcon from "@mui/icons-material/AppRegistrationOutlined";
+import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
 import PersonPinCircleOutlinedIcon from "@mui/icons-material/PersonPinCircleOutlined";
 import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
+import AddBusinessOutlinedIcon from "@mui/icons-material/AddBusinessOutlined";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 import StepConnector, {
@@ -22,6 +23,7 @@ import Form2 from "./Form2";
 import Form3 from "./Form3";
 import Form4 from "./Form4";
 import Form5 from "./Form5";
+import Form6 from "./Form6";
 import { LinearProgress } from "@mui/material";
 import api from "../../api/api";
 
@@ -76,11 +78,12 @@ function ColorlibStepIcon(props) {
   const { active, completed, className } = props;
 
   const icons = {
-    1: <AppRegistrationOutlinedIcon sx={{ fontSize: "18px" }} />,
+    1: <HowToRegOutlinedIcon sx={{ fontSize: "18px" }} />,
     2: <KeyOutlinedIcon sx={{ fontSize: "22px" }} />,
     3: <PersonPinCircleOutlinedIcon sx={{ fontSize: "22px" }} />,
     4: <BusinessCenterOutlinedIcon sx={{ fontSize: "18px" }} />,
-    5: <HowToRegIcon sx={{ fontSize: "18px" }} />,
+    5: <AddBusinessOutlinedIcon sx={{ fontSize: "18px" }} />,
+    6: <HowToRegIcon sx={{ fontSize: "18px" }} />,
   };
 
   return (
@@ -101,10 +104,11 @@ ColorlibStepIcon.propTypes = {
 };
 
 const steps = [
-  "Courier Information",
+  "General Information",
   "OTP Verification",
   "Location Information",
   "Business Information",
+  "Shop Information",
   "Registration Complete",
 ];
 
@@ -114,7 +118,7 @@ export default function CustomizedSteppers() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
 
-  const [courierData, setCourierData] = React.useState({});
+  const [shopData, setShopData] = React.useState({});
 
   const [otpStatus, setOtpStatus] = React.useState();
 
@@ -128,21 +132,23 @@ export default function CustomizedSteppers() {
   const form4Ref = React.useRef();
   const [form4Data, setForm4Data] = React.useState({});
 
+  const form5Ref = React.useRef();
+  const [form5Data, setForm5Data] = React.useState({});
+
   const [submitFlag, setSubmitFlag] = React.useState(false);
 
   const [submissionError , setSubmissionError] = React.useState(false);
 
   React.useEffect(() => {
-    console.log(form1Data);
     if (Object.keys(form1Data).length !== 0) {
       setisSetEmail(true);
-      setCourierData((prev) => ({
+      setShopData((prev) => ({
         ...prev,
-        courierName: form1Data.courierName,
-        courierEmail: form1Data.courierEmail,
-        courierContactNumber: form1Data.courierContactNumber,
+        shopName: form1Data.shopName,
+        shopEmail: form1Data.shopEmail,
+        shopContactNumber: form1Data.shopContactNumber,
         password: form1Data.password,
-        confirm_password: form1Data.confirm_password,
+        confirmPassword: form1Data.confirmPassword,
       }));
 
       if (activeStep === 0) {
@@ -152,11 +158,10 @@ export default function CustomizedSteppers() {
   }, [form1Data]);
 
   React.useEffect(() => {
-    console.log(form3Data);
     if (Object.keys(form3Data).length !== 0) {
-      setCourierData((prev) => ({
+      setShopData((prev) => ({
         ...prev,
-        courierLocation: form3Data,
+        shopLocation: form3Data,
       }));
 
       if (activeStep === 2) {
@@ -166,15 +171,11 @@ export default function CustomizedSteppers() {
   }, [form3Data]);
 
   React.useEffect(() => {
-    console.log(form4Data);
     if (Object.keys(form4Data).length !== 0) {
-      setCourierData((prev) => ({
+      setShopData((prev) => ({
         ...prev,
-        courierBusinessData: form4Data,
+        shopBusinessData: form4Data,
       }));
-
-      // Send Courier Data to the backend
-      setSubmitFlag(true);
 
       if (activeStep === 3) {
         handleNext();
@@ -183,14 +184,28 @@ export default function CustomizedSteppers() {
   }, [form4Data]);
 
   React.useEffect(() => {
-    console.log(courierData);
+    console.log("sadas")
+    console.log(submitFlag)
+    if (Object.keys(form5Data).length !== 0) {
+      setShopData((prev) => ({ ...prev, shopInformation: form5Data }));
+
+      setSubmitFlag(true);
+
+      if (activeStep === 4) {
+      handleNext();
+    }
+    }
+  }, [form5Data]);
+
+  React.useEffect(() => {
+    console.log("ashj" , shopData);
     const sendData = async () => {
       try {
         if (submitFlag) {
           setLoading(true);
           const response = await api.post(
-            "/public/user/addCourier",
-            courierData
+            "/public/user/addShop",
+            shopData
           );
           console.log(response.data);
         }
@@ -207,6 +222,7 @@ export default function CustomizedSteppers() {
         } else {
           console.error("Error message:", error.message);
         }
+        setSubmissionError(true);
       } finally {
         setLoading(false);
       }
@@ -214,6 +230,10 @@ export default function CustomizedSteppers() {
 
     sendData();
   }, [submitFlag]);
+
+  // React.useEffect(() => {
+  //   console.log(shopData);
+  // }, [shopData]);
 
   const totalSteps = () => steps.length;
 
@@ -230,12 +250,15 @@ export default function CustomizedSteppers() {
       form3Ref.current.submitForm();
     } else if (form4Ref.current) {
       form4Ref.current.submitForm();
+    } else if (form5Ref.current) {
+      form5Ref.current.submitForm();
     }
 
     // for OTP page navigation
     if (activeStep === 1 && otpStatus) {
       handleNext();
     }
+
   };
 
   const handleNext = () => {
@@ -252,14 +275,14 @@ export default function CustomizedSteppers() {
 
   const handleSubmit = () => {
     submitForm();
-    console.log(courierData);
+    console.log(shopData);
   };
 
   const handleReset = () => {
     setActiveStep(0);
     setCompleted({});
   };
-
+  console.log(activeStep);
   return (
     <Box
       sx={{
@@ -326,7 +349,7 @@ export default function CustomizedSteppers() {
                 />
               ) : activeStep === 1 ? (
                 <Form2
-                  courierEmail={form1Data.courierEmail}
+                  shopEmail={form1Data.shopEmail}
                   setLoading={setLoading}
                   setOtpStatus={setOtpStatus}
                   otpStatus={otpStatus}
@@ -344,7 +367,13 @@ export default function CustomizedSteppers() {
                   setForm4Data={setForm4Data}
                 />
               ) : activeStep === 4 ? (
-                <Form5 submissionError={submissionError}/>
+                <Form5
+                  ref={form5Ref}
+                  setForm5Data={setForm5Data}
+                  form5Data={form5Data}
+                />
+              ) : activeStep === 5 ? (
+                <Form6 submissionError={submissionError}/>
               ) : null}
             </Stack>
             <Box
