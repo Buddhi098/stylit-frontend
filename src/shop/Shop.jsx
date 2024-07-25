@@ -11,7 +11,7 @@ import DashboardDefault from './pages/dashboard';
 
 // ==============================|| APP - THEME, ROUTER, LOCAL ||============================== //
 
-export default function Shop() {
+export default function ShopLayout() {
   return (
     <ThemeCustomization>
       <ScrollTop>
