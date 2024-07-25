@@ -10,7 +10,7 @@ import ProductStatistics from '../shop/pages/product/product_statistics/ProductS
 import CourierRequest from '../shop/pages/order/courier_request/CourierRequest';
 import ManageOrders from '../shop/pages/order/manage_orders/ManageOrders';
 import OrderStatistics from '../shop/pages/order/order_statistics/OrderStatistics';
-import ApprovedDelivery from '../shop/pages/approved_delivery/ApprovedDelivery';
+// import ApprovedDelivery from '../shop/pages/approved_delivery/ApprovedDelivery';
 
 const Dashboard = Loadable(lazy(()=>import('../shop/pages/dashboard')))
 const AddNewProduct = Loadable(lazy(()=>import('../shop/pages/product/add_new_products/AddNewProduct')))
@@ -49,10 +49,10 @@ const ShopRoutes = {
       path:'order_statistics',
       element: <OrderStatistics/>
     },
-    {
-      path:'approved_delivery',
-      element: <ApprovedDelivery/>
-    }
+    // {
+    //   path:'approved_delivery',
+    //   element: <ApprovedDelivery/>
+    // }
 
 
   ]
