@@ -9,13 +9,14 @@ import React from "react";
 import Logo from "../assets/images/logo/Stylit_logo.png";
 import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
+import ShopperSignUp from "../pages/shopper_sign_up/ShopperSignUp";
 
-const PrimaryHeader = () => {
+const PrimaryHeader = ({topHeaderColor}) => {
   return (
       <Stack direction="column" sx={{ borderBottom: "1px solid #f0f0f0" }}>
         <Box
           sx={{
-            backgroundColor: "primary.main",
+            backgroundColor: `${topHeaderColor}`,
             height: "35px",
           }}
         />
@@ -30,20 +31,7 @@ const PrimaryHeader = () => {
           }}
         >
           <Stack direction="row" spacing={5} sx={{position:'absolute' , top:"30%" , left:"8%"}}>
-            <Link to="#">
-              <Typography
-                variant="body2_nunito"
-                sx={{
-                  "&:hover": {
-                    borderBottom: "3px solid black",
-                    paddingBottom: "16px",
-                  },
-                }}
-              >
-                Men
-              </Typography>
-            </Link>
-            <Link to="#">
+          <Link to="/public/women">
               <Typography
                 variant="body2_nunito"
                 sx={{
@@ -54,6 +42,19 @@ const PrimaryHeader = () => {
                 }}
               >
                 Women
+              </Typography>
+            </Link>
+            <Link to="/public/men">
+              <Typography
+                variant="body2_nunito"
+                sx={{
+                  "&:hover": {
+                    borderBottom: "3px solid black",
+                    paddingBottom: "16px",
+                  },
+                }}
+              >
+                Men
               </Typography>
             </Link>
             <Link to="#">
@@ -125,12 +126,7 @@ const PrimaryHeader = () => {
                 }}
               />
             </Stack>
-            <Link to="#">
-              {/* <PersonOutlineOutlinedIcon
-                sx={{ fontSize: "30px", color: "rgba(0, 0, 0, 0.6)" }}
-              /> */}
-              <span class="material-symbols-outlined topbar-icon">person</span>
-            </Link>
+            <ShopperSignUp/>
             <Link to="#">
               {/* <FavoriteBorderOutlinedIcon
                 sx={{ fontSize: "30px", color: "rgba(0, 0, 0, 0.6)" }}
@@ -147,6 +143,10 @@ const PrimaryHeader = () => {
         </Stack>
       </Stack>
   );
+};
+
+PrimaryHeader.defaultProps = {
+  topHeaderColor: "primary.main",
 };
 
 export default PrimaryHeader;
