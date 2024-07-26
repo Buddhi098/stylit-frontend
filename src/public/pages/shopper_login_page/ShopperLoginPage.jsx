@@ -6,6 +6,7 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import { MenuItem } from "@mui/material";
 import Section1 from "./Section1";
+import { height } from "@mui/system";
 // import Section2 from "./Section2";
 
 const style = {
@@ -17,7 +18,7 @@ const style = {
   boxShadow: 24,
 };
 
-export default function ShopperSignUp() {
+export default function ShopperLoginPage() {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = (event) => {
@@ -42,7 +43,7 @@ export default function ShopperSignUp() {
         }}
       >
         <Typography variant="body1_nunito" fontSize="15px">
-          Sing Up
+          Sing In
         </Typography>
       </MenuItem>
       <Modal

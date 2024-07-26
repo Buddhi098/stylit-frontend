@@ -1,13 +1,13 @@
 import React from 'react'
 import CustomizedSteppers from './CustomizedSteppers'
-import PrimaryHeader from '../../components/PrimaryHeader'
 import { ThemeProvider } from '@emotion/react'
 import { theme } from '../../assets/themes/MUIThemeProvider'
+import ShopHeader from '../shop_sign_up_page/ShopHeader'
 
 const ShopSignUpForm = () => {
   return (
     <ThemeProvider theme={theme}>
-      <PrimaryHeader/>
+      <ShopHeader/>
       <CustomizedSteppers/>
     </ThemeProvider>
   )

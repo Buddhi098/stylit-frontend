@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import {
   Box,
   TextField,
-  FormControlLabel,
-  RadioGroup,
-  Radio,
-  Checkbox,
   Button,
   Typography,
   Link,
@@ -13,26 +9,27 @@ import {
 } from "@mui/material";
 import img from "../../assets/images/shopper_sign_up_page/cover.png";
 import logo from "../../assets/images/logo/Stylit_logo.png";
-import CloseIcon from '@mui/icons-material/Close';
-import Section11 from "../shopper_login_page/Section1";
+import CloseIcon from "@mui/icons-material/Close";
+import { Stack } from "@mui/system";
+import Section11 from "../shopper_sign_up/Section1";
 
-const Section1 = ({handleClose}) => {
-  const [showLogin , setShowLogin] = useState(false);
-  const handleShowLogin = () => {
-    setShowLogin(!showLogin);
-    }
+const Section1 = ({ handleClose }) => {
+  const [showSignUp , setShowSignUp] = useState(false);
+  const handleShowSignUp = () => {
+    setShowSignUp(!showSignUp);
+  }
   return (
     <Box
       sx={{
         display: "flex",
-        height: "80vh",
+        height: "500px",
         width: "100%",
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#f5f5f5",
       }}
     >
-      {showLogin ? (<Section11 handleClose={handleClose}/>) :(<Box
+      {showSignUp ? (<Section11 handleClose={handleClose}/>) : (<Box
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
@@ -47,7 +44,7 @@ const Section1 = ({handleClose}) => {
         {/* Left side - Form */}
         <Box
           sx={{
-            padding: "0px 50px",
+            padding: { xs: "20px 20px", md: "20px 50px" }, // Adjust padding
             flex: 1,
             display: "flex",
             flexDirection: "column",
@@ -62,19 +59,20 @@ const Section1 = ({handleClose}) => {
               justifyContent: "center",
               alignItems: "center",
               flexDirection: "column",
+              marginBottom: "20px", // Adjust margin-bottom
             }}
           >
             <Box
               component="img"
               src={logo}
               width="80px"
-              marginBottom="20px"
+              marginBottom="10px" // Adjust margin-bottom
             ></Box>
             <Typography variant="body1_alata" gutterBottom>
-              Join the Stylit Community Today!
+              Welcome back to Stylit!
             </Typography>
             <Typography variant="body2_nunito" color="#999999" gutterBottom>
-              Access the best trends and deals.
+              Please login to your account.
             </Typography>
           </Box>
           <TextField
@@ -96,43 +94,6 @@ const Section1 = ({handleClose}) => {
               disableUnderline: true, // This will remove the underline
             }}
           />
-          <TextField
-            size="small"
-            variant="filled"
-            label={
-              <Typography variant="body2_nunito">Confirm Password</Typography>
-            }
-            type="password"
-            margin="normal"
-            InputProps={{
-              disableUnderline: true, // This will remove the underline
-            }}
-          />
-
-          <Typography variant="body2_nunito" mt="18px" gutterBottom>
-            Mostly interested in:
-          </Typography>
-          <RadioGroup row>
-            <FormControlLabel
-              value="womenswear"
-              control={<Radio />}
-              label={<Typography variant="body2_nunito">Womenswear</Typography>}
-            />
-            <FormControlLabel
-              value="menswear"
-              control={<Radio />}
-              label={<Typography variant="body2_nunito">Menswear</Typography>}
-            />
-          </RadioGroup>
-
-          <FormControlLabel
-            control={<Checkbox />}
-            label={
-              <Typography variant="body2_nunito">
-                Yes, send me newsletters and updates via email.
-              </Typography>
-            }
-          />
 
           <Button
             variant="contained"
@@ -148,11 +109,23 @@ const Section1 = ({handleClose}) => {
           >
             <Typography variant="body1_nunito">SIGN UP</Typography>
           </Button>
-          <Typography variant="body2_nunito" align="center" sx={{ mt: 2 }}>
-            Already have an account? <Link onClick={handleShowLogin} sx={{cursor:'pointer'}}>Sign In</Link>
-          </Typography>
+          <Stack
+            direction="column"
+            spacing={0.1}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "20px", // Adjust margin-top
+            }}
+          >
+            <Typography variant="body2_nunito" align="center" sx={{ mt: 2 }}>
+              Don’t have an account? <Link onClick={handleShowSignUp} sx={{cursor:'pointer'}}>Sign up</Link>
+            </Typography>
+            <Link><Typography variant="body2_nunito">Reset password</Typography></Link>
+          </Stack>
 
-          <Typography variant="body2_nunito" align="center" sx={{ mt: 2 }}>
+          <Typography variant="body2_nunito" align="center" sx={{ mt: 7 }}>
             By providing your email address, you agree to our{" "}
             <Link href="#">Privacy Policy</Link> and{" "}
             <Link href="#">Terms of Service</Link>.
@@ -160,8 +133,7 @@ const Section1 = ({handleClose}) => {
         </Box>
 
         {/* Right side - Image */}
-
-        <Box sx={{position:'relative' }}>
+        <Box sx={{ position: "relative", width: { xs: "100%", md: "50%" } }}>
           <Box
             component={"img"}
             src={img}
@@ -185,6 +157,7 @@ const Section1 = ({handleClose}) => {
           </IconButton>
         </Box>
       </Box>)}
+      
     </Box>
   );
 };
