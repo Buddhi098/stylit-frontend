@@ -19,6 +19,7 @@ import Link from '@mui/material/Link';
 import { visuallyHidden } from "@mui/utils";
 import { headCells } from "./TableConfig";
 import OngoingDialog from "./OngoingDialog";
+import QRScannerDialog from "./QRScannerDialog";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -118,6 +119,7 @@ export default function TableComponent({ rows }) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [open, setOpen] = React.useState(false);
   const [selectedRow, setSelectedRow] = React.useState(null);
+  const [isQRDialogOpen, setIsQRDialogOpen] = React.useState(false);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -148,6 +150,18 @@ export default function TableComponent({ rows }) {
     setSelectedRow(null);
   };
 
+  const handleQRDialogOpen = () => {
+    setIsQRDialogOpen(true);
+  };
+
+  const handleQRDialogClose = () => {
+    setIsQRDialogOpen(false);
+  };
+
+  const handleScanSuccess = (data) => {
+    console.log("Scanned QR Code: ", data);
+  };
+
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
@@ -173,7 +187,7 @@ export default function TableComponent({ rows }) {
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
-                    <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)}>
+                    <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)} sx={{ cursor: "pointer"}}>
                       <TableCell
                         component="th"
                         id={labelId}
@@ -213,8 +227,8 @@ export default function TableComponent({ rows }) {
                               color: '#ffffff',
                               '&:hover': { backgroundColor: '#A8D8F7', color: '#ffffff' },
                               margin: "3px",
-                              
                             }}
+                            onClick={handleQRDialogOpen}
                           >
                             Scan QR
                           </Button>
@@ -250,6 +264,11 @@ export default function TableComponent({ rows }) {
         open={open}
         handleClose={handleClose}
         selectedRow={selectedRow}
+      />
+      <QRScannerDialog
+        open={isQRDialogOpen}
+        handleClose={handleQRDialogClose}
+        onScanSuccess={handleScanSuccess}
       />       
     </Box>
   );

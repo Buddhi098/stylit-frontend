@@ -172,7 +172,7 @@ export default function TableComponent({ rows }) {
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
-                    <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)}>
+                    <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)} sx={{ cursor: "pointer"}}>
                       <TableCell
                         component="th"
                         id={labelId}

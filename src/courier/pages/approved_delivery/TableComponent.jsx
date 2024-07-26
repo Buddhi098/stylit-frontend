@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -15,10 +15,10 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import Link from '@mui/material/Link';
 import { visuallyHidden } from "@mui/utils";
 import { headCells } from "./TableConfig";
 import ApprovedDialog from "./ApprovedDialog";
+import QRScannerDialog from "./QRScannerDialog";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -99,7 +99,7 @@ function EnhancedTableToolbar(props) {
       }}
     >
       <Typography
-        sx={{ flex: "1 1 100%" ,fontWeight: 'bold'}}
+        sx={{ flex: "1 1 100%", fontWeight: "bold" }}
         variant="h6"
         id="tableTitle"
         component="div"
@@ -111,13 +111,14 @@ function EnhancedTableToolbar(props) {
 }
 
 export default function TableComponent({ rows }) {
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [open, setOpen] = React.useState(false);
-  const [selectedRow, setSelectedRow] = React.useState(null);
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("calories");
+  const [page, setPage] = useState(0);
+  const [dense, setDense] = useState(false);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [open, setOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [isQRDialogOpen, setIsQRDialogOpen] = useState(false);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -142,10 +143,22 @@ export default function TableComponent({ rows }) {
     setSelectedRow(row);
     setOpen(true);
   };
-  
+
   const handleClose = () => {
     setOpen(false);
     setSelectedRow(null);
+  };
+
+  const handleQRDialogOpen = () => {
+    setIsQRDialogOpen(true);
+  };
+
+  const handleQRDialogClose = () => {
+    setIsQRDialogOpen(false);
+  };
+
+  const handleScanSuccess = (data) => {
+    console.log("Scanned QR Code: ", data);
   };
 
   const emptyRows =
@@ -173,7 +186,13 @@ export default function TableComponent({ rows }) {
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
-                    <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)}>
+                    <TableRow
+                      hover
+                      tabIndex={-1}
+                      key={row.id}
+                      onClick={() => handleRowClick(row)}
+                      sx={{ cursor: "pointer"}}
+                    >
                       <TableCell
                         component="th"
                         id={labelId}
@@ -192,16 +211,18 @@ export default function TableComponent({ rows }) {
                         onClick={(event) => event.stopPropagation()}
                       >
                         <Button
-                            sx={{
-                              backgroundColor: '#6CB4EE',
-                              color: '#ffffff',
-                              '&:hover': { backgroundColor: '#A8D8F7', color: '#ffffff' },
-                              
-                            }}
-                          >
-                            Scan QR
-                          </Button>
-    
+                          sx={{
+                            backgroundColor: "#6CB4EE",
+                            color: "#ffffff",
+                            "&:hover": {
+                              backgroundColor: "#A8D8F7",
+                              color: "#ffffff",
+                            },
+                          }}
+                          onClick={handleQRDialogOpen}
+                        >
+                          Scan QR
+                        </Button>
                       </TableCell>
                     </TableRow>
                   );
@@ -228,12 +249,16 @@ export default function TableComponent({ rows }) {
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
-
       <ApprovedDialog
         open={open}
         handleClose={handleClose}
         selectedRow={selectedRow}
-      />       
+      />
+      <QRScannerDialog
+        open={isQRDialogOpen}
+        handleClose={handleQRDialogClose}
+        onScanSuccess={handleScanSuccess}
+      />
     </Box>
   );
 }
