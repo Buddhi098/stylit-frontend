@@ -7,34 +7,15 @@ import TabPanel from '@mui/lab/TabPanel';
 import Loadable from '../../../components/Loadable';
 import lazy from 'react';
 
-const NewAccountReqTable = Loadable(React.lazy(() => import('./NewAccountReqTable/NewAccountReqTable')));
+const NewShopReqTable = Loadable(React.lazy(() => import('./new-shop-request/ShopRequest')));
 
 
 const Shop = () => {
-    const [value, setValue] = React.useState('1');
- 
-   const handleChange = (event, newValue) => {
-     setValue(newValue);
-   };
- 
+   
    return (
-     <Box sx={{ width: '100%', typography: 'body1' }}>
-       <TabContext value={value}>
-         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-           <TabList onChange={handleChange} aria-label="Shop tabs" centered>
-             <Tab label="New Account Requests" value="1" />
-             <Tab label="All Shop Accounts" value="2" />
-             <Tab label="Payment Requests" value="3" />
-             <Tab label="Payments History" value="4" />
-           </TabList>
-         </Box>
-         <TabPanel value="1"><NewAccountReqTable/></TabPanel>
-         <TabPanel value="2">Item Two</TabPanel>
-         <TabPanel value="3">kk</TabPanel>
-         <TabPanel value="4">Tt</TabPanel>
-       </TabContext>
-     </Box>
-   );
+    <NewShopReqTable />
+    );
+    
  };
  
  export default Shop;
