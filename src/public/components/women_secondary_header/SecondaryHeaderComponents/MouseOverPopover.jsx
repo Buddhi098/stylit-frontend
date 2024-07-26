@@ -34,7 +34,7 @@ export default function MouseOverPopover({ label, Component, red }) {
     >
       <Stack direction="row">
         <Box
-          height="70px"
+          height="60px"
           sx={{
             display: "flex",
             justifyContent: "flex-end",
@@ -56,14 +56,13 @@ export default function MouseOverPopover({ label, Component, red }) {
       <Fade in={isHover} timeout={300}>
         <Box
           sx={{
-            width: "100vw",
+            width: "100%",
             zIndex: 1, // Ensure it appears on top
             position: "absolute", // Ensure it appears on top
-            top: "140px", // Adjust positioning if needed
+            top: "143px", // Adjust positioning if needed
             left: "0", // Adjust positioning if needed
             backgroundColor: "white", // Optional: style it to stand out
             border: "1px solid #ccc", // Optional: border styling
-            padding: "10px", // Optional: padding
             marginTop: "5px", // Adjust spacing if needed
             transition: "opacity 0.3s ease", // Optional: additional transition styles
           }}
