@@ -7,9 +7,9 @@ import AdminLayout from '../admin/Admin';
 import { element } from 'prop-types';
 
 
-const Dashboard = Loadable(lazy(()=>import('../admin/pages/dashboard')))
-const Shop = Loadable(lazy(()=>import('../admin/pages/Shop/Shop')))
-
+const Dashboard = Loadable(lazy(()=>import('../admin/pages/dashboard/index')))
+const ShopRequest = Loadable(lazy(()=>import('../admin/pages/Shop/new-shop-request/ShopRequest')))
+const AllShops = Loadable(lazy(()=>import('../admin/pages/Shop/all-shops/AllShops')))
 
 // ==============================|| MAIN ROUTING ||============================== //
 const AdminRoutes = {
@@ -25,9 +25,10 @@ const AdminRoutes = {
       element: <Dashboard/>
     },
     {
-      path: 'shops',
-      element: <Shop/>
+      path: 'shop/new-account-request',
+      element: <ShopRequest/>
     },
+    { path: 'shop/all-shop-accounts', element: <AllShops/> },
 
   ]
 };

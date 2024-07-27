@@ -17,10 +17,11 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CancelIcon from '@mui/icons-material/Cancel';
 import { visuallyHidden } from "@mui/utils";
-import { headCellsPendingRequests, headCellsRejectedDeliveries, rejectedDeliveries } from "./TableConfig";
-import PendingShopDialog from "./PendingShopDialog";
+import { headCellsAllShops, shopData } from "./TableConfig";
+import ShopDetailsDialog from "./ShopDetailsDialog";
 import RejectedShopDialog from "./RejectedShopDialog";
 import ViewLocation from "./ViewLocation";
+import { set } from "lodash";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -101,7 +102,7 @@ export default function TableComponent({ rows }) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [openDialog, setOpenDialog] = React.useState(null); // null, "pending", or "reject"
   const [selectedRow, setSelectedRow] = React.useState(null);
-  const [tab, setTab] = React.useState(0);
+  
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -124,7 +125,8 @@ export default function TableComponent({ rows }) {
 
   const handleRowClick = (row) => {
     setSelectedRow(row);
-    setOpenDialog(tab === 0 ? "pending" : "reject");
+    setOpenDialog(true);
+    
   };
 
   const handleCloseDialog = () => {
@@ -132,48 +134,14 @@ export default function TableComponent({ rows }) {
     setSelectedRow(null);
   };
 
-  const handleTabChange = (event, newValue) => {
-    setTab(newValue);
-  };
 
-  const filterRows = () => {
-    if (tab === 0) {
-      return rows;
-    }
-    if (tab === 1) {
-      return rejectedDeliveries; 
-    }
-    return [];
-  };
-
-  const filteredRows = filterRows();
+  const filteredRows = rows;
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - filteredRows.length) : 0;
 
-  const getHeadCells = () => {
-    return tab === 0 ? headCellsPendingRequests : headCellsRejectedDeliveries;
-  };
 
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <Tabs value={tab} onChange={handleTabChange}
-          sx={{
-            "& .MuiTabs-indicator": {
-              backgroundColor: "#C0A888", 
-            },
-            "& .MuiTab-root": {
-              color: "#000",
-            },
-            "& .MuiTab-root.Mui-selected": {
-              color: "#C0A888", 
-            },
-          }}>
-        
-          <Tab label="Pending Requests" />
-          <Tab label="Rejected Requests" />
-        </Tabs>
-
-        {tab === 0 && (
           <>
             <TableContainer>
               <Table
@@ -185,7 +153,7 @@ export default function TableComponent({ rows }) {
                   order={order}
                   orderBy={orderBy}
                   onRequestSort={handleRequestSort}
-                  headCells={getHeadCells()} // Pass headCells dynamically
+                  headCells={headCellsAllShops} // Pass headCells dynamically
                 />
                 <TableBody>
                   {stableSort(filteredRows, getComparator(order, orderBy))
@@ -195,42 +163,14 @@ export default function TableComponent({ rows }) {
 
                       return (
                         <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)}>
-                          {/* <TableCell
-                            component="th"
-                            id={labelId}
-                            scope="row"
-                            padding="none"
-                            align="right"
-                          >
-                            {row.orderId}
-                          </TableCell> */}
                           <TableCell align="right">{row.shopName}</TableCell>
                           <TableCell align="right">{row.shopEmail}</TableCell>
                           <TableCell align="right">{row.shopContactNumber}</TableCell>
                           <TableCell align="right">{row.shopBusinessData.businessType}</TableCell>
                           <TableCell align="center"
                             onClick={(event) => event.stopPropagation()}><ViewLocation/></TableCell>
-                          <TableCell
-                            align="center"
-                            onClick={(event) => event.stopPropagation()}
-                          >
-                            <Button
-                              variant="contained"
-                              color="success"
-                              sx={{ margin: "3px" }}
-                              size="small"
-                            >
-                              Accept
-                            </Button>
-                            <Button
-                              variant="contained"
-                              color="error"
-                              sx={{ margin: "3px" }}
-                              size="small"
-                            >
-                              Reject
-                            </Button>
-                          </TableCell>
+                          <TableCell align="right">{row.shopBankDetails.accountNo}</TableCell>
+                          <TableCell align="right">{row.shopBankDetails.branchName}</TableCell>
                         </TableRow>
                       );
                     })}
@@ -252,85 +192,19 @@ export default function TableComponent({ rows }) {
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </>
-        )}
-
-        {tab === 1 && (
-          <>
-            <TableContainer>
-              <Table
-                sx={{ minWidth: 750 }}
-                aria-labelledby="tableTitle"
-                size={dense ? "small" : "medium"}
-              >
-                <EnhancedTableHead
-                  order={order}
-                  orderBy={orderBy}
-                  onRequestSort={handleRequestSort}
-                  headCells={getHeadCells()} // Pass headCells dynamically
-                />
-                <TableBody>
-                  {stableSort(filteredRows, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                      const labelId = `enhanced-table-checkbox-${index}`;
-
-                      return (
-                        <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)}>
-                          <TableCell align="right">{row.shopName}</TableCell>
-                          <TableCell align="right">{row.shopEmail}</TableCell>
-                          <TableCell align="right">{row.shopContactNumber}</TableCell>
-                          <TableCell align="right">{row.shopBusinessData.businessType}</TableCell>
-                          <TableCell align="center"
-                            onClick={(event) => event.stopPropagation()}><ViewLocation/></TableCell>
-                          <TableCell
-                            align="center"
-                          >
-                            <CancelIcon sx={{ color: "#ff1744" }} />
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={filteredRows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </>
-        )}
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
-
-      {openDialog === "pending" && (
-        console.log(selectedRow),
-        <PendingShopDialog
-          open={openDialog === "pending"}
+      {openDialog && (
+        <ShopDetailsDialog
+          open={openDialog }
           handleClose={handleCloseDialog}
           selectedRow={selectedRow}
         />
       )}
-
-      {openDialog === "reject" && (
-        <RejectedShopDialog
-          open={openDialog === "reject"}
-          handleClose={handleCloseDialog}
-          selectedRow={selectedRow}
-        />
-      )}
+    
     </Box>
   );
 }

@@ -4,37 +4,12 @@ import bearappeal from "../../../assets/images/stores/bearappeal.png"
 
 
 // headCells.js
-export const headCellsAllRequests = [
-    {
-      id: "orderId", // this id should be same as the key of the object in tableData.js
-      numeric: true,
-      disablePadding: true,
-      label: "Order ID",
-    },
-    {
-      id: "storeName",
-      numeric: true,
-      disablePadding: false,
-      label: "Store Name",
-    },
-    {
-      id: "weight",
-      numeric: true,
-      disablePadding: false,
-      label: "Weight (G)",
-    },
-    {
-      id: "deliveryDate",
-      numeric: true,
-      disablePadding: false,
-      label: "Approx. Delivery Date",
-    },
-    {
-      id: "amount",
-      numeric: true,
-      disablePadding: false,
-      label: "Total Amount (Rs.)",
-    },
+export const headCellsPendingRequests = [
+  { id: 'shopName', numeric: true, disablePadding: true, label: 'Shop Name' },
+  { id: 'shopEmail', numeric: true, disablePadding: false, label: 'Email' },
+  { id: 'shopContactNumber', numeric: true, disablePadding: false, label: 'Contact Number' },
+  { id: 'businessType', numeric: true, disablePadding: false, label: 'Business Type' },
+  { id: 'shopLocation', numeric: false, disablePadding: true, label: 'Location',disableSort: true, },
     {
       id: "actions",
       numeric: false,
@@ -45,36 +20,12 @@ export const headCellsAllRequests = [
   ];
 
   export const headCellsRejectedDeliveries = [
-    {
-      id: "orderId", // this id should be same as the key of the object in tableData.js
-      numeric: true,
-      disablePadding: true,
-      label: "Order ID",
-    },
-    {
-      id: "storeName",
-      numeric: true,
-      disablePadding: false,
-      label: "Store Name",
-    },
-    {
-      id: "weight",
-      numeric: true,
-      disablePadding: false,
-      label: "Weight (G)",
-    },
-    {
-      id: "deliveryDate",
-      numeric: true,
-      disablePadding: false,
-      label: "Approx. Delivery Date",
-    },
-    {
-      id: "amount",
-      numeric: true,
-      disablePadding: false,
-      label: "Total Amount (Rs.)",
-    },
+    { id: 'shopName', numeric: true, disablePadding: true, label: 'Shop Name' },
+  { id: 'shopEmail', numeric: true, disablePadding: false, label: 'Email' },
+  { id: 'shopContactNumber', numeric: true, disablePadding: false, label: 'Contact Number' },
+  { id: 'businessType', numeric: true, disablePadding: false, label: 'Business Type' },
+  { id: 'shopLocation', numeric: false, disablePadding: true, label: 'Location',disableSort: true, },
+    
     {
       id: "status",
       numeric: false,
@@ -147,370 +98,354 @@ export const headCellsAllRequests = [
   export const tableData = [
     {
       id: 1,
-      orderId: 132465498,
-      storeName: "Givenchy",
-      deliveryDate: "2024-07-23",
-      amount: 15000,
-      weight: 1500,
-      orderedDate: "2024-07-11",
-      address:"No.113/Peradeniya Road,Kandy",
-      customerName: "Nimal",
-      customerEmail: "nimal@mail.com",
-      customerPhone:"077-2880123",
-      storeImage: givenchy,
-      description:"Internet"
-
+      shopName: "Imogene Griffin",
+      shopEmail: "year3group22@gmail.com",
+      shopContactNumber: "896",
+      password: "123456",
+      confirmPassword: "123456",
+      shopLocation: {
+        addressLine1: "949 West First Parkway",
+        addressLine2: "Qui rerum blanditiis",
+        city: "Ea illum rem sequi",
+        province: "Modi mollit voluptat",
+        postalCode: "1234",
+        latitude: "6.9388614",
+        longitude: "79.8542005"
+      },
+      shopBusinessData: {
+        businessRegNo: "758",
+        businessRegDate: "1986-06-12",
+        businessType: "Deleniti consequuntu",
+        businessEmail: "cokygaje@mailinator.com",
+        businessDocument: "data:application/pdf;base64,JV"
+      },
+      shopInformation: {
+        shopDescription: "Ea sed maxime ex ut",
+        categories: [
+          {
+            title: "Outerwear"
+          }
+        ],
+        facebookLink: "Autem dolor nemo adi",
+        instagramLink: "Consectetur suscipi",
+        logo: "data:image/png;base64,iVBORw0KGgoAAAANSU"
+      }
     },
     {
-      "id": 2,
-      "orderId": 132465499,
-      "storeName": "Givenchy",
-      "deliveryDate": "2024-07-24",
-      "amount": 18000,
-      "weight": 1600,
-      "orderedDate": "2024-07-12",
-      "address": "No.45/Queen Street, Colombo",
-      "customerName": "Ayesha",
-      "customerEmail": "ayesha@mail.com",
-      "customerPhone": "077-1234567",
-      storeImage: givenchy
+      id: 2,
+      shopName: "Colombo Electronics",
+      shopEmail: "colomboelectronics@gmail.com",
+      shopContactNumber: "0779876543",
+      password: "electronics123",
+      confirmPassword: "electronics123",
+      shopLocation: {
+        addressLine1: "789 Galle Road",
+        addressLine2: "Colombo 04",
+        city: "Colombo",
+        province: "Western",
+        postalCode: "00400",
+        latitude: "6.927079",
+        longitude: "79.861244"
+      },
+      shopBusinessData: {
+        businessRegNo: "345678",
+        businessRegDate: "2015-08-20",
+        businessType: "Electronics",
+        businessEmail: "colomboelectronics.business@gmail.com",
+        businessDocument: "data:application/pdf;base64,JV"
+      },
+      shopInformation: {
+        shopDescription: "Leading electronics store in Colombo",
+        categories: [
+          {
+            title: "Electronics"
+          }
+        ],
+        facebookLink: "https://facebook.com/colomboelectronics",
+        instagramLink: "https://instagram.com/colomboelectronics",
+        logo: "data:image/png;base64,iVBORw0KGgoAAAANSU"
+      }
+    },
+    {
+      id: 3,
+      shopName: "Kandy Crafts",
+      shopEmail: "kandycrafts@gmail.com",
+      shopContactNumber: "0771234567",
+      password: "crafts123",
+      confirmPassword: "crafts123",
+      shopLocation: {
+        addressLine1: "456 Temple Road",
+        addressLine2: "Kandy",
+        city: "Kandy",
+        province: "Central",
+        postalCode: "20000",
+        latitude: "7.290572",
+        longitude: "80.633726"
+      },
+      shopBusinessData: {
+        businessRegNo: "789012",
+        businessRegDate: "2010-05-15",
+        businessType: "Handicrafts",
+        businessEmail: "kandycrafts.business@gmail.com",
+        businessDocument: "data:application/pdf;base64,JV"
+      },
+      shopInformation: {
+        shopDescription: "Authentic Sri Lankan handicrafts",
+        categories: [
+          {
+            title: "Handicrafts"
+          }
+        ],
+        facebookLink: "https://facebook.com/kandycrafts",
+        instagramLink: "https://instagram.com/kandycrafts",
+        logo: "data:image/png;base64,iVBORw0KGgoAAAANSU"
+      }
+    },
+    {
+      id: 4,
+      shopName: "Galle Souvenirs",
+      shopEmail: "gallesouvenirs@gmail.com",
+      shopContactNumber: "0776543210",
+      password: "souvenirs123",
+      confirmPassword: "souvenirs123",
+      shopLocation: {
+        addressLine1: "123 Lighthouse Street",
+        addressLine2: "Galle Fort",
+        city: "Galle",
+        province: "Southern",
+        postalCode: "80000",
+        latitude: "6.0328",
+        longitude: "80.217",
+      },
+      shopBusinessData: {
+        businessRegNo: "567890",
+        businessRegDate: "2012-11-30",
+        businessType: "Souvenirs",
+        businessEmail: "gallesouvenirs.business@gmail.com",
+        businessDocument: "data:application/pdf;base64,JV"
+      },
+      shopInformation: {
+        shopDescription: "Unique souvenirs from Galle",
+        categories: [
+          {
+            title: "Souvenirs"
+          }
+        ],
+        facebookLink: "https://facebook.com/gallesouvenirs",
+        instagramLink: "https://instagram.com/gallesouvenirs",
+        logo: "data:image/png;base64,iVBORw0KGgoAAAANSU"
+      }
+    },
+    {
+      id: 5,
+      shopName: "Jaffna Spices",
+      shopEmail: "jaffnaspices@gmail.com",
+      shopContactNumber: "0771122334",
+      password: "spices123",
+      confirmPassword: "spices123",
+      shopLocation: {
+        addressLine1: "789 Market Road",
+        addressLine2: "Jaffna",
+        city: "Jaffna",
+        province: "Northern",
+        postalCode: "40000",
+        latitude: "9.6615",
+        longitude: "80.0255"
+      },
+      shopBusinessData: {
+        businessRegNo: "234567",
+        businessRegDate: "2018-03-25",
+        businessType: "Spices",
+        businessEmail: "jaffnaspices.business@gmail.com",
+        businessDocument: "data:application/pdf;base64,JV"
+      },
+      shopInformation: {
+        shopDescription: "Authentic Jaffna spices",
+        categories: [
+          {
+            title: "Spices"
+          }
+        ],
+        facebookLink: "https://facebook.com/jaffnaspices",
+        instagramLink: "https://instagram.com/jaffnaspices",
+        logo: "data:image/png;base64,iVBORw0KGgoAAAANSU"
+      }
+    },
+    {
+      id: 6,
+      shopName: "Negombo Seafood",
+      shopEmail: "negomboseafood@gmail.com",
+      shopContactNumber: "0779988776",
+      password: "seafood123",
+      confirmPassword: "seafood123",
+      shopLocation: {
+        addressLine1: "456 Beach Road",
+        addressLine2: "Negombo",
+        city: "Negombo",
+        province: "Western",
+        postalCode: "11500",
+        latitude: "7.2083",
+        longitude: "79.8358"
+      },
+      shopBusinessData: {
+        businessRegNo: "678901",
+        businessRegDate: "2016-07-10",
+        businessType: "Seafood",
+        businessEmail: "negomboseafood.business@gmail.com",
+        businessDocument: "data:application/pdf;base64,JV"
+      },
+      shopInformation: {
+        shopDescription: "Fresh seafood from Negombo",
+        categories: [
+          {
+            title: "Seafood"
+          }
+        ],
+        facebookLink: "https://facebook.com/negomboseafood",
+        instagramLink: "https://instagram.com/negomboseafood",
+        logo: "data:image/png;base64,iVBORw0KGgoAAAANSU"
+      }
+    },
+    {
+      id: 7,
+      shopName: "Matara Textiles",
+      shopEmail: "mataratextiles@gmail.com",
+      shopContactNumber: "0773344556",
+      password: "textiles123",
+      confirmPassword: "textiles123",
+      shopLocation: {
+        addressLine1: "123 Textile Street",
+        addressLine2: "Matara",
+        city: "Matara",
+        province: "Southern",
+        postalCode: "81000",
+        latitude: "5.9485",
+        longitude: "80.5353"
+      },
+      shopBusinessData: {
+        businessRegNo: "345678",
+        businessRegDate: "2014-09-05",
+        businessType: "Textiles",
+        businessEmail: "mataratextiles.business@gmail.com",
+        businessDocument: "data:application/pdf;base64,JV"
+      },
+      shopInformation: {
+        shopDescription: "Quality textiles from Matara",
+        categories: [
+          {
+            title: "Textiles"
+          }
+        ],
+        facebookLink: "https://facebook.com/mataratextiles",
+        instagramLink: "https://instagram.com/mataratextiles",
+        logo: "data:image/png;base64,iVBORw0KGgoAAAANSU"
+      }
+    },
+    {
+      id: 8,
+      shopName: "Anuradhapura Antiques",
+      shopEmail: "anuradhapuraantiques@gmail.com",
+      shopContactNumber: "0775566778",
+      password: "antiques123",
+      confirmPassword: "antiques123",
+      shopLocation: {
+        addressLine1: "456 Ancient Road",
+        addressLine2: "Anuradhapura",
+        city: "Anuradhapura",
+        province: "North Central",
+        postalCode: "50000",
+        latitude: "8.3114",
+        longitude: "80.4037"
+      },
+      shopBusinessData: {
+        businessRegNo: "789012",
+        businessRegDate: "2013-12-15",
+        businessType: "Antiques",
+        businessEmail: "anuradhapuraantiques.business@gmail.com",
+        businessDocument: "data:application/pdf;base64,JV"
+      },
+      shopInformation: {
+        shopDescription: "Historical antiques from Anuradhapura",
+        categories: [
+          {
+            title: "Antiques"
+          }
+        ],
+        facebookLink: "https://facebook.com/anuradhapuraantiques",
+        instagramLink: "https://instagram.com/anuradhapuraantiques",
+        logo: "data:image/png;base64,iVBORw0KGgoAAAANSU"
+      }
+    },
+    {
+      id: 9,
+      shopName: "Trincomalee Treasures",
+      shopEmail: "trincomaleetreasures@gmail.com",
+      shopContactNumber: "0776677889",
+      password: "treasures123",
+      confirmPassword: "treasures123",
+      shopLocation: {
+        addressLine1: "789 Beach Road",
+        addressLine2: "Trincomalee",
+        city: "Trincomalee",
+        province: "Eastern",
+        postalCode: "31000",
+        latitude: "8.5874",
+        longitude: "81.2152"
+      },
+      shopBusinessData: {
+        businessRegNo: "890123",
+        businessRegDate: "2017-04-20",
+        businessType: "Jewelry",
+        businessEmail: "trincomaleetreasures.business@gmail.com",
+        businessDocument: "data:application/pdf;base64,JV"
+      },
+      shopInformation: {
+        shopDescription: "Exquisite jewelry from Trincomalee",
+        categories: [
+          {
+            title: "Jewelry"
+          }
+        ],
+        facebookLink: "https://facebook.com/trincomaleetreasures",
+        instagramLink: "https://instagram.com/trincomaleetreasures",
+        logo: "data:image/png;base64,iVBORw0KGgoAAAANSU"
+      }
+    },
+    {
+      id: 10,
+      shopName: "Kandy Crafts",
+    shopEmail: "kandycrafts@gmail.com",
+    shopContactNumber: "0771234567",
+    password: "crafts123",
+    confirmPassword: "crafts123",
+    shopLocation: {
+      addressLine1: "456 Temple Road",
+      addressLine2: "Kandy",
+      city: "Kandy",
+      province: "Central",
+      postalCode: "20000",
+      latitude: "7.290572",
+      longitude: "80.633726"
+    },
+    shopBusinessData: {
+      businessRegNo: "789012",
+      businessRegDate: "2010-05-15",
+      businessType: "Handicrafts",
+      businessEmail: "kandycrafts.business@gmail.com",
+      businessDocument: "data:application/pdf;base64,JV"
+    },
+    shopInformation: {
+      shopDescription: "Authentic Sri Lankan handicrafts",
+      categories: [
+        {
+          title: "Handicrafts"
+        }
+      ],
+      facebookLink: "https://facebook.com/kandycrafts",
+      instagramLink: "https://instagram.com/kandycrafts",
+      logo: "data:image/png;base64,iVBORw0KGgoAAAANSU"
+    }
   },
-  {
-      "id": 3,
-      "orderId": 132465500,
-      "storeName": "Ebony",
-      "deliveryDate": "2024-07-25",
-      "amount": 12000,
-      "weight": 1400,
-      "orderedDate": "2024-07-10",
-      "address": "No.77/Lake View, Kandy",
-      "customerName": "Raj",
-      "customerEmail": "raj@mail.com",
-      "customerPhone": "077-7654321",
-      storeImage: ebony
-  },
-  {
-      "id": 4,
-      "orderId": 132465501,
-      "storeName": "Bear Appeal",
-      "deliveryDate": "2024-07-22",
-      "amount": 9000,
-      "weight": 1200,
-      "orderedDate": "2024-07-11",
-      "address": "No.18/Beach Road, Galle",
-      "customerName": "Maya",
-      "customerEmail": "maya@mail.com",
-      "customerPhone": "077-5432189",
-      storeImage: bearappeal
-  },
-  {
-      "id": 5,
-      "orderId": 132465502,
-      "storeName": "Givenchy",
-      "deliveryDate": "2024-07-30",
-      "amount": 15000,
-      "weight": 1500,
-      "orderedDate": "2024-07-15",
-      "address": "No.34/Market Lane, Jaffna",
-      "customerName": "Kumar",
-      "customerEmail": "kumar@mail.com",
-      "customerPhone": "077-9876543",
-      storeImage: givenchy
-  },
-  {
-      "id": 6,
-      "orderId": 132465503,
-      "storeName": "Ebony",
-      "deliveryDate": "2024-07-29",
-      "amount": 17000,
-      "weight": 1550,
-      "orderedDate": "2024-07-14",
-      "address": "No.99/Temple Road, Negombo",
-      "customerName": "Sita",
-      "customerEmail": "sita@mail.com",
-      "customerPhone": "077-3216549",
-      storeImage: ebony
-  },
-  {
-      "id": 7,
-      "orderId": 132465504,
-      "storeName": "Bear Appeal",
-      "deliveryDate": "2024-07-26",
-      "amount": 8000,
-      "weight": 1100,
-      "orderedDate": "2024-07-15",
-      "address": "No.52/Hill Street, Nuwara Eliya",
-      "customerName": "Anil",
-      "customerEmail": "anil@mail.com",
-      "customerPhone": "077-2345678",
-      storeImage: bearappeal
-  },
-  {
-      "id": 8,
-      "orderId": 132465505,
-      "storeName": "Givenchy",
-      "deliveryDate": "2024-08-01",
-      "amount": 20000,
-      "weight": 1800,
-      "orderedDate": "2024-07-17",
-      "address": "No.5/Station Road, Matara",
-      "customerName": "Dilani",
-      "customerEmail": "dilani@mail.com",
-      "customerPhone": "077-6543210",
-      storeImage: givenchy
-  },
-  {
-      "id": 9,
-      "orderId": 132465506,
-      "storeName": "Ebony",
-      "deliveryDate": "2024-08-02",
-      "amount": 13000,
-      "weight": 450,
-      "orderedDate": "2024-07-18",
-      "address": "No.27/School Lane, Batticaloa",
-      "customerName": "Harsha",
-      "customerEmail": "harsha@mail.com",
-      "customerPhone": "077-4321987",
-      storeImage: ebony
-  },
-  {
-      "id": 10,
-      "orderId": 132465507,
-      "storeName": "Bear Appeal",
-      "deliveryDate": "2024-07-28",
-      "amount": 9500,
-      "weight": 650,
-      "orderedDate": "2024-07-19",
-      "address": "No.89/Church Street, Kegalle",
-      "customerName": "Priya",
-      "customerEmail": "priya@mail.com",
-      "customerPhone": "077-6789101",
-      storeImage: bearappeal
-  },
-  {
-      "id": 11,
-      "orderId": 132465508,
-      "storeName": "Givenchy",
-      "deliveryDate": "2024-08-03",
-      "amount": 25000,
-      "weight": 2000,
-      "orderedDate": "2024-07-20",
-      "address": "No.14/Forest Road, Badulla",
-      "customerName": "Ravi",
-      "customerEmail": "ravi@mail.com",
-      "customerPhone": "077-9876543",
-      storeImage: givenchy
-  },
-  {
-      "id": 12,
-      "orderId": 132465509,
-      "storeName": "Ebony",
-      "deliveryDate": "2024-08-04",
-      "amount": 11000,
-      "weight": 1350,
-      "orderedDate": "2024-07-21",
-      "address": "No.66/Crescent Road, Anuradhapura",
-      "customerName": "Nisha",
-      "customerEmail": "nisha@mail.com",
-      "customerPhone": "077-2345679",
-      storeImage: ebony
-  },
-  {
-      "id": 13,
-      "orderId": 132465510,
-      "storeName": "Bear Appeal",
-      "deliveryDate": "2024-08-05",
-      "amount": 12000,
-      "weight": 1400,
-      "orderedDate": "2024-07-22",
-      "address": "No.33/Old Road, Polonnaruwa",
-      "customerName": "Kavya",
-      "customerEmail": "kavya@mail.com",
-      "customerPhone": "077-4567890",
-      storeImage: bearappeal
-  },
-  {
-      "id": 14,
-      "orderId": 132465511,
-      "storeName": "Givenchy",
-      "deliveryDate": "2024-07-31",
-      "amount": 15000,
-      "weight": 500,
-      "orderedDate": "2024-07-16",
-      "address": "No.20/Greenfield Lane, Trincomalee",
-      "customerName": "Arjun",
-      "customerEmail": "arjun@mail.com",
-      "customerPhone": "077-3456789",
-      storeImage: givenchy
-  },
-  {
-      "id": 15,
-      "orderId": 132465512,
-      "storeName": "Ebony",
-      "deliveryDate": "2024-08-06",
-      "amount": 12500,
-      "weight": 1500,
-      "orderedDate": "2024-07-23",
-      "address": "No.11/Seaview Road, Colombo",
-      "customerName": "Suresh",
-      "customerEmail": "suresh@mail.com",
-      "customerPhone": "077-8765432",
-      storeImage: ebony
-  },
-  {
-      "id": 16,
-      "orderId": 132465513,
-      "storeName": "Bear Appeal",
-      "deliveryDate": "2024-08-07",
-      "amount": 10500,
-      "weight": 1100,
-      "orderedDate": "2024-07-24",
-      "address": "No.29/City Center, Galle",
-      "customerName": "Vani",
-      "customerEmail": "vani@mail.com",
-      "customerPhone": "077-2346789",
-      storeImage: bearappeal
-  },
-  {
-      "id": 17,
-      "orderId": 132465514,
-      "storeName": "Givenchy",
-      "deliveryDate": "2024-08-08",
-      "amount": 20000,
-      "weight": 2000,
-      "orderedDate": "2024-07-25",
-      "address": "No.13/Market Street, Kurunegala",
-      "customerName": "Chandani",
-      "customerEmail": "chandani@mail.com",
-      "customerPhone": "077-3219876",
-      storeImage: givenchy
-  },
-  {
-      "id": 18,
-      "orderId": 132465515,
-      "storeName": "Ebony",
-      "deliveryDate": "2024-08-09",
-      "amount": 17000,
-      "weight": 750,
-      "orderedDate": "2024-07-26",
-      "address": "No.42/Temple Road, Kandy",
-      "customerName": "Vikram",
-      "customerEmail": "vikram@mail.com",
-      "customerPhone": "077-5678910",
-      storeImage: ebony
-  },
-  {
-      "id": 19,
-      "orderId": 132465516,
-      "storeName": "Bear Appeal",
-      "deliveryDate": "2024-08-10",
-      "amount": 9000,
-      "weight": 200,
-      "orderedDate": "2024-07-27",
-      "address": "No.19/Sunset Boulevard, Jaffna",
-      "customerName": "Priyantha",
-      "customerEmail": "priyantha@mail.com",
-      "customerPhone": "077-6781234",
-      storeImage: bearappeal
-  },
-  {
-      "id": 20,
-      "orderId": 132465517,
-      "storeName": "Givenchy",
-      "deliveryDate": "2024-08-11",
-      "amount": 21000,
-      "weight": 950,
-      "orderedDate": "2024-07-28",
-      "address": "No.55/Colombo Road, Ratnapura",
-      "customerName": "Keshan",
-      "customerEmail": "keshan@mail.com",
-      "customerPhone": "077-7890123",
-      storeImage: givenchy
-  },
-  {
-      "id": 21,
-      "orderId": 132465518,
-      "storeName": "Ebony",
-      "deliveryDate": "2024-08-12",
-      "amount": 14000,
-      "weight": 450,
-      "orderedDate": "2024-07-29",
-      "address": "No.74/Sea View, Hikkaduwa",
-      "customerName": "Sumaya",
-      "customerEmail": "sumaya@mail.com",
-      "customerPhone": "077-8901234",
-      storeImage: ebony
-  },
-  {
-      "id": 22,
-      "orderId": 132465519,
-      "storeName": "Bear Appeal",
-      "deliveryDate": "2024-08-13",
-      "amount": 9500,
-      "weight": 1300,
-      "orderedDate": "2024-07-30",
-      "address": "No.10/Flower Road, Colombo",
-      "customerName": "Nadya",
-      "customerEmail": "nadya@mail.com",
-      "customerPhone": "077-9012345",
-      storeImage: bearappeal
-  },
-  {
-      "id": 23,
-      "orderId": 132465520,
-      "storeName": "Givenchy",
-      "deliveryDate": "2024-08-14",
-      "amount": 26000,
-      "weight": 200,
-      "orderedDate": "2024-07-31",
-      "address": "No.7/River Road, Colombo",
-      "customerName": "Saman",
-      "customerEmail": "saman@mail.com",
-      "customerPhone": "077-4325678",
-      storeImage: givenchy
-  },
-  {
-      "id": 24,
-      "orderId": 132465521,
-      "storeName": "Ebony",
-      "deliveryDate": "2024-08-15",
-      "amount": 17500,
-      "weight": 1500,
-      "orderedDate": "2024-08-01",
-      "address": "No.88/Port Road, Trincomalee",
-      "customerName": "Devika",
-      "customerEmail": "devika@mail.com",
-      "customerPhone": "077-6540987",
-      storeImage: ebony
-  },
-  {
-      "id": 25,
-      "orderId": 132465522,
-      "storeName": "Bear Appeal",
-      "deliveryDate": "2024-08-16",
-      "amount": 8800,
-      "weight": 1150,
-      "orderedDate": "2024-08-02",
-      "address": "No.16/Garden Lane, Nuwara Eliya",
-      "customerName": "Kavitha",
-      "customerEmail": "kavitha@mail.com",
-      "customerPhone": "077-4321098",
-      storeImage: bearappeal
-  },
-  {
-      "id": 26,
-      "orderId": 132465523,
-      "storeName": "Givenchy",
-      "deliveryDate": "2024-08-17",
-      "amount": 30000,
-      "weight": 2500,
-      "orderedDate": "2024-08-03",
-      "address": "No.90/Highway Road, Kandy",
-      "customerName": "Aruni",
-      "customerEmail": "aruni@mail.com",
-      "customerPhone": "077-0123456",
-      storeImage: givenchy
-  }
     
   ];
 
@@ -518,74 +453,213 @@ export const headCellsAllRequests = [
   export const rejectedDeliveries = [
     {
       id: 1,
-      orderId: 132463498,
-      storeName: "Givenchy",
-      deliveryDate: "2024-07-23",
-      amount: 15000,
-      weight: 1500,
-      orderedDate: "2024-07-11",
-      address:"No.113/Peradeniya Road,Kandy",
-      customerName: "Nimal",
-      customerEmail: "nimal@mail.com",
-      customerPhone:"077-2880123",
-      storeImage: givenchy,
-
+      shopName: "Colombo Couture",
+      shopEmail: "colombocouture@gmail.com",
+      shopContactNumber: "0771112233",
+      password: "couture123",
+      confirmPassword: "couture123",
+      shopLocation: {
+        addressLine1: "123 Galle Road",
+        addressLine2: "Colombo 03",
+        city: "Colombo",
+        province: "Western",
+        postalCode: "00300",
+        latitude: "6.927079",
+        longitude: "79.861244"
+      },
+      shopBusinessData: {
+        businessRegNo: "123456",
+        businessRegDate: "2012-01-10",
+        businessType: "Clothing",
+        businessEmail: "colombocouture.business@gmail.com",
+        businessDocument: "data:application/pdf;base64,JV"
+      },
+      shopInformation: {
+        shopDescription: "High-end fashion boutique in Colombo",
+        categories: [
+          {
+            title: "Clothing"
+          }
+        ],
+        facebookLink: "https://facebook.com/colombocouture",
+        instagramLink: "https://instagram.com/colombocouture",
+        logo: "data:image/png;base64,iVBORw0KGgoAAAANSU"
+      }
     },
     {
-      "id": 2,
-      "orderId": 132464499,
-      "storeName": "Givenchy",
-      "deliveryDate": "2024-07-24",
-      "amount": 18000,
-      "weight": 1600,
-      "orderedDate": "2024-07-12",
-      "address": "No.45/Queen Street, Colombo",
-      "customerName": "Ayesha",
-      "customerEmail": "ayesha@mail.com",
-      "customerPhone": "077-1234567",
-      storeImage: givenchy
-  },
-  {
-      "id": 3,
-      "orderId": 132464500,
-      "storeName": "Ebony",
-      "deliveryDate": "2024-07-25",
-      "amount": 12000,
-      "weight": 1400,
-      "orderedDate": "2024-07-10",
-      "address": "No.77/Lake View, Kandy",
-      "customerName": "Raj",
-      "customerEmail": "raj@mail.com",
-      "customerPhone": "077-7654321",
-      storeImage: ebony
-  },
-  {
-      "id": 4,
-      "orderId": 132462501,
-      "storeName": "Bear Appeal",
-      "deliveryDate": "2024-07-22",
-      "amount": 9000,
-      "weight": 1200,
-      "orderedDate": "2024-07-11",
-      "address": "No.18/Beach Road, Galle",
-      "customerName": "Maya",
-      "customerEmail": "maya@mail.com",
-      "customerPhone": "077-5432189",
-      storeImage: bearappeal
-  },
-  {
-      "id": 5,
-      "orderId": 132464502,
-      "storeName": "Givenchy",
-      "deliveryDate": "2024-07-30",
-      "amount": 15000,
-      "weight": 1500,
-      "orderedDate": "2024-07-15",
-      "address": "No.34/Market Lane, Jaffna",
-      "customerName": "Kumar",
-      "customerEmail": "kumar@mail.com",
-      "customerPhone": "077-9876543",
-      storeImage: givenchy
-  },
+      id: 2,
+      shopName: "Kandy Kouture",
+      shopEmail: "kandykouture@gmail.com",
+      shopContactNumber: "0772223344",
+      password: "kouture123",
+      confirmPassword: "kouture123",
+      shopLocation: {
+        addressLine1: "456 Temple Road",
+        addressLine2: "Kandy",
+        city: "Kandy",
+        province: "Central",
+        postalCode: "20000",
+        latitude: "7.290572",
+        longitude: "80.633726"
+      },
+      shopBusinessData: {
+        businessRegNo: "789012",
+        businessRegDate: "2010-05-15",
+        businessType: "Clothing",
+        businessEmail: "kandykouture.business@gmail.com",
+        businessDocument: "data:application/pdf;base64,JV"
+      },
+      shopInformation: {
+        shopDescription: "Authentic Sri Lankan clothing in Kandy",
+        categories: [
+          {
+            title: "Clothing"
+          }
+        ],
+        facebookLink: "https://facebook.com/kandykouture",
+        instagramLink: "https://instagram.com/kandykouture",
+        logo: "data:image/png;base64,iVBORw0KGgoAAAANSU"
+      }
+    },
+    {
+      id: 3,
+      shopName: "Galle Garments",
+      shopEmail: "gallegarments@gmail.com",
+      shopContactNumber: "0773334455",
+      password: "garments123",
+      confirmPassword: "garments123",
+      shopLocation: {
+        addressLine1: "789 Lighthouse Street",
+        addressLine2: "Galle Fort",
+        city: "Galle",
+        province: "Southern",
+        postalCode: "80000",
+        latitude: "6.0328",
+        longitude: "80.217",
+      },
+      shopBusinessData: {
+        businessRegNo: "345678",
+        businessRegDate: "2015-08-20",
+        businessType: "Clothing",
+        businessEmail: "gallegarments.business@gmail.com",
+        businessDocument: "data:application/pdf;base64,JV"
+      },
+      shopInformation: {
+        shopDescription: "Traditional and modern clothing in Galle",
+        categories: [
+          {
+            title: "Clothing"
+          }
+        ],
+        facebookLink: "https://facebook.com/gallegarments",
+        instagramLink: "https://instagram.com/gallegarments",
+        logo: "data:image/png;base64,iVBORw0KGgoAAAANSU"
+      }
+    },
+    {
+      id: 4,
+      shopName: "Jaffna Jumpsuits",
+      shopEmail: "jaffnajumpsuits@gmail.com",
+      shopContactNumber: "0774445566",
+      password: "jumpsuits123",
+      confirmPassword: "jumpsuits123",
+      shopLocation: {
+        addressLine1: "101 Main Street",
+        addressLine2: "Jaffna",
+        city: "Jaffna",
+        province: "Northern",
+        postalCode: "40000",
+        latitude: "9.6615",
+        longitude: "80.0255"
+      },
+      shopBusinessData: {
+        businessRegNo: "901234",
+        businessRegDate: "2018-03-25",
+        businessType: "Clothing",
+        businessEmail: "jaffnajumpsuits.business@gmail.com",
+        businessDocument: "data:application/pdf;base64,JV"
+      },
+      shopInformation: {
+        shopDescription: "Trendy jumpsuits and more in Jaffna",
+        categories: [
+          {
+            title: "Clothing"
+          }
+        ],
+        facebookLink: "https://facebook.com/jaffnajumpsuits",
+        instagramLink: "https://instagram.com/jaffnajumpsuits",
+        logo: "data:image/png;base64,iVBORw0KGgoAAAANSU"
+      }
+    },
+    {
+      id: 5,
+      shopName: "Negombo Niche",
+      shopEmail: "negomboniche@gmail.com",
+      shopContactNumber: "0775556677",
+      password: "niche123",
+      confirmPassword: "niche123",
+      shopLocation: {
+        addressLine1: "202 Beach Road",
+        addressLine2: "Negombo",
+        city: "Negombo",
+        province: "Western",
+        postalCode: "11500",
+        latitude: "7.2083",
+        longitude: "79.8358"
+      },
+      shopBusinessData: {
+        businessRegNo: "567890",
+        businessRegDate: "2016-11-05",
+        businessType: "Clothing",
+        businessEmail: "negomboniche.business@gmail.com",
+        businessDocument: "data:application/pdf;base64,JV"
+      },
+      shopInformation: {
+        shopDescription: "Exclusive beachwear and more in Negombo",
+        categories: [
+          {
+            title: "Clothing"
+          }
+        ],
+        facebookLink: "https://facebook.com/negomboniche",
+        instagramLink: "https://instagram.com/negomboniche",
+        logo: "data:image/png;base64,iVBORw0KGgoAAAANSU"
+      }
+    },
+    {
+      id: 6,
+      shopName: "Matara Moda",
+      shopEmail: "mataramoda@gmail.com",
+      shopContactNumber: "0776667788",
+      password: "moda123",
+      confirmPassword: "moda123",
+      shopLocation: {
+        addressLine1: "303 Main Street",
+        addressLine2: "Matara",
+        city: "Matara",
+        province: "Southern",
+        postalCode: "81000",
+        latitude: "5.9485",
+        longitude: "80.5353"
+      },
+      shopBusinessData: {
+        businessRegNo: "678901",
+        businessRegDate: "2017-07-15",
+        businessType: "Clothing",
+        businessEmail: "mataramoda.business@gmail.com",
+        businessDocument: "data:application/pdf;base64,JV"
+      },
+      shopInformation: {
+        shopDescription: "Fashionable clothing for all in Matara",
+        categories: [
+          {
+            title: "Clothing"
+          }
+        ],
+        facebookLink: "https://facebook.com/mataramoda",
+        instagramLink: "https://instagram.com/mataramoda",
+        logo: "data:image/png;base64,iVBORw0KGgoAAAANSU"
+      }
+    }
   ];
     

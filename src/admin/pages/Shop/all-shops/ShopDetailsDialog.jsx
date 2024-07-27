@@ -17,6 +17,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import BusinessIcon from '@mui/icons-material/Business';
 import DescriptionIcon from '@mui/icons-material/Description';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import L from "leaflet";
@@ -25,7 +26,6 @@ import Link from '@mui/material/Link';
 import Chip from '@mui/material/Chip';
 
 const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
-  console.log( "shop: ", selectedRow);
   const selectedShop = selectedRow;
 
   const markerIcon = new L.Icon({
@@ -39,22 +39,20 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
   });
 
   const LocationMarker = () => {
-
     return position === null ? null : (
       <Marker position={position} icon={markerIcon}>
         <Typography variant="body2">Store Location</Typography>
       </Marker>
     );
   };
-  const position = [selectedRow.shopLocation.latitude , selectedRow.shopLocation.longitude];
 
+  const position = [selectedRow.shopLocation.latitude, selectedRow.shopLocation.longitude];
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogTitle sx={{ backgroundColor: '#C0A888' }}>
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" alignItems="center">
-            
             {selectedShop && (
               <>
                 <img
@@ -70,11 +68,6 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
                 <Typography variant="h6" component="span" ml={2} style={{ textTransform: 'uppercase', fontWeight: 'bold', color: 'white' }}>
                   {selectedShop.shopName}
                 </Typography>
-                {/* <Chip label="Rejected" color="error" sx={{textTransform: 'uppercase',
-                fontWeight: 'bold',
-                fontSize:'0.7rem',
-                height:"26px",
-                ml: 4}}/> */}
               </>
             )}
           </Box>
@@ -103,7 +96,7 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
             </Box>
             {selectedShop && (
               <>
-              <Grid container spacing={1} ml={3} mt={0.25}>
+                <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Shop Name</strong></Typography></Grid>
                   <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopName}</Typography></Grid>
                 </Grid>
@@ -134,21 +127,19 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
               <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Shop Location</Typography>
             </Box>
             {selectedShop && (
-              <>
-                <Stack>
-          <MapContainer
-          center={position}
-          zoom={13}
-          style={{ height: "50vh", marginTop: "20px" }}
-        >
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
-          <LocationMarker />
-        </MapContainer>
-          </Stack>
-              </>
+              <Stack>
+                <MapContainer
+                  center={position}
+                  zoom={13}
+                  style={{ height: "50vh", marginTop: "20px" }}
+                >
+                  <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  />
+                  <LocationMarker />
+                </MapContainer>
+              </Stack>
             )}
           </Box>
           <Box>
@@ -215,64 +206,68 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
                   </Typography></Grid>
                 </Grid>
                 <Grid container spacing={1} ml={3} mt={0.25}>
-              <Grid item xs={4}>
-                <Typography variant="body2" component="span">
-                  <strong>Facebook</strong>
-                </Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <Link
-                  href={selectedShop.shopInformation.facebookLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{ textAlign: 'right', color: 'black' }}
-                >
-                  {selectedShop.shopInformation.facebookLink}
-                </Link>
-              </Grid>
-            </Grid>
-            <Grid container spacing={1} ml={3} mt={0.25}>
-              <Grid item xs={4}>
-                <Typography variant="body2" component="span">
-                  <strong>Instagram</strong>
-                </Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <Link
-                  href={selectedShop.shopInformation.instagramLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{ textAlign: 'right', color: 'black' }}
-                >
-                  {selectedShop.shopInformation.instagramLink}
-                </Link>
-              </Grid>
-            </Grid>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Facebook</strong></Typography></Grid>
+                  <Grid item xs={8}>
+                    <Link
+                      href={selectedShop.shopInformation.facebookLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{ textAlign: 'right', color: 'black' }}
+                    >
+                      {selectedShop.shopInformation.facebookLink}
+                    </Link>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Instagram</strong></Typography></Grid>
+                  <Grid item xs={8}>
+                    <Link
+                      href={selectedShop.shopInformation.instagramLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{ textAlign: 'right', color: 'black' }}
+                    >
+                      {selectedShop.shopInformation.instagramLink}
+                    </Link>
+                  </Grid>
+                </Grid>
+              </>
+            )}
+          </Box>
+          <Box mt={2}>
+            <Box display="flex" alignItems="center">
+              <Box sx={{
+                width: "35px",
+                height: "35px",
+                borderRadius: "50%",
+                backgroundColor: "#D9D9D9",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}>
+                <AccountBalanceIcon fontSize="small" sx={{ color: "black" }} />
+              </Box>
+              <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Bank Details</Typography>
+            </Box>
+            {selectedShop && (
+              <>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Bank Name</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopBankDetails.bankName}</Typography></Grid>
+                </Grid>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Account Number</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopBankDetails.accountNo}</Typography></Grid>
+                </Grid>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Branch</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopBankDetails.branchName}</Typography></Grid>
+                </Grid>
               </>
             )}
           </Box>
         </Box>
       </DialogContent>
-      <DialogActions>
-      <Button
-                              variant="contained"
-                              color="success"
-                              sx={{ margin: "3px" }}
-                              size="small"
-                              onClick={handleClose}
-      >
-                              Accept
-                            </Button>
-                            <Button
-                              variant="contained"
-                              color="error"
-                              sx={{ margin: "3px" }}
-                              size="small"
-                              onClick={handleClose}
-                            >
-                              Reject
-                            </Button>
-      </DialogActions>
     </Dialog>
   );
 };

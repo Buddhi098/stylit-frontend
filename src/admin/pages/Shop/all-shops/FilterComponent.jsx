@@ -124,10 +124,10 @@ const FilterComponent = ({
             }}
           >
             <Typography variant="h4" ml="2px">
-              Shop Requests
+              All Shops
             </Typography>
             <Typography variant="h6" ml="2px" color="#8E8B8B">
-              Accept/Reject the Shop requets
+            View full details of all shops
             </Typography>
           </Box>
         </Grid>

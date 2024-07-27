@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TableComponent from "./TableComponent";
 import FilterComponent from "./FilterComponent";
 import { Stack } from "@mui/material";
-import { filterOptions, tableData, headCellsPendingRequests, headCellsRejectedDeliveries, rejectedDeliveries } from "./TableConfig";
+import { filterOptions, shopData, headCellsAllShops } from "./TableConfig";
 
 const DataTable = () => {
   const [search, setSearch] = useState("");
@@ -13,8 +13,8 @@ const DataTable = () => {
   const [checked, setChecked] = useState(false);
   const [tab, setTab] = useState(0);
 
-  const getHeadCells = () => tab === 0 ? headCellsPendingRequests : headCellsRejectedDeliveries;
-  const getData = () => tab === 0 ? tableData : rejectedDeliveries;
+  const getHeadCells = () => headCellsAllShops;
+  const getData = () => shopData;
 
   const columnIdArray = getHeadCells().map((column) => column.id);
 
