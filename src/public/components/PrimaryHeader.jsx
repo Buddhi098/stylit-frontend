@@ -67,7 +67,7 @@ const PrimaryHeader = ({ topHeaderColor }) => {
               Men
             </Typography>
           </Link>
-          <Link to="#">
+          <Link to="/public/fashion_store">
             <Typography
               variant="body2_nunito"
               sx={{

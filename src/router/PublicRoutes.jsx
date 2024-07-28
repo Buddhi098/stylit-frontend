@@ -18,6 +18,7 @@ const CourierLoginPage = Loadable(lazy(() => import('../public/pages/courier_log
 const Men = Loadable(lazy(()=> import('../public/pages/men_page/MenPage')));
 const ShopLoginPage = Loadable(lazy(()=> import('../public/pages/shop_login_page/ShopLoginPage')));
 const SearchPage = Loadable(lazy(()=>import('../public/pages/search_box_page/SearchBoxPage')));
+const FashionStorePage = Loadable(lazy(()=>import('../public/pages/fashion_store_page/FashionStorePage')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 export const BaseRoute={
@@ -71,6 +72,10 @@ const PublicRoutes = {
     {
       path:'search',
       element:<SearchPage/>
+    },
+    {
+      path:'fashion_store',
+      element:<FashionStorePage/>
     },
     {
       path: '*',
