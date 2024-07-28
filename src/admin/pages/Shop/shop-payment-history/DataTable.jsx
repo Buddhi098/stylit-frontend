@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TableComponent from "./TableComponent";
 import FilterComponent from "./FilterComponent";
 import { Stack } from "@mui/material";
-import { filterOptions, shopPaymentReqData, headCellsShopPaymentReq } from "./TableConfig";
+import { filterOptions, AcceptedPayments, headCellsAcceptedPayments, headCellsRejectedPayments, RejectedPayments } from "./TableConfig";
 
 const DataTable = () => {
   const [search, setSearch] = useState("");
@@ -13,8 +13,8 @@ const DataTable = () => {
   const [checked, setChecked] = useState(false);
   const [tab, setTab] = useState(0);
 
-  const getHeadCells = () => headCellsShopPaymentReq;
-  const getData = () => shopPaymentReqData;
+  const getHeadCells = () => tab === 0 ? headCellsAcceptedPayments : headCellsRejectedPayments;
+  const getData = () => tab === 0 ? AcceptedPayments : RejectedPayments;
 
   const columnIdArray = getHeadCells().map((column) => column.id);
 
@@ -42,7 +42,7 @@ const DataTable = () => {
         if (filter === "Requested <= Withdrawable") return value <= row.withdrawableAmount;
       }
 
-      if (filterIdArray[index] === "requestedDate") {
+      if (filterIdArray[index] === "requiredDate") {
         const currentDate = new Date();
 
         if (filter === "Before Today") return new Date(value) < currentDate;

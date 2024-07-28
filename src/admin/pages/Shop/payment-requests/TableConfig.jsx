@@ -11,7 +11,7 @@ export const headCellsShopPaymentReq = [
   { id: 'contactNumber', numeric: true, disablePadding: false, label: 'Contact No.' },
   { id: 'requestedAmount', numeric: true, disablePadding: false, label: 'Requested (Rs.)' },
   { id: 'withdrawableAmount', numeric: true, disablePadding: false, label: 'Withdrawable (Rs.)' },
-  { id: 'requestedDate', numeric: true, disablePadding: false, label: 'Requested Date' },
+  { id: 'requestedDate', numeric: true, disablePadding: false, label: 'Required Date' },
   { id: 'actions', numeric: false, disablePadding: false, label: 'Actions', disableSort: true },
 ];
   
