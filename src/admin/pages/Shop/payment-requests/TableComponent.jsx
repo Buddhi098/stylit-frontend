@@ -17,10 +17,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CancelIcon from '@mui/icons-material/Cancel';
 import { visuallyHidden } from "@mui/utils";
-import { headCellsAllShops, shopData } from "./TableConfig";
-import ShopDetailsDialog from "./ShopDetailsDialog";
-import ViewLocation from "./ViewLocation";
-import { set } from "lodash";
+import { headCellsShopPaymentReq, shopPaymentReqData } from "./TableConfig";
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -152,7 +151,7 @@ export default function TableComponent({ rows }) {
                   order={order}
                   orderBy={orderBy}
                   onRequestSort={handleRequestSort}
-                  headCells={headCellsAllShops} // Pass headCells dynamically
+                  headCells={headCellsShopPaymentReq} // Pass headCells dynamically
                 />
                 <TableBody>
                   {stableSort(filteredRows, getComparator(order, orderBy))
@@ -161,15 +160,23 @@ export default function TableComponent({ rows }) {
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
-                        <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)}>
+                        <TableRow hover tabIndex={-1} key={row.id} >
+                          <TableCell align="right">{row.paymentId}</TableCell>
                           <TableCell align="right">{row.shopName}</TableCell>
-                          <TableCell align="right">{row.shopEmail}</TableCell>
-                          <TableCell align="right">{row.shopContactNumber}</TableCell>
-                          <TableCell align="right">{row.shopBusinessData.businessType}</TableCell>
-                          <TableCell align="center"
-                            onClick={(event) => event.stopPropagation()}><ViewLocation/></TableCell>
-                          <TableCell align="right">{row.shopBankDetails.accountNo}</TableCell>
-                          <TableCell align="right">{row.shopBankDetails.branchName}</TableCell>
+                          <TableCell align="right">{row.email}</TableCell>
+                          <TableCell align="right">{row.contactNumber}</TableCell>
+                          <TableCell align="right">{row.requestedAmount}</TableCell>
+                          <TableCell align="right">{row.withdrawableAmount}</TableCell>
+                          <TableCell align="right">{row.requestedDate}</TableCell>
+                          <TableCell align="center" onClick={(event) => event.stopPropagation()}>
+                          <Button variant="contained" color="success" sx={{ margin: "3px" }} size="small" startIcon={<CheckIcon />}>
+                            Accept
+                          </Button>
+                          <Button variant="contained" color="error" sx={{ margin: "3px" }} size="small" startIcon={<CloseIcon />}>
+                            Reject
+                          </Button>
+                        </TableCell>
+                          
                         </TableRow>
                       );
                     })}
@@ -196,13 +203,7 @@ export default function TableComponent({ rows }) {
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
-      {openDialog && (
-        <ShopDetailsDialog
-          open={openDialog }
-          handleClose={handleCloseDialog}
-          selectedRow={selectedRow}
-        />
-      )}
+    
     
     </Box>
   );

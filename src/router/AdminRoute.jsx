@@ -10,6 +10,7 @@ import { element } from 'prop-types';
 const Dashboard = Loadable(lazy(()=>import('../admin/pages/dashboard/index')))
 const ShopRequest = Loadable(lazy(()=>import('../admin/pages/Shop/new-shop-request/ShopRequest')))
 const AllShops = Loadable(lazy(()=>import('../admin/pages/Shop/all-shops/AllShops')))
+const ShopPaymentRequests = Loadable(lazy(()=>import('../admin/pages/Shop/payment-requests/PaymentRequests')))
 
 // ==============================|| MAIN ROUTING ||============================== //
 const AdminRoutes = {
@@ -29,6 +30,7 @@ const AdminRoutes = {
       element: <ShopRequest/>
     },
     { path: 'shop/all-shop-accounts', element: <AllShops/> },
+    { path: 'shop/payment-requests', element: <ShopPaymentRequests/> }
 
   ]
 };

@@ -17,7 +17,8 @@ import AddchartOutlinedIcon from "@mui/icons-material/AddchartOutlined";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { filterOptions,rejectedDeliveries } from "./TableConfig";
 import { filter } from "lodash";
-import StoreIcon from "@mui/icons-material/Store";
+import PaymentIcon from "@mui/icons-material/Payment";
+
 
 const FilterComponent = ({
   search,
@@ -112,7 +113,7 @@ const FilterComponent = ({
               alignItems: "center",
             }}
           >
-            <StoreIcon sx={{ color: "white" }} />
+            <PaymentIcon sx={{ color: "white" }} />
           </Box>
 
           <Box
@@ -125,10 +126,10 @@ const FilterComponent = ({
             }}
           >
             <Typography variant="h4" ml="2px">
-              All Shops
+              Shop Payment Requests
             </Typography>
             <Typography variant="h6" ml="2px" color="#8E8B8B">
-            View full details of all shops
+              Manage shop payment requests
             </Typography>
           </Box>
         </Grid>
@@ -151,7 +152,7 @@ const FilterComponent = ({
         </Grid>
       </Grid>
 
-      {/* <Grid
+      <Grid
         container
         spacing={2}
         alignItems="center"
@@ -161,9 +162,9 @@ const FilterComponent = ({
           alignItems: "flex-end",
           justifyContent: "flex-start",
         }}
-      > */}
+      >
         {/* Filter boxes */}
-        {/* {filterOptions.map((filterOption, index) => (
+        {filterOptions.map((filterOption, index) => (
 
           <Grid
             key={index}
@@ -199,10 +200,10 @@ const FilterComponent = ({
               </Select>
             </FormControl>
           </Grid>
-        ))} */}
+        ))}
 
         {/* filter button */}
-        {/* <Grid item md={2}>
+        <Grid item md={2}>
           <ToggleButton
             value="check"
             selected={checked}
@@ -238,8 +239,8 @@ const FilterComponent = ({
           }}
         >
           
-        </Grid> */}
-      {/* </Grid> */}
+        </Grid>
+      </Grid>
     </Box>
   );
 };
