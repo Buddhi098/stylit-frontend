@@ -57,9 +57,11 @@ const Section1 = () => {
           sx={{
             mt: 2,
             backgroundColor: "white",
+            borderRadius: 0,
             color: "black",
             "&:hover": {
-              backgroundColor: "lightgrey",
+              background:"#000000",
+              color:"#ffffff"
             },
           }}
         >
