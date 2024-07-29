@@ -8,46 +8,24 @@ import AutorenewIcon from '@mui/icons-material/Autorenew';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff'; // Relevant icon for Out of Stock
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import ExpectedEarningsCard from './ExpectedEarningsCard';
 import StockLevelChart from './StockLevel';
 import ProductAnalytics from './ProductAnalytics';
 import PopularBrands from './PopularBrands';
 
-const AnalyticEcommerce = ({ icon, title, count, bgColor, iconColor, borderColor }) => {
+const AnalyticEcommerce = ({ icon, title, count }) => {
   return (
-    <Card sx={{ 
-      height: '100px', 
-      display: 'flex', 
-      alignItems: 'center', 
-      borderRadius: '12px', 
-      bgcolor: bgColor || 'rgba(250, 250, 250, 0.8)', 
-      color: '#333', 
-      border: `1px solid ${borderColor || '#ddd'}` 
-    }}>
-      <CardContent sx={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        width: '100%', 
-        padding: '16px !important' 
-      }}>
-        <Box sx={{ 
-          bgcolor: iconColor || '#FFF', 
-          borderRadius: '50%', 
-          width: 50, 
-          height: 50, 
-          display: 'flex', 
-          justifyContent: 'center', 
-          alignItems: 'center', 
-          marginRight: 2 
-        }}>
+    <Card sx={{ height: '100px', display: 'flex', alignItems: 'center', borderRadius: '12px', boxShadow: 1, bgcolor: '#FAFAFA' }}>
+      <CardContent sx={{ display: 'flex', alignItems: 'center', width: '100%', padding: '16px !important' }}>
+        <Box sx={{ bgcolor: '#FFF', borderRadius: '50%', width: 50, height: 50, display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: 2 }}>
           {icon}
         </Box>
         <Box>
-          <Typography variant="h6" component="div" sx={{ fontSize: '1.25rem', fontWeight: 600 }}>
+          <Typography variant="h6" component="div" sx={{ fontSize: '1.25rem', fontWeight: 600, color: '#333' }}>
             {count}
           </Typography>
-          <Typography variant="body2" color="inherit" sx={{ fontSize: '0.775rem' }}>
+          <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.775rem' }}>
             {title}
           </Typography>
         </Box>
@@ -73,17 +51,13 @@ export default function ProductCards() {
               icon={<InventoryIcon sx={{ fontSize: 30, color: '#1976d2' }} />} 
               title="Total Products" 
               count="1.5K" 
-              bgColor="rgba(25, 118, 210, 0.1)"
-              borderColor="#1976d2"
             />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
             <AnalyticEcommerce 
-              icon={<HighlightOffIcon sx={{ fontSize: 30, color: '#e57373' }} />} 
+              icon={<HighlightOffIcon sx={{ fontSize: 30, color: '#ed6c02' }} />} 
               title="Out of Stock" 
               count="100" 
-              bgColor="rgba(229, 115, 115, 0.1)"
-              borderColor="#e57373"
             />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
@@ -91,8 +65,6 @@ export default function ProductCards() {
               icon={<ShoppingBagIcon sx={{ fontSize: 30, color: '#2e7d32' }} />} 
               title="Active Products" 
               count="1.3K" 
-              bgColor="rgba(46, 125, 50, 0.1)"
-              borderColor="#2e7d32"
             />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
@@ -100,8 +72,6 @@ export default function ProductCards() {
               icon={<LocalShippingIcon sx={{ fontSize: 30, color: '#9c27b0' }} />} 
               title="Products Sold" 
               count="500" 
-              bgColor="rgba(156, 39, 176, 0.1)"
-              borderColor="#9c27b0"
             />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
@@ -109,8 +79,6 @@ export default function ProductCards() {
               icon={<AutorenewIcon sx={{ fontSize: 30, color: '#ffb74d' }} />}
               title="Products Returned" 
               count="52" 
-              bgColor="rgba(255, 183, 77, 0.1)"
-              borderColor="#ffb74d"
             />
           </Grid>
         </Grid>
