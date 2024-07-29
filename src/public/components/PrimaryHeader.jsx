@@ -11,6 +11,7 @@ import Logo from "../assets/images/logo/Stylit_logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import ProfileMenu from "./ProfileMenu";
 import "./primaryHeader.css";
+import Cart from "../../registered_shopper/pages/cart/Cart";
 
 const PrimaryHeader = ({ topHeaderColor }) => {
   const navigate = useNavigate()
@@ -135,20 +136,13 @@ const PrimaryHeader = ({ topHeaderColor }) => {
           {/* <ShopperSignUp/> */}
           <ProfileMenu />
 
-          <Link to="#">
+          <Link to="/shopper/favorite">
             {/* <FavoriteBorderOutlinedIcon
                 sx={{ fontSize: "30px", color: "rgba(0, 0, 0, 0.6)" }}
               /> */}
             <span class="material-symbols-outlined topbar-icon1">favorite</span>
           </Link>
-          <Link to="#">
-            {/* <ShoppingBagOutlinedIcon
-                sx={{ fontSize: "30px", color: "rgba(0, 0, 0, 0.6)" }}
-              /> */}
-            <span class="material-symbols-outlined topbar-icon1">
-              local_mall
-            </span>
-          </Link>
+          <Cart/>
         </Stack>
       </Stack>
     </Stack>
