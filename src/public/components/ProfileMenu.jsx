@@ -11,7 +11,7 @@ import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
 import { Shop } from "@mui/icons-material";
 import ShopperSignUp from "../pages/shopper_sign_up/ShopperSignUp";
@@ -26,6 +26,13 @@ export default function ProfileMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const navigate = useNavigate();
+
+  const navigateToAccount = () => {
+    window.scrollTo(0, 0);
+    navigate("/shopper/account/contact_information");
+  }
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -57,7 +64,7 @@ export default function ProfileMenu() {
             overflow: "visible",
             boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2)",
             width: "180px",
-            height: "130px",
+            minHeight: "130px",
             padding: "20px 0px",
             mt: 1.5,
             "& .MuiAvatar-root": {
@@ -90,6 +97,20 @@ export default function ProfileMenu() {
         <ShopperSignUp/>
 
         <ShopperLoginPage/>
+
+        <MenuItem
+          onClick={navigateToAccount}
+          sx={{
+            color: "#999999",
+            "&:hover": {
+              color: "#000000",
+            },
+          }}
+        >
+          <Typography variant="body1_nunito" fontSize="15px">
+            Account
+          </Typography>
+        </MenuItem>
 
         <MenuItem
           onClick={handleClose}
