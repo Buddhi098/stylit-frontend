@@ -3,9 +3,6 @@ import {
   Box,
   Stack,
   Typography,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
 } from "@mui/material";
 import { useNavigate } from "react-router";
 
@@ -28,13 +25,16 @@ const colorCode = {
     "repeating-linear-gradient(45deg, #000, #000 10px, #fff 10px, #fff 20px)",
 };
 
-const ProductCard = ({ colors ,name , price , img , id}) => {
+const ProductCard = ({ colors, name, price, img, id }) => {
   const [selectedColor, setColor] = useState(colors[0]);
   const navigate = useNavigate();
 
-  const handleNavigateToDressPage = (id) =>{
-    navigate(`/public/dress/${id}`)
-  }
+  const handleNavigateToDressPage = (e) => {
+    window.scrollTo(0,0);
+    e.stopPropagation();
+    navigate(`/public/dress/${id}`);
+  };
+
   return (
     <Box
       sx={{
@@ -45,20 +45,19 @@ const ProductCard = ({ colors ,name , price , img , id}) => {
           boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.3)",
         },
       }}
-
-      onClick = {handleNavigateToDressPage(id)}
+      onClick={handleNavigateToDressPage}
     >
       <Box
-      component="img"
-      src={img}
+        component="img"
+        src={img}
         sx={{
           backgroundColor: "#e0e0e0",
           height: "400px",
-          width:"310px",
+          width: "310px",
           marginBottom: "16px",
           objectFit: "cover",
         }}
-      ></Box>
+      />
       <Stack spacing={1} padding={"4px"}>
         <Stack
           direction={"row"}
@@ -81,12 +80,12 @@ const ProductCard = ({ colors ,name , price , img , id}) => {
         <Stack direction="row" spacing={1}>
           {colors.map((color) => (
             <Box key={color} sx={{
-              width:"24px",
-              height:"24px",
-              borderRadius:"50%",
-              display:"flex",
-              justifyContent:"center",
-              alignItems:"center",
+              width: "24px",
+              height: "24px",
+              borderRadius: "50%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
               border: selectedColor === color ? "1px solid #000" : "none",
             }}>
               <Box
