@@ -39,7 +39,7 @@ const ChatArea = ({ chat }) => {
                 overflowY: 'auto',
                 p: 2,
                 display: 'flex',
-                flexDirection: 'column',
+                flexDirection: 'column'
             }}
         >
             {Object.keys(groupedMessages).map((date, index) => (
@@ -58,48 +58,37 @@ const ChatArea = ({ chat }) => {
 
                     {groupedMessages[date].map((msg, index) => (
                         <Box 
-                        key={index} 
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: msg.sender === 'customer' ? 'flex-start' : 'flex-end',
-                          mb: 1.5,
-                          position: 'relative',
-                          maxWidth: '100%',
-                        }}
-                      >
-                        <Paper 
-                          sx={{
-                            p: 1.5,
-                            borderRadius: 2,
-                            bgcolor: msg.sender === 'customer' ? 'white' : '#6CB4EE',
-                            color: msg.sender === 'customer' ? 'black' : 'white',
-                            maxWidth: '100%',
-                            wordBreak: 'break-word',
-                            maxHeight: '32px', 
-                            overflowY: 'auto',  
-                            display: 'flex',
-                            alignItems: 'center', 
-                            justifyContent: 'center', 
-                            textAlign: 'center',
-                            fontSize: '0.82rem', 
-                          }}
+                            key={index} 
+                            sx={{
+                                display: 'flex',
+                                justifyContent: msg.sender === 'courier' ? 'flex-start' : 'flex-end',
+                                mb: 1.5,
+                            }}
                         >
-                          {msg.text}
-                        </Paper>
-                        <Typography 
-                          variant="caption" 
-                          color="textSecondary" 
-                          sx={{ 
-                            fontSize: '0.65rem',
-                            mt: 0.5,
-                            alignSelf: msg.sender === 'customer' ? 'flex-start' : 'flex-end',
-                          }}
-                        >
-                          {formatTime(msg.time)}
-                        </Typography>
-                      </Box>
-                      
+                            <Paper 
+                                sx={{
+                                    p: 1.5,
+                                    borderRadius: 1,
+                                    bgcolor: msg.sender === 'courier' ? '#e6e6e6' : '#C0A888',
+                                    color: msg.sender === 'courier' ? 'black' : 'white',
+                                    maxWidth: '70%',
+                                    wordBreak: 'break-word',
+                                }}
+                            >
+                                {msg.text}
+                            </Paper>
+                            <Typography 
+                                variant="caption" 
+                                color="textSecondary" 
+                                sx={{ 
+                                    ml: 2,
+                                    mt: 5,
+                                    textAlign: msg.sender === 'courier' ? 'left' : 'right',
+                                }}
+                            >
+                                {formatTime(msg.time)}
+                            </Typography>
+                        </Box>
                     ))}
                 </Box>
             ))}

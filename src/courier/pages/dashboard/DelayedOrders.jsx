@@ -17,21 +17,17 @@ import { NumericFormat } from 'react-number-format';
 // project import
 import Dot from '../../components/@extended/Dot';
 
-function createData(orderId, name, weight, status, delivery_date) {
-  return { orderId, name, weight, status, delivery_date };
+function createData(orderId, destination, expected_date, completed_date, delay) {
+  return { orderId, destination, expected_date, completed_date, delay};
 }
 
 const rows = [
-  createData(12658456, 'Nolimit', 5.5, 0, '2024-08-15'),
-  createData(13578965, 'Fashion Bug', 2.3, 1, '2024-08-10'),
-  createData(14235789, 'Kelly Felder', 1.2, 2, '2024-08-12'),
-  createData(15987654, 'Givenchy', 3.8, 0, '2024-08-18'),
-  createData(16894523, 'Cool Planet', 4.6, 1, '2024-08-11'),
-  createData(17896542, 'Chik Avenue', 5.0, 2, '2024-08-20'),
-  createData(18987654, 'GFlock', 2.1, 0, '2024-08-14'),
-  createData(19875432, 'Ebony', 6.7, 1, '2024-08-09'),
-  createData(20765498, 'Bear Appeal', 3.4, 2, '2024-08-16'),
-  createData(21789654, 'Tshirt Republic', 1.5, 0, '2024-08-13')
+    createData(12658456, 'Kandy', '2024-08-15', '2024-08-18', '3 days'),
+    createData(13578965, 'Kandy', '2024-08-10', '2024-08-12', '2 days'),
+    createData(14235789, 'Colombo', '2024-08-12', '2024-08-13', '1 days'),
+    createData(15987654, 'Ampara', '2024-08-18', '2024-08-22', '4 days'),
+    createData(16894523, 'Colombo', '2024-08-11', '2024-08-13', '2 days'),
+    createData(17896542, 'Galle', '2024-08-20', '2024-08-21', '1 day'),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -68,28 +64,28 @@ const headCells = [
     label: 'Order ID'
   },
   {
-    id: 'name',
+    id: 'destination',
     align: 'left',
     disablePadding: true,
-    label: 'Store Name'
+    label: 'City'
   },
   {
-    id: 'weight',
+    id: 'expected_date',
     align: 'right',
     disablePadding: false,
-    label: 'Weight (Kg)'
+    label: 'Expected Delivery Date'
   },
   {
-    id: 'status',
+    id: 'completed_date',
     align: 'right',
     disablePadding: false,
-    label: 'Status'
+    label: 'Completed Delivery Date'
   },
   {
-    id: 'delivery_date',
+    id: 'delay',
     align: 'right',
     disablePadding: false,
-    label: 'Approx. Delivery Date'
+    label: 'Delayed Days'
   },
 
 ];
@@ -112,36 +108,6 @@ function OrderTableHead({ order, orderBy }) {
         ))}
       </TableRow>
     </TableHead>
-  );
-}
-
-function OrderStatus({ status }) {
-  let color;
-  let title;
-
-  switch (status) {
-    case 0:
-      color = 'warning';
-      title = 'Pending';
-      break;
-    case 1:
-      color = 'success';
-      title = 'Approved';
-      break;
-    case 2:
-      color = 'error';
-      title = 'Rejected';
-      break;
-    default:
-      color = 'primary';
-      title = 'None';
-  }
-
-  return (
-    <Stack direction="row" spacing={1} alignItems="center">
-      <Dot color={color} />
-      <Typography>{title}</Typography>
-    </Stack>
   );
 }
 
@@ -180,12 +146,10 @@ export default function OrderTable() {
                   <TableCell component="th" id={labelId} scope="row">
                     <Link color="secondary"> {row.orderId}</Link>
                   </TableCell>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell align="right">{row.weight}</TableCell>
-                  <TableCell>
-                    <OrderStatus status={row.status} />
-                  </TableCell>
-                  <TableCell align="right">{row.delivery_date}</TableCell>
+                  <TableCell>{row.destination}</TableCell>
+                  <TableCell align="right">{row.expected_date}</TableCell>
+                  <TableCell align="right">{row.completed_date}</TableCell>
+                  <TableCell align="right">{row.delay}</TableCell>
                 </TableRow>
               );
             })}
@@ -197,5 +161,3 @@ export default function OrderTable() {
 }
 
 OrderTableHead.propTypes = { order: PropTypes.any, orderBy: PropTypes.string };
-
-OrderStatus.propTypes = { status: PropTypes.number };

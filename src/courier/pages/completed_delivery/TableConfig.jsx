@@ -75,6 +75,11 @@ export const headCells = [
       numeric: true,
       disablePadding: false,
     },
+    {
+      id:"delay",
+      numeric: true,
+      disablePadding: false,
+    },
   ];
   
   
@@ -118,7 +123,7 @@ export const headCells = [
       customerEmail: "nimal@mail.com",
       customerPhone: "077-2880123",
       storeImage: givenchy,
-      description: "Internet"
+      delay:"On Time"
     },
     {
       id: 2,
@@ -132,7 +137,8 @@ export const headCells = [
       customerName: "Ayesha",
       customerEmail: "ayesha@mail.com",
       customerPhone: "077-1234567",
-      storeImage: givenchy
+      storeImage: givenchy,
+      delay:"Delayed by 3 days"
     },
     {
       id: 3,
@@ -146,7 +152,8 @@ export const headCells = [
       customerName: "Raj",
       customerEmail: "raj@mail.com",
       customerPhone: "077-7654321",
-      storeImage: ebony
+      storeImage: ebony,
+      delay:"On Time"
     },
     {
       id: 4,
@@ -160,7 +167,8 @@ export const headCells = [
       customerName: "Maya",
       customerEmail: "maya@mail.com",
       customerPhone: "077-5432189",
-      storeImage: bearappeal
+      storeImage: bearappeal,
+      delay:"Delayed by 4 days"
     },
     {
       id: 5,
@@ -174,7 +182,8 @@ export const headCells = [
       customerName: "Kumar",
       customerEmail: "kumar@mail.com",
       customerPhone: "077-9876543",
-      storeImage: givenchy
+      storeImage: givenchy,
+      delay:"Delayed by 2 days"
     },
     {
       id: 6,
@@ -188,7 +197,8 @@ export const headCells = [
       customerName: "Sita",
       customerEmail: "sita@mail.com",
       customerPhone: "077-3216549",
-      storeImage: ebony
+      storeImage: ebony,
+      delay:"Delayed by 6 days"
     },
     {
       id: 7,
@@ -202,7 +212,8 @@ export const headCells = [
       customerName: "Anil",
       customerEmail: "anil@mail.com",
       customerPhone: "077-2345678",
-      storeImage: bearappeal
+      storeImage: bearappeal,
+      delay:"Delayed by 4 days"
     },
     {
       id: 8,
@@ -216,7 +227,8 @@ export const headCells = [
       customerName: "Dilani",
       customerEmail: "dilani@mail.com",
       customerPhone: "077-6543210",
-      storeImage: givenchy
+      storeImage: givenchy,
+      delay:"Delayed by 2 days"
     },
     {
       id: 9,
@@ -230,7 +242,8 @@ export const headCells = [
       customerName: "Harsha",
       customerEmail: "harsha@mail.com",
       customerPhone: "077-4321987",
-      storeImage: ebony
+      storeImage: ebony,
+      delay:"On Time"
     },
     {
       id: 10,
@@ -244,7 +257,8 @@ export const headCells = [
       customerName: "Priya",
       customerEmail: "priya@mail.com",
       customerPhone: "077-6789101",
-      storeImage: bearappeal
+      storeImage: bearappeal,
+      delay:"On Time"
     }
     
     

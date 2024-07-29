@@ -2,7 +2,7 @@ import { Stack } from '@mui/system'
 import React from 'react'
 import DataTable from './ChatData'
 
-const CustomerChat = () => {
+const AdminChat = () => {
   return (
     <Stack>
         <DataTable/>
@@ -10,4 +10,4 @@ const CustomerChat = () => {
   )
 }
 
-export default CustomerChat
+export default AdminChat

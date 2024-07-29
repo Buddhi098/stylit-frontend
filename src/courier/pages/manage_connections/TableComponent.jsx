@@ -14,6 +14,7 @@ import {
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function TableComponent({ filteredShops }) {
   const [tab, setTab] = useState(0);
@@ -169,9 +170,9 @@ export default function TableComponent({ filteredShops }) {
                             color: tab === 1 ? "#A68A6C" : "#ffffff",
                           },
                         }}
-                       
+                        endIcon={tab === 0 ? <AddIcon /> : null}
                       >
-                        {tab === 0 ? "Follow" : (tab === 1 ? "Requested" : "Following")}
+                        {tab === 0 ? "Connect" : (tab === 1 ? "Requested" : "Connected")}
                       </Button>
                     </Box>
                   </Grid>

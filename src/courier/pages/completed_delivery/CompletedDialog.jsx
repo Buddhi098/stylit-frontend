@@ -111,6 +111,10 @@ const DeliveryDialog = ({ open, handleClose, selectedRow }) => {
                     <Grid item xs={3}><Typography variant="body2"><strong>Delivery Address</strong></Typography></Grid>
                     <Grid item xs={7}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.address}</Typography></Grid>
                   </Grid>
+                  <Grid container spacing={1} ml={3} mt={0.25}>
+                    <Grid item xs={3}><Typography variant="body2"><strong>Delay</strong></Typography></Grid>
+                    <Grid item xs={7}><Typography variant="body2" sx={{ textAlign: 'right', color: selectedRow.delay === 'On Time' ? 'green' : 'red' }}>{selectedRow.delay}</Typography></Grid>
+                  </Grid>
                 </>
               )}
             </Box>

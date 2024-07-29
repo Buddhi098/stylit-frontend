@@ -13,6 +13,8 @@ import PaymentMethod from '../courier/pages/payment_method/PaymentMethod';
 import WithdrawCash from '../courier/pages/withdraw_cash/WithdrawCash';
 import ManageConnections from '../courier/pages/manage_connections/ManageConnections';
 import CustomerChat from '../courier/pages/customer_chat/CustomerChat';
+import ShopChat from '../courier/pages/shop_chat/ShopChat';
+import AdminChat from '../courier/pages/admin_chat/AdminChat';
 
 const Dashboard = Loadable(lazy(()=>import('../courier/pages/dashboard')))
 
@@ -57,7 +59,16 @@ const CourierRoutes = {
     {
       path:'chat/customer_chat',
       element:<CustomerChat/>
+    },
+    {
+      path:'chat/shop_chat',
+      element:<ShopChat/>
+    },
+    {
+      path:'chat/admin_chat',
+      element:<AdminChat/>
     }
+
 
   ]
 };

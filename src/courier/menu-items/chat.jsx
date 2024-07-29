@@ -28,16 +28,15 @@ const chat = {
         id: "shops",
         title: "Shops",
         type: "item",
-        url: "/courier/chat/shop",
+        url: "/courier/chat/shop_chat",
         icon: icons.StoreIcon,
         breadcrumbs: false,
       },
-
       {
         id: "admin",
         title: "Admin",
         type: "item",
-        url: "/courier/chat/admin",
+        url: "/courier/chat/admin_chat",
         icon: icons.ManageAccountsIcon,
         breadcrumbs: false,
       },
