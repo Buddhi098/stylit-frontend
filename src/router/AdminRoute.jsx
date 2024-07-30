@@ -16,6 +16,7 @@ const CourierPaymentHistory = Loadable(lazy(()=>import('../admin/pages/Courier/c
 const CourierPaymentRequests = Loadable(lazy(()=>import('../admin/pages/Courier/courier-payment-requests/CourierPaymentRequests')))
 const AllCouriers = Loadable(lazy(()=>import('../admin/pages/Courier/all-couriers/AllCouriers')))
 const CourierRequest = Loadable(lazy(()=>import('../admin/pages/Courier/new-courier-request/CourierRequest')))
+const Chat = Loadable(lazy(()=>import('../admin/pages/Chat/shop_chat/ShopChat')))
 
 
 
@@ -42,6 +43,8 @@ const AdminRoutes = {
     { path: 'courier/all-courier-accounts', element: <AllCouriers/> },
     { path: 'courier/payment-requests', element: <CourierPaymentRequests/> },
     { path: 'courier/payment-history', element: <CourierPaymentHistory/> },
+
+    { path: 'chat/shop_chat', element: <Chat/> },
 
   ]
 };
