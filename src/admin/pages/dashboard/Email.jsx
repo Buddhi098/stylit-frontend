@@ -39,7 +39,7 @@ export default function Email() {
           secondary={
             <React.Fragment>
               
-              {"I need help with my account."}
+              {"I'm having a trouble resetting my password"}
             </React.Fragment>
           }
         />
