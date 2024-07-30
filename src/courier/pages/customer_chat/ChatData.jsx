@@ -7,6 +7,7 @@ import MessageList from './MessageList';
 import ChatArea from './ChatArea';
 import MessageInput from './MessageInput';
 import initialMessages from './Messages'; // Adjust the path as needed
+import AdsClickIcon from '@mui/icons-material/AdsClick'; 
 
 const ChatData = () => {
     const [selectedChat, setSelectedChat] = useState(null);
@@ -52,8 +53,8 @@ const ChatData = () => {
     return (
         <Box sx={{ display: 'flex', height: 'calc(100vh - 64px)' }}>
             {/* Message List */}
-            <Box sx={{ width: '300px', borderRight: '1px solid #e0e0e0', bgcolor: 'white', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-                <Box sx={{ p: 2, borderBottom: '1px solid #e0e0e0' }}>
+            <Box sx={{ width: '350px', borderRight: '1px solid #e0e0e0', bgcolor: 'white', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+                <Box sx={{ p: 2}}>
                     <TextField
                         fullWidth
                         size="small"
@@ -71,7 +72,7 @@ const ChatData = () => {
                             ),
                         }}
                     />
-                    <Typography variant="h6" sx={{ mt: 2 }}>Direct Messages</Typography>
+                    <Typography variant="h6" sx={{ mt: 2, fontWeight:'bold'}}>Direct Messages</Typography>
                 </Box>
                 <Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
                     <MessageList 
@@ -131,6 +132,7 @@ const ChatData = () => {
                     <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                         <Typography variant="h6" color="textSecondary" sx={{fontWeight:'bold'}}>
                             Select a Chat to Start Messaging
+                            <AdsClickIcon sx={{ ml: 1 }}/>
                         </Typography>
                     </Box>
                 )}

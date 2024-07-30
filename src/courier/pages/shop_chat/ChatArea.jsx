@@ -3,17 +3,17 @@ import { Paper, Box, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 
 const ChatArea = ({ chat }) => {
-    // const messagesEndRef = useRef(null);
+    const messagesEndRef = useRef(null);
 
-    // const scrollToBottom = () => {
-    //     if (messagesEndRef.current) {
-    //         messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    //     }
-    // };
+    const scrollToBottom = () => {
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
-    // useEffect(() => {
-    //     scrollToBottom();
-    // }, [chat.messages]);
+    useEffect(() => {
+        scrollToBottom();
+    }, [chat.messages]);
 
     const formatDate = (date) => {
         return dayjs(date).format('MMM D, YYYY');
@@ -39,7 +39,7 @@ const ChatArea = ({ chat }) => {
                 overflowY: 'auto',
                 p: 2,
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
             }}
         >
             {Object.keys(groupedMessages).map((date, index) => (
@@ -58,37 +58,48 @@ const ChatArea = ({ chat }) => {
 
                     {groupedMessages[date].map((msg, index) => (
                         <Box 
-                            key={index} 
-                            sx={{
-                                display: 'flex',
-                                justifyContent: msg.sender === 'courier' ? 'flex-start' : 'flex-end',
-                                mb: 1.5,
-                            }}
+                        key={index} 
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: msg.sender === 'shop' ? 'flex-start' : 'flex-end',
+                          mb: 1.5,
+                          position: 'relative',
+                          maxWidth: '100%',
+                        }}
+                      >
+                        <Paper 
+                          sx={{
+                            p: 1.5,
+                            borderRadius: 2,
+                            bgcolor: msg.sender === 'shop' ? 'rgba(192, 168, 136,0.2)' : '#6CB4EE',
+                            color: msg.sender === 'shop' ? 'black' : 'white',
+                            maxWidth: '100%',
+                            wordBreak: 'break-word',
+                            maxHeight: '32px', 
+                            overflowY: 'auto',  
+                            display: 'flex',
+                            alignItems: 'center', 
+                            justifyContent: 'center', 
+                            textAlign: 'center',
+                            fontSize: '0.85rem', 
+                          }}
                         >
-                            <Paper 
-                                sx={{
-                                    p: 1.5,
-                                    borderRadius: 1,
-                                    bgcolor: msg.sender === 'courier' ? '#e6e6e6' : '#C0A888',
-                                    color: msg.sender === 'courier' ? 'black' : 'white',
-                                    maxWidth: '70%',
-                                    wordBreak: 'break-word',
-                                }}
-                            >
-                                {msg.text}
-                            </Paper>
-                            <Typography 
-                                variant="caption" 
-                                color="textSecondary" 
-                                sx={{ 
-                                    ml: 2,
-                                    mt: 5,
-                                    textAlign: msg.sender === 'courier' ? 'left' : 'right',
-                                }}
-                            >
-                                {formatTime(msg.time)}
-                            </Typography>
-                        </Box>
+                          {msg.text}
+                        </Paper>
+                        <Typography 
+                          variant="caption" 
+                          color="textSecondary" 
+                          sx={{ 
+                            fontSize: '0.65rem',
+                            mt: 0.5,
+                            alignSelf: msg.sender === 'shop' ? 'flex-start' : 'flex-end',
+                          }}
+                        >
+                          {formatTime(msg.time)}
+                        </Typography>
+                      </Box>
+                      
                     ))}
                 </Box>
             ))}

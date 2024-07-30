@@ -9,8 +9,6 @@ import DeliveryRequest from '../courier/pages/delivery_request/DeliveryRequest';
 import ApprovedDelivery from '../courier/pages/approved_delivery/ApprovedDelivery';
 import OngoingDelivery from '../courier/pages/ongoing_delivery/OngoingDelivery';
 import CompletedDelivery from '../courier/pages/completed_delivery/CompletedDelivery';
-import PaymentMethod from '../courier/pages/payment_method/PaymentMethod';
-import WithdrawCash from '../courier/pages/withdraw_cash/WithdrawCash';
 import ManageConnections from '../courier/pages/manage_connections/ManageConnections';
 import CustomerChat from '../courier/pages/customer_chat/CustomerChat';
 import ShopChat from '../courier/pages/shop_chat/ShopChat';
@@ -43,14 +41,6 @@ const CourierRoutes = {
     {
       path:'completed_delivery',
       element:<CompletedDelivery/>
-    },
-    {
-      path:'payment_method',
-      element:<PaymentMethod/>
-    },
-    {
-      path:'withdraw_cash',
-      element:<WithdrawCash/>
     },
     {
       path:'manage_connection',

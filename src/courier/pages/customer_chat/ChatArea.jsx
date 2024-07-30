@@ -3,17 +3,17 @@ import { Paper, Box, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 
 const ChatArea = ({ chat }) => {
-    // const messagesEndRef = useRef(null);
+    const messagesEndRef = useRef(null);
 
-    // const scrollToBottom = () => {
-    //     if (messagesEndRef.current) {
-    //         messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    //     }
-    // };
+    const scrollToBottom = () => {
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
-    // useEffect(() => {
-    //     scrollToBottom();
-    // }, [chat.messages]);
+    useEffect(() => {
+        scrollToBottom();
+    }, [chat.messages]);
 
     const formatDate = (date) => {
         return dayjs(date).format('MMM D, YYYY');
@@ -103,7 +103,7 @@ const ChatArea = ({ chat }) => {
                     ))}
                 </Box>
             ))}
-            {/* <div ref={messagesEndRef} /> */}
+            <div ref={messagesEndRef} />
         </Box>
     );
 };

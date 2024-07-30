@@ -71,14 +71,16 @@ const MessageList = ({ messages, onChatClick, selectedChatId }) => {
                                     bgcolor: '#A68A6C', 
                                     color: 'white', 
                                     borderRadius: '50%', 
-                                    width: 20, 
-                                    height: 20, 
+                                    width: 17, 
+                                    height: 17, 
                                     display: 'flex', 
                                     justifyContent: 'center', 
                                     alignItems: 'center' 
                                 }}
                             >
-                                {unreadCount}
+                                <Typography variant="overline" sx={{ lineHeight: 1 }}>
+                                    {unreadCount}
+                                </Typography>
                             </Box>
                         )}
                     </ListItem>

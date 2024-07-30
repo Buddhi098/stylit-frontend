@@ -1,8 +1,18 @@
+import givenchy from "../../assets/images/stores/givenchy.png"
+import ebony from "../../assets/images/stores/ebony.png"
+import bearappeal from "../../assets/images/stores/bearappeal.png"
+import nolimit from "../../assets/images/stores/nolimit.png"
+import carnage from "../../assets/images/stores/carnage.png"
+import hameedia from "../../assets/images/stores/hameedia.png"
+import coolplanet from "../../assets/images/stores/coolplanet.png"
+import tshirtrepublic from "../../assets/images/stores/tshirtrepublic.jpeg"
+import street82 from "../../assets/images/stores/street82.png"
+
 const messages = [
     {
         id: 1,
-        name: 'FedEx',
-        avatar: 'path_to_avatar.jpg',
+        name: 'Givenchy',
+        avatar:givenchy,
         lastMessage: "Package has been picked up and is on the way.",
         time: '2024-07-26T12:05:00',
         unread: true,
@@ -18,8 +28,8 @@ const messages = [
     },
     {
         id: 2,
-        name: 'Domex',
-        avatar: 'path_to_avatar.jpg',
+        name: 'Ebony',
+        avatar: ebony,
         lastMessage: "Package has been delivered to the customer.",
         time: '2024-07-25T08:40:00',
         unread: false,
@@ -35,8 +45,8 @@ const messages = [
     },
     {
         id: 3,
-        name: 'Pronto Lanka',
-        avatar: 'path_to_avatar.jpg',
+        name: 'Nolimit',
+        avatar: nolimit,
         lastMessage: "Delivering the package now.",
         time: '2024-07-26T14:20:00',
         unread: true,
@@ -53,8 +63,8 @@ const messages = [
     },
     {
         id: 4,
-        name: 'Prompt Xpress',
-        avatar: 'path_to_avatar.jpg',
+        name: 'Bear Appeal',
+        avatar: bearappeal,
         lastMessage: "Package is ready for pickup.",
         time: '2024-07-26T10:15:00',
         unread: false,
@@ -67,8 +77,8 @@ const messages = [
     },
     {
         id: 5,
-        name: 'DHL',
-        avatar: 'path_to_avatar.jpg',
+        name: 'Carnage',
+        avatar: carnage,
         lastMessage: "Package picked up and heading to the customer.",
         time: '2024-07-26T09:10:00',
         unread: false,
@@ -82,8 +92,8 @@ const messages = [
     },
     {
         id: 6,
-        name: 'RPX',
-        avatar: 'path_to_avatar.jpg',
+        name: 'Street82',
+        avatar: street82,
         lastMessage: "Package is ready for delivery.",
         time: '2024-07-26T16:15:00',
         unread: true,
@@ -99,8 +109,8 @@ const messages = [
     },
     {
         id: 7,
-        name: 'UPS',
-        avatar: 'path_to_avatar.jpg',
+        name: 'Hameedia',
+        avatar: hameedia,
         lastMessage: "Package is on its way to the customer.",
         time: '2024-07-26T11:45:00',
         unread: true,
@@ -116,8 +126,8 @@ const messages = [
     },
     {
         id: 8,
-        name: 'Dreamco Express',
-        avatar: 'path_to_avatar.jpg',
+        name: 'Cool Planet',
+        avatar: coolplanet,
         lastMessage: "Package is on the way to the customer.",
         time: '2024-07-26T15:10:00',
         unread: true,
@@ -133,8 +143,8 @@ const messages = [
     },
     {
         id: 9,
-        name: 'Antron Express',
-        avatar: 'path_to_avatar.jpg',
+        name: 'T-shirt Republic',
+        avatar: tshirtrepublic,
         lastMessage: "Package has been delivered to the customer.",
         time: '2024-07-26T11:35:00',
         unread: false,
