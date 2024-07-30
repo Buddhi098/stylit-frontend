@@ -5,6 +5,7 @@ import Loadable from '../components/Loadable';
 
 import CourierLayout from '../courier/Courier';
 import { element } from 'prop-types';
+import ActorBasedRoute from './route_protector/ActorBasedRoute';
 
 const Dashboard = Loadable(lazy(()=>import('../courier/pages/dashboard')))
 
@@ -16,7 +17,7 @@ const CourierRoutes = {
   children: [
     {
       path: 'dashboard',
-      element: <Dashboard/>
+      element: <ActorBasedRoute element={Dashboard} requiredRoles={['courier']} />
     },
 
   ]

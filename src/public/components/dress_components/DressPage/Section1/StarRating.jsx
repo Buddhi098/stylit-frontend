@@ -8,15 +8,15 @@ import { Rating } from '@mui/material';
 const StarRating = ({ ratings }) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Typography variant="h4" sx={{ mr: 1 }}>
+      <Typography variant="body2_alata" sx={{ mr: 1 }}>
         {ratings}
       </Typography>
       <Rating
         value={Number(ratings)}
         precision={0.5}
         readOnly
-        icon={<StarIcon fontSize="inherit" />}
-        emptyIcon={<StarBorderIcon fontSize="inherit" />}
+        icon={<StarIcon sx={{fontSize:"13px"}}/>}
+        emptyIcon={<StarBorderIcon sx={{fontSize:"13px"}} />}
       />
     </Box>
   );

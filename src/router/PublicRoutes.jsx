@@ -23,6 +23,7 @@ const FashionStoreCategoryPage = Loadable(lazy(()=>import('../public/pages/fashi
 const AllFashionStore = Loadable(lazy(()=>import('../public/pages/fashion_store_page/all_fashion_store/AllFashionStore')));
 const ShopPage = Loadable(lazy(()=>import('../public/pages/fashion_store_page/shop_page/ShopPage')));
 const DressPage = Loadable(lazy(() => import("../public/components/dress_components/DressPage/DressPage")));
+const ProductPage = Loadable(lazy(()=>import('../public/pages/product_page/ProductPage')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 export const BaseRoute={
@@ -90,12 +91,20 @@ const PublicRoutes = {
       element:<AllFashionStore/>
     },
     {
+      path:'all_fashion_store/:title',
+      element:<AllFashionStore/>
+    },
+    {
       path:'shop_page/:id',
       element:<ShopPage/>
     },
     {
       path:'dress/:id',
       element:<DressPage/>
+    },
+    {
+      path:'product/:gender',
+      element:<ProductPage/>
     },
     {
       path: '*',

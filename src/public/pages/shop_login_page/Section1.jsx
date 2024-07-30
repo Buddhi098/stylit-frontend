@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useRef, useState } from "react";
 import {
   Box,
   Typography,
@@ -13,9 +13,16 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import backgroundImage from "../../assets/images/shop_login_page/Image.png";
 import api from "../../api/api";
+import AuthContext from "../../../context/auth_context/AuthContext";
+import { useNavigate } from "react-router";
 
 const Section1 = () => {
-  const [error, setError] = React.useState('');
+  const [error, setError] = React.useState("");
+  const btnRef = useRef();
+  const [btnLabel, setBtnLabel] = useState("Login");
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
+  
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -32,35 +39,39 @@ const Section1 = () => {
     onSubmit: async (values) => {
       // console.log("Form values:", values);
       const { email, password } = values;
-      const loginType = "shop";
-      const data = {
-        userName: email,
-        password: password,
-        userRole: loginType,
-      }
-      console.log("Data:", data);
       try {
-        const response = await api.post('/public/user/login', data);
-        const { access_token } = response.data;
-        localStorage.setItem('token', access_token);
-        setError('');
-        // Redirect to a protected route
-        window.location.href = '/shop/dashboard';
-      } catch (err) {
-        setError('Invalid email or password');
+        btnRef.current.disabled = true;
+        setBtnLabel("Logging In...");
+
+        await login(email, password, "shop");
+
+        navigate("/shop/dashboard");
+      } catch (error) {
+        console.error(
+          "There was an error adding the user:",
+          error.response?.data
+        );
+        setError("Invalid email or password");
+      } finally {
+        btnRef.current.disabled = false;
+        setBtnLabel("Login");
       }
     },
   });
 
-  const handleEmailChange = (e)=>{
-    setError('');
+  const handleEmailChange = (e) => {
+    // Clear the error for the email field
+    formik.setFieldError("email", "");
+    setError("");
+    // Handle the change event using Formik
     formik.handleChange(e);
-  }
+  };
 
-  const handlePasswordChange = (e)=>{
-    setError('');
-    formik.handleChange(e)
-  }
+  const handlePasswordChange = (e) => {
+    formik.setFieldError("password", "");
+    setError("");
+    formik.handleChange(e);
+  };
 
   return (
     <Box
@@ -107,7 +118,7 @@ const Section1 = () => {
             }}
           />
           <Typography variant="body1_nunito">
-            Begin Your Journey as a Courier with Us
+            Sign in to your account to continue
           </Typography>
         </Box>
       </Container>
@@ -123,14 +134,19 @@ const Section1 = () => {
               STYLIT!
             </Typography>
           </Typography>
-          {error!=='' && (
-          <Alert severity="error" sx={{ marginTop: "10px" }}>
-            {error}
-          </Alert>
-        )}
-          <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 2 }}>
+          {error !== "" && (
+            <Alert severity="error" sx={{ marginTop: "10px" }}>
+              {error}
+            </Alert>
+          )}
+          <Box
+            component="form"
+            noValidate
+            onSubmit={formik.handleSubmit}
+            sx={{ mt: 2 }}
+          >
             <TextField
-            variant="filled"
+              variant="filled"
               margin="normal"
               required
               fullWidth
@@ -146,7 +162,7 @@ const Section1 = () => {
               helperText={formik.touched.email && formik.errors.email}
             />
             <TextField
-            variant="filled"
+              variant="filled"
               margin="normal"
               required
               fullWidth
@@ -164,12 +180,19 @@ const Section1 = () => {
             <Link
               href="#"
               variant="body2"
-              sx={{ display: "block", textAlign: "right", mb: 2 ,textDecoration:'none' , fontStyle: 'italic'}}
+              sx={{
+                display: "block",
+                textAlign: "right",
+                mb: 2,
+                textDecoration: "none",
+                fontStyle: "italic",
+              }}
               color="#000000"
             >
               Forgot password?
             </Link>
             <Button
+              ref={btnRef}
               type="submit"
               fullWidth
               variant="contained"
@@ -180,11 +203,18 @@ const Section1 = () => {
                 "&:hover": { backgroundColor: "#b39971" },
               }}
             >
-              <Typography variant="body1_nunito">Login</Typography>
+              <Typography variant="body1_nunito">{btnLabel}</Typography>
             </Button>
             <Box sx={{ textAlign: "center", mt: 2 }}>
               <Typography variant="body2">
-                Not Registered? <Link href="/public/courier_signup_form" color="#999999" sx={{fontStyle: 'italic'}}>Register Here</Link>
+                Not Registered?{" "}
+                <Link
+                  href="/public/courier_signup_form"
+                  color="#999999"
+                  sx={{ fontStyle: "italic" }}
+                >
+                  Register Here
+                </Link>
               </Typography>
             </Box>
           </Box>

@@ -2,12 +2,17 @@ import React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import coverPhoto from "../../assets/images/fashion_store_page/cover.png";
 import { Stack } from "@mui/system";
+import { useNavigate } from "react-router";
 const Section1 = () => {
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate("/public/all_fashion_store");
+  }
   return (
     <Box
       sx={{
         position: "relative",
-        height: "100vh",
+        height: "80vh",
         width: "100%",
         overflow: "hidden",
       }}
@@ -58,7 +63,7 @@ const Section1 = () => {
             },
           }}
         >
-          <Typography variant="body2_alata"> Explore Now</Typography>
+          <Typography variant="body2_alata" onClick={handleNavigate}> Explore Now</Typography>
         </Button>
       </Box>
     </Box>

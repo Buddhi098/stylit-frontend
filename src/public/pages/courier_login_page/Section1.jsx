@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useRef, useState } from "react";
 import {
   Box,
   Typography,
@@ -13,9 +13,16 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import backgroundImage from "../../assets/images/courier_login_page/Image.png";
 import api from "../../api/api";
+import { useNavigate } from "react-router";
+import AuthContext from "../../../context/auth_context/AuthContext";
 
 const Section1 = () => {
   const [error, setError] = React.useState('');
+  const btnRef = useRef();
+  const [btnLabel, setBtnLabel] = useState("Login");
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -32,22 +39,22 @@ const Section1 = () => {
     onSubmit: async (values) => {
       // console.log("Form values:", values);
       const { email, password } = values;
-      const loginType = "courier";
-      const data = {
-        userName: email,
-        password: password,
-        userRole: loginType,
-      }
-      console.log("Data:", data);
       try {
-        const response = await api.post('/public/user/login', data);
-        const { access_token } = response.data;
-        localStorage.setItem('token', access_token);
-        setError('');
-        // Redirect to a protected route
-        window.location.href = '/courier/dashboard';
-      } catch (err) {
-        setError('Invalid email or password');
+        btnRef.current.disabled = true;
+        setBtnLabel("Logging In...");
+
+        await login(email, password, "courier");
+
+        navigate("/courier/dashboard");
+      } catch (error) {
+        console.error(
+          "There was an error adding the user:",
+          error.response?.data
+        );
+        setError("Invalid email or password");
+      } finally {
+        btnRef.current.disabled = false;
+        setBtnLabel("Login");
       }
     },
   });
@@ -170,6 +177,7 @@ const Section1 = () => {
               Forgot password?
             </Link>
             <Button
+            ref={btnRef}
               type="submit"
               fullWidth
               variant="contained"
@@ -180,7 +188,7 @@ const Section1 = () => {
                 "&:hover": { backgroundColor: "#b39971" },
               }}
             >
-              <Typography variant="body1_nunito">Login</Typography>
+              <Typography variant="body1_nunito">{btnLabel}</Typography>
             </Button>
             <Box sx={{ textAlign: "center", mt: 2 }}>
               <Typography variant="body2">

@@ -60,7 +60,6 @@ export default function ShopperLoginPage() {
         <Fade in={open}>
           <Box sx={style} onClick={(e) => e.stopPropagation()}>
             <Section1 handleClose={handleClose} />
-            {/* <Section2 handleClose={handleClose} /> */}
           </Box>
         </Fade>
       </Modal>

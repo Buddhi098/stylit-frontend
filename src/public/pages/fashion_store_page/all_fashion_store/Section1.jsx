@@ -14,6 +14,7 @@ import s22 from "../../../assets/images/fashion_store_page/s22.png";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import { useNavigate } from "react-router";
+import SearchBox from "./SearchBox";
 
 const categories = [
   "Casual Wear Stores",
@@ -28,13 +29,62 @@ const categories = [
 ];
 
 const stores = [
-  { id: 1, name: "Gfock", category: "Casual Wear Stores", cover: s22, logo: s21, favorite: false },
-  { id: 2, name: "Another Store", category: "Casual Wear Stores", cover: s22, logo: s21, favorite: false },
-  { id: 3, name: "Another Store 2", category: "Casual Wear Stores", cover: s22, logo: s21, favorite: true },
-  { id: 4, name: "Another Store 2", category: "Casual Wear Stores", cover: s22, logo: s21, favorite: true },
-  { id: 5, name: "Another Store 2", category: "Casual Wear Stores", cover: s22, logo: s21, favorite: true },
-  { id: 6, name: "Another Store 2", category: "Casual Wear Stores", cover: s22, logo: s21, favorite: true },
-  { id: 7, name: "Another Store 2", category: "Casual Wear Stores", cover: s22, logo: s21, favorite: true },
+  {
+    id: 1,
+    name: "Gfock",
+    category: "Casual Wear Stores",
+    cover: s22,
+    logo: s21,
+    favorite: false,
+  },
+  {
+    id: 2,
+    name: "Another Store",
+    category: "Casual Wear Stores",
+    cover: s22,
+    logo: s21,
+    favorite: false,
+  },
+  {
+    id: 3,
+    name: "Another Store 2",
+    category: "Casual Wear Stores",
+    cover: s22,
+    logo: s21,
+    favorite: true,
+  },
+  {
+    id: 3,
+    name: "Another Store 2",
+    category: "Casual Wear Stores",
+    cover: s22,
+    logo: s21,
+    favorite: true,
+  },
+  {
+    id: 3,
+    name: "Another Store 2",
+    category: "Casual Wear Stores",
+    cover: s22,
+    logo: s21,
+    favorite: true,
+  },
+  {
+    id: 3,
+    name: "Another Store 2",
+    category: "Casual Wear Stores",
+    cover: s22,
+    logo: s21,
+    favorite: true,
+  },
+  {
+    id: 3,
+    name: "Another Store 2",
+    category: "Casual Wear Stores",
+    cover: s22,
+    logo: s21,
+    favorite: true,
+  },
   // Add more stores with unique ids as needed
 ];
 
@@ -117,8 +167,10 @@ const ShopBox = ({ shopName, cover, logo, id, favorite }) => {
   );
 };
 
-const Section1 = () => {
-  const [selectedCategory, setSelectedCategory] = useState("Casual Wear Stores");
+const Section1 = ({title}) => {
+  const [selectedCategory, setSelectedCategory] =
+    useState(title);
+  const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
 
@@ -136,8 +188,11 @@ const Section1 = () => {
   };
 
   const filteredStores = stores.filter(
-    (store) => store.category === selectedCategory
+    (store) =>
+      store.category === selectedCategory &&
+      store.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
   const displayedStores = filteredStores.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
@@ -161,6 +216,11 @@ const Section1 = () => {
           Explore our complete list of fashion stores and find your favorites
         </Typography>
       </Stack>
+
+      <Stack width={"100%"}>
+        <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      </Stack>
+
       <Stack direction="row" spacing={2} width={"90%"} minHeight={"80vh"}>
         <Box width={"30%"}>
           <Typography variant="body1_alata">Categories</Typography>
@@ -206,6 +266,10 @@ const Section1 = () => {
       />
     </Stack>
   );
+};
+
+Section1.defaultProps = {
+  title: "Casual Wear Stores",
 };
 
 export default Section1;

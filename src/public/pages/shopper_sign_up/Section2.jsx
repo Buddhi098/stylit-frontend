@@ -1,8 +1,16 @@
 import React from "react";
 import { Box, Typography, Button, IconButton, Stack } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
 
-const WelcomeUI = ({ handleClose }) => {
+const Section2 = ({ handleClose, setIsSubmit }) => {
+  const navigate = useNavigate();
+
+  const handleHandleNavigation = (e) => {
+    navigate("/public/men");
+    handleClose(e);
+  };
+
   return (
     <Stack
       sx={{
@@ -54,19 +62,7 @@ const WelcomeUI = ({ handleClose }) => {
             width: "50%",
             borderRadius: "0",
           }}
-        >
-          <Typography variant="body2_nunito">GO TO MY ACCOUNT</Typography>
-        </Button>
-        <Button
-          variant="contained"
-          fullWidth
-          sx={{
-            marginTop: 2,
-            background: "black",
-            color: "white",
-            width: "50%",
-            borderRadius: "0",
-          }}
+          onClick={handleHandleNavigation} // Call the function here
         >
           <Typography variant="body2_nunito">CONTINUE SHOPPING</Typography>
         </Button>
@@ -75,4 +71,4 @@ const WelcomeUI = ({ handleClose }) => {
   );
 };
 
-export default WelcomeUI;
+export default Section2;

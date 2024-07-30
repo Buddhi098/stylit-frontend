@@ -10,13 +10,20 @@ import {
 import React from "react";
 import ImageModal from "./ImageModal";
 import SearchIcon from "@mui/icons-material/Search";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import img1 from "../../assets/images/search_box_page/img1.png";
 import img2 from "../../assets/images/search_box_page/img2.png";
 import img3 from "../../assets/images/search_box_page/img3.png";
 import img4 from "../../assets/images/search_box_page/img4.png";
 import ImageBox from "./ImageBox";
+
+
+
 const Section1 = () => {
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate(-1);
+  }
   return (
     <Stack
       sx={{
@@ -67,7 +74,7 @@ const Section1 = () => {
         />
         <Divider orientation="vertical" flexItem />
         <ImageModal />
-        <Link to="/public">
+        <Link onClick={handleNavigate}>
           <Typography
             variant="body2_nunito"
             sx={{

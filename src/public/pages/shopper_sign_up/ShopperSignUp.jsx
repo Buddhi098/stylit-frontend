@@ -6,6 +6,7 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import { MenuItem } from "@mui/material";
 import Section1 from "./Section1";
+import Section2 from "./Section2";
 // import Section2 from "./Section2";
 
 const style = {
@@ -19,19 +20,20 @@ const style = {
 
 export default function ShopperSignUp() {
   const [open, setOpen] = React.useState(false);
+  const [isSubmit, setIsSubmit] = React.useState(false);
 
   const handleOpen = (event) => {
     event.stopPropagation();
     setOpen(true);
   };
 
-  const handleClose = (event) => {
+  const handleClose =  (event) => {
     event.stopPropagation();
     setOpen(false);
   };
 
   return (
-    <div>
+    <Box>
       <MenuItem
         onClick={handleOpen}
         sx={{
@@ -58,11 +60,18 @@ export default function ShopperSignUp() {
       >
         <Fade in={open}>
           <Box sx={style} onClick={(e) => e.stopPropagation()}>
-            <Section1 handleClose={handleClose} />
-            {/* <Section2 handleClose={handleClose} /> */}
+            {isSubmit ? (
+              <Section2 handleClose={handleClose} setIsSubmit={setIsSubmit}/>
+            ) : (
+              <Section1
+                handleClose={handleClose}
+                isSubmit={isSubmit}
+                setIsSubmit={setIsSubmit}
+              />
+            )}
           </Box>
         </Fade>
       </Modal>
-    </div>
+    </Box>
   );
 }

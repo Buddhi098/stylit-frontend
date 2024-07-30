@@ -10,47 +10,56 @@ import img6 from "../../../assets/images/fashion_store_page/s16.png";
 import img7 from "../../../assets/images/fashion_store_page/s17.png";
 import img8 from "../../../assets/images/fashion_store_page/s18.png";
 import img9 from "../../../assets/images/fashion_store_page/s19.png";
+import { useNavigate } from "react-router";
 
 const categories = [
   {
     title: "Casual Wear Stores",
-    image: img1, // Replace with actual image URL
+    image: img1,
   },
   {
     title: "Formal Wear Stores",
-    image: img2, // Replace with actual image URL
+    image: img2,
   },
   {
     title: "Occasion Wear Stores",
-    image: img3, // Replace with actual image URL
+    image: img3,
   },
   {
     title: "Denim Stores",
-    image: img4, // Replace with actual image URL
+    image: img4,
   },
   {
     title: "Active Wear Stores",
-    image: img5, // Replace with actual image URL
+    image: img5,
   },
   {
     title: "Outerwear Stores",
-    image: img6, // Replace with actual image URL
+    image: img6,
   },
   {
     title: "Bag Stores",
-    image: img7, // Replace with actual image URL
+    image: img7,
   },
   {
     title: "Footwear Stores",
-    image: img8, // Replace with actual image URL
+    image: img8,
   },
   {
     title: "Accessories Stores",
-    image: img9, // Replace with actual image URL
+    image: img9,
   },
 ];
 
 const Section1 = () => {
+  const navigate = useNavigate();
+
+  const handleNavigate = (e, title) => {
+    e.preventDefault();
+    window.scrollTo(0, 0);
+    navigate(`/public/all_fashion_store/${title}`);
+  };
+
   return (
     <Box style={{ padding: "20px" }}>
       <Stack margin="16px 0px">
@@ -86,6 +95,7 @@ const Section1 = () => {
             xs={12}
             sm={6}
             md={4}
+            key={index}
             sx={{
               display: "flex",
               alignItems: "center",
@@ -93,7 +103,6 @@ const Section1 = () => {
             }}
           >
             <Box
-              key={index}
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -101,6 +110,7 @@ const Section1 = () => {
                 position: "relative",
                 cursor: "pointer",
               }}
+              onClick={(e) => handleNavigate(e, category.title)}
             >
               <Box
                 component="img"
@@ -111,8 +121,8 @@ const Section1 = () => {
                   height: "auto",
                   maxWidth: "400px",
                   margin: "10px auto",
-                  '&:hover': {
-                    filter: 'brightness(0.9)',
+                  "&:hover": {
+                    filter: "brightness(0.9)",
                   },
                 }}
               />

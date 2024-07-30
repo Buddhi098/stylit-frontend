@@ -285,7 +285,7 @@ const Section2 = () => {
       </Stack>
       <Grid container spacing={2} sx={{ width: "85%" }}>
         {filteredClothes.map((item) => (
-          <Grid item xs={4} key={item.id} sx={{display:"flex" , justifyContent:"flex-end"}}>
+          <Grid item xs={4} sx={{display:"flex" , justifyContent:"flex-end"}}>
             <DressCard colors={item.colors} name={item.name} price={item.price} img={img} id={item.id}/>
           </Grid>
         ))}
