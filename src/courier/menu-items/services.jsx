@@ -1,48 +1,58 @@
 // assets
 import InventoryIcon from "@mui/icons-material/Inventory";
 import AddchartIcon from '@mui/icons-material/Addchart';
-import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import DomainVerificationIcon from '@mui/icons-material/DomainVerification';
+import ChecklistRtlIcon from '@mui/icons-material/ChecklistRtl';
 
 // icons
 const icons = {
   InventoryIcon,
   AddchartIcon,
-  QueryStatsIcon
+  DomainVerificationIcon,
+  ChecklistRtlIcon
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
 
-const product = {
-  id: "services",
+const services = {
+  id: "group-services",
   title: "Services",
   type: "group",
   children: [
     {
-      id: "Order & Reviews",
-      title: "Order & Reviews",
+      id: "Delivery Requests",
+      title: "Delivery Requests",
       type: "item",
-      url: "/courier/order_reviews",
-      icon: icons.InventoryIcon,
+      url: "/courier/delivery_request",
+      icon: icons.AddchartIcon,
       breadcrumbs: false,
     },
     {
-      id: "orders",
-      title: "Orders",
+      id: "Approved Deliveries",
+      title: "Approved Deliveries",
       type: "item",
-      url: "/courier/add_product",
-      icon: icons.AddchartIcon,
+      url: "/courier/approved_delivery",
+      icon: icons.ChecklistRtlIcon,
+      breadcrumbs: false,
+    },
+    {
+      id: "Ongoing Deliveries",
+      title: "Ongoing Deliveries",
+      type: "item",
+      url: "/courier/ongoing_delivery",
+      icon: icons.InventoryIcon,
       breadcrumbs: false,
     },
 
     {
-      id: "order-statistics",
-      title: "Order Statistics",
+      id: "Completed Deliveries",
+      title: "Completed Deliveries",
       type: "item",
-      url: "/courier/product_Statistics",
-      icon: icons.QueryStatsIcon,
+      url: "/courier/completed_delivery",
+      icon: icons.DomainVerificationIcon,
       breadcrumbs: false,
     },
   ],
 };
 
-export default product;
+export default services;

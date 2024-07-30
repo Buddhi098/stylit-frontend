@@ -1,23 +1,22 @@
 /* Custom SimpleBar styles */
 .simplebar-track.simplebar-vertical {
-    width: 10px;
+  width: 10px;
+}
+
+.simplebar-scrollbar:before {
+  background: linear-gradient(180deg, #C0A888 0%, #C0A888 100%);
+}
+
+.simplebar-track.simplebar-horizontal .simplebar-scrollbar:before {
+  height: 8px;
+}
+
+.simplebar-track.simplebar-vertical .simplebar-scrollbar:before {
+  width: 8px;
+}
+
+.simplebar-scrollbar {
+  &::before {
+    border-radius: 10px;
   }
-  
-  .simplebar-scrollbar:before {
-    background: linear-gradient(180deg, #C0A888 0%, #C0A888 100%);
-  }
-  
-  .simplebar-track.simplebar-horizontal .simplebar-scrollbar:before {
-    height: 8px;
-  }
-  
-  .simplebar-track.simplebar-vertical .simplebar-scrollbar:before {
-    width: 8px;
-  }
-  
-  .simplebar-scrollbar {
-    &::before {
-      border-radius: 10px;
-    }
-  }
-  
+}
