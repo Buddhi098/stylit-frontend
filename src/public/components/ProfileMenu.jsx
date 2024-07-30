@@ -16,9 +16,13 @@ import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
 import { Shop } from "@mui/icons-material";
 import ShopperSignUp from "../pages/shopper_sign_up/ShopperSignUp";
 import ShopperLoginPage from "../pages/shopper_login_page/ShopperLoginPage";
+import AuthContext from "../../context/auth_context/AuthContext";
 
 export default function ProfileMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const { user, logout } = React.useContext(AuthContext);
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -32,7 +36,7 @@ export default function ProfileMenu() {
   const navigateToAccount = () => {
     window.scrollTo(0, 0);
     navigate("/shopper/account/contact_information");
-  }
+  };
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -91,40 +95,73 @@ export default function ProfileMenu() {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem>
-          <Typography variant="body2_nunito" >Welcome</Typography>
+          <Typography variant="body2_nunito">Welcome</Typography>
         </MenuItem>
 
-        <ShopperSignUp/>
+        {user?.resource_access.stylit.roles.includes("shopper") ? (
+          <>
+            <MenuItem
+              onClick={navigateToAccount}
+              sx={{
+                color: "#999999",
+                "&:hover": {
+                  color: "#000000",
+                },
+              }}
+            >
+              <Typography variant="body1_nunito" fontSize="15px">
+                Account
+              </Typography>
+            </MenuItem>
 
-        <ShopperLoginPage/>
+            <MenuItem
+              onClick={handleClose}
+              sx={{
+                color: "#999999",
+                "&:hover": {
+                  color: "#000000",
+                },
+              }}
+            >
+              <Typography variant="body1_nunito" fontSize="15px">
+                Help Center
+              </Typography>
+            </MenuItem>
 
-        <MenuItem
-          onClick={navigateToAccount}
-          sx={{
-            color: "#999999",
-            "&:hover": {
-              color: "#000000",
-            },
-          }}
-        >
-          <Typography variant="body1_nunito" fontSize="15px">
-            Account
-          </Typography>
-        </MenuItem>
+            <MenuItem
+              onClick={logout}
+              sx={{
+                color: "#999999",
+                "&:hover": {
+                  color: "#000000",
+                },
+              }}
+            >
+              <Typography variant="body1_nunito" fontSize="15px">
+                Logout
+              </Typography>
+            </MenuItem>
+          </>
+        ) : (
+          <>
+            <ShopperSignUp />
 
-        <MenuItem
-          onClick={handleClose}
-          sx={{
-            color: "#999999",
-            "&:hover": {
-              color: "#000000",
-            },
-          }}
-        >
-          <Typography variant="body1_nunito" fontSize="15px">
-            Help Center
-          </Typography>
-        </MenuItem>
+            <ShopperLoginPage />
+            <MenuItem
+              onClick={handleClose}
+              sx={{
+                color: "#999999",
+                "&:hover": {
+                  color: "#000000",
+                },
+              }}
+            >
+              <Typography variant="body1_nunito" fontSize="15px">
+                Help Center
+              </Typography>
+            </MenuItem>
+          </>
+        )}
       </Menu>
     </React.Fragment>
   );
