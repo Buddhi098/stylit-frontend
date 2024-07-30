@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Box, TextField, InputAdornment, IconButton, Avatar, Menu, MenuItem, Fab, Typography } from '@mui/material';
+import { Box, TextField, InputAdornment, IconButton, Avatar, Menu, MenuItem, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CallIcon from '@mui/icons-material/Call';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import AddIcon from '@mui/icons-material/Add'; // Import Add Icon
 import MessageList from './MessageList';
 import ChatArea from './ChatArea';
 import MessageInput from './MessageInput';
@@ -50,11 +49,6 @@ const ChatData = () => {
         setAnchorEl(null);
     };
 
-    const handleNewChat = () => {
-        // Handle creating a new chat
-        console.log('New chat button clicked');
-    };
-
     return (
         <Box sx={{ display: 'flex', height: 'calc(100vh - 64px)' }}>
             {/* Message List */}
@@ -88,18 +82,6 @@ const ChatData = () => {
                         selectedChatId={selectedChat ? selectedChat.id : null} // Pass selectedChatId
                     />
                 </Box>
-                <Fab
-                    aria-label="add"
-                    onClick={handleNewChat}
-                    sx={{
-                        color: "#C0A888",
-                        position: 'absolute',
-                        bottom: 25,
-                        right: 16,
-                    }}
-                >
-                    <AddIcon sx={{ color: '#C0A888' }} /> {/* Icon color */}
-                </Fab>
             </Box>
 
             {/* Chat Area */}

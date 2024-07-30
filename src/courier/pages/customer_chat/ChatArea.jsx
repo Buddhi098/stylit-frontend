@@ -72,7 +72,7 @@ const ChatArea = ({ chat }) => {
                           sx={{
                             p: 1.5,
                             borderRadius: 2,
-                            bgcolor: msg.sender === 'customer' ? 'white' : '#6CB4EE',
+                            bgcolor: msg.sender === 'customer' ? 'rgba(192, 168, 136,0.2)' : '#6CB4EE',
                             color: msg.sender === 'customer' ? 'black' : 'white',
                             maxWidth: '100%',
                             wordBreak: 'break-word',
@@ -82,7 +82,7 @@ const ChatArea = ({ chat }) => {
                             alignItems: 'center', 
                             justifyContent: 'center', 
                             textAlign: 'center',
-                            fontSize: '0.82rem', 
+                            fontSize: '0.85rem', 
                           }}
                         >
                           {msg.text}
