@@ -11,11 +11,12 @@ const Dashboard = Loadable(lazy(()=>import('../admin/pages/dashboard/index')))
 const ShopRequest = Loadable(lazy(()=>import('../admin/pages/Shop/new-shop-request/ShopRequest')))
 const AllShops = Loadable(lazy(()=>import('../admin/pages/Shop/all-shops/AllShops')))
 const ShopPaymentRequests = Loadable(lazy(()=>import('../admin/pages/Shop/payment-requests/PaymentRequests')))
-const ShopPaymentHistory = Loadable(lazy(()=>import('../admin/pages/Shop/shop-payment-history/ShopPaymentHistory')))
-const CourierPaymentHistory = Loadable(lazy(()=>import('../admin/pages/Courier/courier-payment-history/CourierPaymentHistory')))
+const ShopPaymentHistory = Loadable(lazy(()=>import('../admin/pages/Shop/shop-payment-history-copy/ShopPaymentHistory')))
+const CourierPaymentHistory = Loadable(lazy(()=>import('../admin/pages/Courier/courier-payment-history-copy/CourierPaymentHistory')))
 const CourierPaymentRequests = Loadable(lazy(()=>import('../admin/pages/Courier/courier-payment-requests/CourierPaymentRequests')))
 const AllCouriers = Loadable(lazy(()=>import('../admin/pages/Courier/all-couriers/AllCouriers')))
 const CourierRequest = Loadable(lazy(()=>import('../admin/pages/Courier/new-courier-request/CourierRequest')))
+
 
 
 

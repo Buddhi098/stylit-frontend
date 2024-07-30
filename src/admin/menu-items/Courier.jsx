@@ -34,14 +34,14 @@ const courier = {
       icon: icons.LocalShippingIcon,
       breadcrumbs: false,
     },
-    {
-      id: "courierPaymentRequests",
-      title: "Courier Payment Requests",
-      type: "item",
-      url: "/admin/courier/payment-requests",
-      icon: icons.PaymentIcon,
-      breadcrumbs: false,
-    },
+    // {
+    //   id: "courierPaymentRequests",
+    //   title: "Courier Payment Requests",
+    //   type: "item",
+    //   url: "/admin/courier/payment-requests",
+    //   icon: icons.PaymentIcon,
+    //   breadcrumbs: false,
+    // },
     {
       id: "courierPaymentHistory",
       title: "Courier Payment History",

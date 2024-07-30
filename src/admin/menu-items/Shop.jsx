@@ -34,14 +34,14 @@ const shop = {
       icon: icons.StoreIcon,
       breadcrumbs: false,
     },
-    {
-      id: "shopPaymentRequests",
-      title: " Shop Payment Requests",
-      type: "item",
-      url: "/admin/shop/payment-requests",
-      icon: icons.PaymentIcon,
-      breadcrumbs: false,
-    },
+    // {
+    //   id: "shopPaymentRequests",
+    //   title: " Shop Payment Requests",
+    //   type: "item",
+    //   url: "/admin/shop/payment-requests",
+    //   icon: icons.PaymentIcon,
+    //   breadcrumbs: false,
+    // },
     {
       id: "shopPaymentHistory",
       title: "Shop Payment History",

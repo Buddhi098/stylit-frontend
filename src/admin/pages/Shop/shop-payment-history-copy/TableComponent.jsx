@@ -19,8 +19,8 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { visuallyHidden } from "@mui/utils";
 import { headCellsAllShops, shopData } from "./TableConfig";
 import ShopDetailsDialog from "./ShopDetailsDialog";
-import ViewLocation from "./ViewLocation";
 import { set } from "lodash";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -162,27 +162,16 @@ export default function TableComponent({ rows }) {
 
                       return (
                         <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)}>
+                          <TableCell align="right">{row.paymentId}</TableCell>
                           <TableCell align="right">{row.shopName}</TableCell>
                           <TableCell align="right">{row.shopEmail}</TableCell>
                           <TableCell align="right">{row.shopContactNumber}</TableCell>
-                          <TableCell align="right">{row.shopBusinessData.businessType}</TableCell>
-                          <TableCell align="center"
-                            onClick={(event) => event.stopPropagation()}><ViewLocation/></TableCell>
-                          <TableCell align="right">{row.shopBankDetails.accountNo}</TableCell>
-                          <TableCell align="right">{row.shopBankDetails.branchName}</TableCell>
+                          <TableCell align="right">{row.amount}</TableCell>
+                          <TableCell align="right">{row.paymentDate}</TableCell>
+                          <TableCell align="right">{row.accountNo}</TableCell>
+                          <TableCell align="right">{row.branchName}</TableCell>
                           <TableCell align="center">
-                            <Switch
-                              defaultChecked
-                              sx={{
-                                '& .MuiSwitch-switchBase.Mui-checked': {
-                                  color: 'green',
-                                },
-                                '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                                  backgroundColor: 'green',
-                                },
-                              }}
-                              onClick={(event) => event.stopPropagation()}
-                            />
+                            <CheckCircleIcon color="success" />
                           </TableCell>
                         </TableRow>
                       );

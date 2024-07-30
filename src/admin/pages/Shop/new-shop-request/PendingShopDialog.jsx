@@ -23,6 +23,7 @@ import L from "leaflet";
 import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
 import Chip from '@mui/material/Chip';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
   console.log( "shop: ", selectedRow);
@@ -183,6 +184,20 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Business Email</strong></Typography></Grid>
                   <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopBusinessData.businessEmail}</Typography></Grid>
+                </Grid>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Business Document</strong></Typography></Grid>
+                  <Grid item xs={8}>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      color="primary"
+                      startIcon={<PictureAsPdfIcon />}
+                      onClick={() => window.open(selectedShop.shopBusinessData.businessDocument, '_blank')}
+                    >
+                      View PDF
+                    </Button>
+                  </Grid>
                 </Grid>
               </>
             )}

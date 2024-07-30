@@ -24,6 +24,8 @@ import L from "leaflet";
 import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
 import Chip from '@mui/material/Chip';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import Switch from '@mui/material/Switch';
 
 const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
   const selectedShop = selectedRow;
@@ -71,9 +73,26 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
               </>
             )}
           </Box>
-          <IconButton onClick={handleClose}>
-            <CloseIcon />
-          </IconButton>
+          <Box display="flex" alignItems="center">
+            <Typography variant="body1" component="span" mr={1} style={{ color: 'white' }}>
+              Status
+            </Typography>
+            <Switch
+              checked={selectedShop.isActive}
+              // onChange={(event) => handleSwitchChange(event, selectedShop.id)}
+              sx={{
+                '& .MuiSwitch-switchBase.Mui-checked': {
+                  color: 'green',
+                },
+                '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+                  backgroundColor: 'green',
+                },
+              }}
+            />
+            <IconButton onClick={handleClose}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
         </Box>
       </DialogTitle>
       <Divider />
@@ -174,6 +193,20 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Business Email</strong></Typography></Grid>
                   <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopBusinessData.businessEmail}</Typography></Grid>
+                </Grid>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Business Document</strong></Typography></Grid>
+                  <Grid item xs={8}>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      color="primary"
+                      startIcon={<PictureAsPdfIcon />}
+                      onClick={() => window.open(selectedShop.shopBusinessData.businessDocument, '_blank')}
+                    >
+                      View PDF
+                    </Button>
+                  </Grid>
                 </Grid>
               </>
             )}

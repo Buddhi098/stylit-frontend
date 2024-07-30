@@ -12,6 +12,7 @@ export const headCellsAllShops = [
   { id: 'shopLocation', numeric: false, disablePadding: true, label: 'Location',disableSort: true, },
   { id: 'accountNo', numeric: true, disablePadding: true, label: 'Bank Account', },
   { id: 'branchName', numeric: true, disablePadding: true, label: 'Bank Branch', },
+  { id: 'status',numeric: true, disablePadding: true, label: 'Status',disableSort: true, },
   ];
   
   // these are filter box options

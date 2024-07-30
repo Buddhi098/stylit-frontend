@@ -170,6 +170,20 @@ export default function TableComponent({ rows }) {
                             onClick={(event) => event.stopPropagation()}><ViewLocation/></TableCell>
                           <TableCell align="right">{row.shopBankDetails.accountNo}</TableCell>
                           <TableCell align="right">{row.shopBankDetails.branchName}</TableCell>
+                          <TableCell align="center">
+                            <Switch
+                              defaultChecked
+                              sx={{
+                                '& .MuiSwitch-switchBase.Mui-checked': {
+                                  color: 'green',
+                                },
+                                '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+                                  backgroundColor: 'green',
+                                },
+                              }}
+                              onClick={(event) => event.stopPropagation()}
+                            />
+                          </TableCell>
                         </TableRow>
                       );
                     })}
