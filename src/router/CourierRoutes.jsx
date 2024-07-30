@@ -13,6 +13,7 @@ import ManageConnections from '../courier/pages/manage_connections/ManageConnect
 import CustomerChat from '../courier/pages/customer_chat/CustomerChat';
 import ShopChat from '../courier/pages/shop_chat/ShopChat';
 import AdminChat from '../courier/pages/admin_chat/AdminChat';
+import ActorBasedRoute from './route_protector/ActorBasedRoute';
 
 const Dashboard = Loadable(lazy(()=>import('../courier/pages/dashboard')))
 
@@ -28,35 +29,35 @@ const CourierRoutes = {
     },
     {
       path:'delivery_request',
-      element: <DeliveryRequest/>
+      element: <ActorBasedRoute element={DeliveryRequest} requiredRoles={['courier']} />
     },
     {
       path:'approved_delivery',
-      element: <ApprovedDelivery/>
+      element: <ActorBasedRoute element={ApprovedDelivery} requiredRoles={['courier']} />
     },
     {
       path:'ongoing_delivery',
-      element:<OngoingDelivery/>
+      element: <ActorBasedRoute element={OngoingDelivery} requiredRoles={['courier']} />
     },
     {
       path:'completed_delivery',
-      element:<CompletedDelivery/>
+      element: <ActorBasedRoute element={CompletedDelivery} requiredRoles={['courier']} />
     },
     {
       path:'manage_connection',
-      element:<ManageConnections/>
+      element: <ActorBasedRoute element={ManageConnections} requiredRoles={['courier']} />
     },
     {
       path:'chat/customer_chat',
-      element:<CustomerChat/>
+      element: <ActorBasedRoute element={CustomerChat} requiredRoles={['courier']} />
     },
     {
       path:'chat/shop_chat',
-      element:<ShopChat/>
+      element: <ActorBasedRoute element={ShopChat} requiredRoles={['courier']} />
     },
     {
       path:'chat/admin_chat',
-      element:<AdminChat/>
+      element: <ActorBasedRoute element={AdminChat} requiredRoles={['courier']} />
     }
 
 

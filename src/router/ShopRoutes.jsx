@@ -37,28 +37,24 @@ const ShopRoutes = {
       element: <ActorBasedRoute element={ManageProduct} requiredRoles={['shop']} />
     },
     {
-      path:'manage_product',
-      element: <ManageProduct/>
-    },
-    {
       path:'add_new_product',
-      element: <AddNewProduct/>
+      element: <ActorBasedRoute element={AddNewProduct} requiredRoles={['shop']} />
     },
     {
       path:'product_statistics',
-      element: <ProductStatistics/>
+      element: <ActorBasedRoute element={ProductStatistics} requiredRoles={['shop']} />
     },
     {
       path:'courier_request',
-      element: <CourierRequest/>
+      element: <ActorBasedRoute element={CourierRequest} requiredRoles={['shop']} />
     },
     {
       path:'manage_orders',
-      element: <ManageOrders/>
+      element: <ActorBasedRoute element={ManageOrders} requiredRoles={['shop']} />
     },
     {
       path:'order_statistics',
-      element: <OrderStatistics/>
+      element: <ActorBasedRoute element={OrderStatistics} requiredRoles={['shop']} />
     },
     // {
     //   path:'approved_delivery',
@@ -66,27 +62,27 @@ const ShopRoutes = {
     // }
     {
       path:'courier_chat',
-      element: <CourierChat/>
+      element: <ActorBasedRoute element={CourierChat} requiredRoles={['shop']} />
     },
     {
       path:'customer_chat',
-      element: <CustomerChat/>
+      element: <ActorBasedRoute element={CustomerChat} requiredRoles={['shop']} />
     },
     {
       path:'admin_chat',
-      element: <AdminChat/>
+      element: <ActorBasedRoute element={AdminChat} requiredRoles={['shop']} />
     },
     {
       path:'manage_connections',
-      element: <ManageConnections/>
+      element: <ActorBasedRoute element={ManageConnections} requiredRoles={['shop']} />
     },
     {
       path:'payment_method',
-      element: <PaymentMethods/>
+      element: <ActorBasedRoute element={PaymentMethods} requiredRoles={['shop']} />
     },
     {
       path:'withdraw_cash',
-      element: <WithdrawCash/>
+      element: <ActorBasedRoute element={WithdrawCash} requiredRoles={['shop']} />
     },
 
   ]
