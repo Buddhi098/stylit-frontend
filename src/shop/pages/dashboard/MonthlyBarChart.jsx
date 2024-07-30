@@ -48,7 +48,6 @@ export default function MonthlyBarChart() {
   const theme = useTheme();
 
   const { primary, secondary } = theme.palette.text;
-  const info = theme.palette.info.light;
 
   const [series] = useState([
     {
@@ -61,7 +60,20 @@ export default function MonthlyBarChart() {
   useEffect(() => {
     setOptions((prevState) => ({
       ...prevState,
-      colors: [info],
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shade: 'light',
+          type: 'horizontal', // or 'vertical' for a vertical gradient
+          shadeIntensity: 0.5,
+          gradientToColors: ['#E2C7A8'], // lighter shade of #C0A888
+          inverseColors: false,
+          opacityFrom: 0.85,
+          opacityTo: 0.85,
+          stops: [0, 100]
+        }
+      },
+      colors: ['#C0A888'],
       xaxis: {
         labels: {
           style: {
@@ -70,7 +82,7 @@ export default function MonthlyBarChart() {
         }
       }
     }));
-  }, [primary, info, secondary]);
+  }, [primary, secondary]);
 
   return (
     <Box id="chart" sx={{ bgcolor: 'transparent' }}>
