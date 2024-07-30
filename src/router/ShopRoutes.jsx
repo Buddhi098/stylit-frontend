@@ -16,6 +16,7 @@ import AdminChat from '../shop/pages/chat/admin_chat/AdminChat';
 import ManageConnections from '../shop/pages/manage_connections/ManageConnections';
 import PaymentMethods from '../shop/pages/payment/payment_method/PaymentMethod';
 import WithdrawCash from '../shop/pages/payment/withdraw_cash/WithdrawCash';
+import ActorBasedRoute from './route_protector/ActorBasedRoute';
 // import ApprovedDelivery from '../shop/pages/approved_delivery/ApprovedDelivery';
 
 const Dashboard = Loadable(lazy(()=>import('../shop/pages/dashboard')))
