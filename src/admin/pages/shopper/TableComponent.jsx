@@ -326,14 +326,14 @@ export default function TableComponent({ rows }) {
                         align="left"
                         onClick={(event) => event.stopPropagation()}
                       >
-                        <Button
+                        {/*<Button
                           variant="contained"
                           color="primary"
                           sx={{ margin: "3px" }}
                           size="small"
                         >
                           Chat
-                        </Button>
+                        </Button>*/}
                         
                       </TableCell>
                     </TableRow>

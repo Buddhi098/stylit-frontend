@@ -75,12 +75,12 @@ const columnChartOptions = {
 
 const initialSeries = [
   {
-    name: 'Income',
+    name: 'Completed',
     data: [180, 90, 135, 114, 120, 145, 123, 56, 143, 123, 141, 162]
   },
   {
-    name: 'Cost Of Sales',
-    data: [190, 70, 155, 134, 130, 140, 133, 66, 153, 153, 111, 182]
+    name: 'Cancelled',
+    data: [30, 17, 20, 34, 35, 29, 33, 26, 33, 23, 21, 38]
   }
 ];
 
@@ -118,15 +118,15 @@ export default function SalesChart() {
     } else if (income) {
       setSeries([
         {
-          name: 'Income',
+          name: 'Completed',
           data: [180, 90, 135, 114, 120, 145, 123, 56, 143, 123, 141, 162]
         }
       ]);
     } else if (cos) {
       setSeries([
         {
-          name: 'Cost Of Sales',
-          data: [190, 70, 155, 134, 130, 140, 133, 66, 153, 153, 111, 182]
+          name: 'Cancelled',
+          data: [30, 17, 20, 34, 19, 29, 33, 26, 33, 23, 21, 18]
         }
       ]);
     } else {
@@ -177,9 +177,9 @@ export default function SalesChart() {
             <FormGroup row>
               <FormControlLabel
                 control={<Checkbox color="warning" checked={income} onChange={handleLegendChange} name="income" />}
-                label="Expected income"
+                label="Completed Orders"
               />
-              <FormControlLabel control={<Checkbox checked={cos} onChange={handleLegendChange} name="cos" />} label="Income received" />
+              <FormControlLabel control={<Checkbox checked={cos} onChange={handleLegendChange} name="cos" />} label="Cancelled Orders" />
             </FormGroup>
           </FormControl>
         </Stack>
