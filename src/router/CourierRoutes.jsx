@@ -13,7 +13,8 @@ import ManageConnections from '../courier/pages/manage_connections/ManageConnect
 import CustomerChat from '../courier/pages/customer_chat/CustomerChat';
 import ShopChat from '../courier/pages/shop_chat/ShopChat';
 import AdminChat from '../courier/pages/admin_chat/AdminChat';
-import ActorBasedRoute from './route_protector/ActorBasedRoute';
+import EditProfile from '../courier/pages/edit_profile/EditProfile';
+import Payment from '../courier/pages/payment/Payment';
 
 const Dashboard = Loadable(lazy(()=>import('../courier/pages/dashboard')))
 
@@ -57,7 +58,15 @@ const CourierRoutes = {
     },
     {
       path:'chat/admin_chat',
-      element: <ActorBasedRoute element={AdminChat} requiredRoles={['courier']} />
+      element:<AdminChat/>
+    },
+    {
+      path:'edit_profile',
+      element:<EditProfile/>
+    },
+    {
+      path:'payment',
+      element:<Payment/>
     }
 
 

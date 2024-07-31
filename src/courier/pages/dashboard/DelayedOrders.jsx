@@ -73,7 +73,7 @@ const headCells = [
     id: 'expected_date',
     align: 'right',
     disablePadding: false,
-    label: 'Expected Delivery Date'
+    label: 'Approx. Delivery Date'
   },
   {
     id: 'completed_date',
