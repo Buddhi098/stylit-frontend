@@ -3,61 +3,51 @@ import { Box, Typography, Grid, Link, Stack } from "@mui/material";
 
 const categories = [
   {
-    title: "Dresses",
+    title: "Shirts",
     items: [
-      "Shop All Dresses",
-      "Casual Dresses",
-      "Evening Dresses",
-      "Maxi Dresses",
-      "Midi Dresses",
-      "Mini Dresses",
-    ],
-  },
-  {
-    title: "Tops",
-    items: [
-      "Shop All Tops",
-      "Blouses",
+      "Shop All Shirts",
+      "Casual Shirts",
+      "Dress Shirts",
+      "Polos",
       "T-Shirts",
-      "Shirts",
-      "Tank Tops",
-      "Sweaters",
+      "Henleys",
     ],
   },
   {
-    title: "Bottoms",
+    title: "Trousers",
     subcategories: [
       {
         subtitle: "Pants",
-        items: ["Shop All Jeans", "Jeans", "Trousers", "Leggings"],
-      },
-      {
-        subtitle: "Skirts",
-        items: ["Shop All Skirts", "A-Line Skirts", "Pencil Skirts"],
+        items: ["Shop All Pants", "Jeans", "Chinos", "Trousers"],
       },
       {
         subtitle: "Shorts",
-        items: ["Shop All Shorts"],
+        items: ["Shop All Shorts", "Casual Shorts", "Dress Shorts"],
       },
     ],
-    items: ["Shop All Bottoms"],
+    items: ["Shop All Trousers"],
   },
   {
-    title: "Outwear",
-    items: ["Shop All Outwear", "Jackets", "Coats"],
+    title: "Outerwear",
+    items: ["Shop All Outerwear", "Jackets", "Coats", "Vest"],
+  },
+  {
+    title: "Suits",
+    items: ["Shop All Suits", "Business Suits", "Blazers", "Sport Coats"],
   },
   {
     title: "Activewear",
     items: [
       "Shop All Activewear",
-      "Leggings",
-      "Sports Bras",
-      "Workout Tops",
-      "Jackets",
-      "Shorts",
+      "Athletic Shirts",
+      "Workout Shorts",
+      "Track Pants",
+      "Sports Jackets",
+      "Compression Wear",
     ],
   },
 ];
+
 
 const Section1 = () => {
   return (
@@ -81,7 +71,7 @@ const Section1 = () => {
                   category.items.map((item, idx) => (
                     <Link
                       width="150px"
-                      href="#"
+                      href="/public/product/men"
                       key={idx}
                       underline="none"
                       display="block"
@@ -114,7 +104,7 @@ const Section1 = () => {
                         {subcategory.items.map((subitem, subitemIdx) => (
                           <Link
                             width="100px"
-                            href="#"
+                            href="/public/product/men"
                             key={subitemIdx}
                             underline="none"
                             display="block"

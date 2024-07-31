@@ -14,6 +14,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import img from "../../../public/assets/images/men_page/cover.png";
+import { Link } from "react-router-dom";
 
 const CartItem = ({ image, name, size, color, price }) => {
   const [quantity, setQuantity] = React.useState(1);
@@ -93,7 +94,6 @@ const CartItem = ({ image, name, size, color, price }) => {
   );
 };
 
-
 const Section1 = () => {
   return (
     <Box sx={{ width: 500, mx: "auto", p: 2 }}>
@@ -163,14 +163,16 @@ const Section1 = () => {
         <Typography variant="body1_alata">Rs 7000</Typography>
       </Box>
 
-      <Button
-        variant="contained"
-        fullWidth
-        size="large"
-        sx={{ background: "#000000", color: "#ffffff", borderRadius: 0 }}
-      >
-        <Typography variant="body2_nunito">CONTINUE TO CHECKOUT</Typography>
-      </Button>
+      <Link to="/shopper/checkout">
+        <Button
+          variant="contained"
+          fullWidth
+          size="large"
+          sx={{ background: "#000000", color: "#ffffff", borderRadius: 0 }}
+        >
+          <Typography variant="body2_nunito">CONTINUE TO CHECKOUT</Typography>
+        </Button>
+      </Link>
 
       <Typography variant="body2" color="text.secondary" align="center" mt={1}>
         Buy now before they sell out!

@@ -81,7 +81,7 @@ const Section1 = () => {
                   category.items.map((item, idx) => (
                     <Link
                       width="150px"
-                      href="#"
+                      href="/public/product/women"
                       key={idx}
                       underline="none"
                       display="block"
@@ -114,7 +114,7 @@ const Section1 = () => {
                         {subcategory.items.map((subitem, subitemIdx) => (
                           <Link
                             width="100px"
-                            href="#"
+                            href="/public/product/women"
                             key={subitemIdx}
                             underline="none"
                             display="block"

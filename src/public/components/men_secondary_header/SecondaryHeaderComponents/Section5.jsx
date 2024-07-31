@@ -1,16 +1,17 @@
 import React from "react";
 import { Box, Typography, Grid, Link, Stack } from "@mui/material";
-import img from "../../../assets/images/women_page/s22.png";
+import img from "../../../assets/images/men_page/s34.png";
 
 const categories = [
   {
     title: "CLOTHING SALE ITEMS",
     items: [
       "Shop All Sale Items",
-      "Dresses",
-      "Tops",
-      "Bottoms",
-      "Outerwear"
+      "Shirts",
+      "Trousers",
+      "Outerwear",
+      "Suits",
+      "Activewear",
     ],
   },
   {
@@ -18,11 +19,14 @@ const categories = [
     items: [
       "Shop All Accessories Sale Items",
       "Bags",
-      "Jewelry",
-      "Scarves & Hats",
+      "Belts",
+      "Watches",
+      "Scarves",
+      "Hats",
     ],
-  }
+  },
 ];
+
 
 const Section5 = () => {
   return (
@@ -50,7 +54,7 @@ const Section5 = () => {
                   {category.items &&
                     category.items.map((item, idx) => (
                       <Link
-                        href="#"
+                        href="/public/product/men"
                         key={idx}
                         underline="none"
                         display="block"
@@ -86,7 +90,7 @@ const Section5 = () => {
                         {subcategory.items.map((subitem, subitemIdx) => (
                           <Link
                             width="100px"
-                            href="#"
+                            href="/public/product/men"
                             key={subitemIdx}
                             underline="none"
                             display="block"

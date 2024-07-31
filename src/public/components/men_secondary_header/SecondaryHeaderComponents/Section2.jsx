@@ -1,16 +1,17 @@
 import React from "react";
 import { Box, Typography, Grid, Link, Stack } from "@mui/material";
-import img from "../../../assets/images/women_page/s22.png";
+import img from "../../../assets/images/men_page/s22.png";
 
 const categories = [
   {
     title: "CLOTHING NEW ARRIVALS",
     items: [
       "Shop All Clothing New Arrivals",
-      "Dresses",
-      "Tops",
-      "Bottoms",
+      "Shirts",
+      "Trousers",
       "Outerwear",
+      "Suits",
+      "Activewear",
     ],
   },
   {
@@ -18,8 +19,9 @@ const categories = [
     items: [
       "Shop All Accessories New Arrivals",
       "Bags",
-      "Jewelry",
-      "Scarves & Hats",
+      "Belts",
+      "Watches",
+      "Hats",
     ],
   },
 ];
@@ -50,7 +52,7 @@ const Section2 = () => {
                   {category.items &&
                     category.items.map((item, idx) => (
                       <Link
-                        href="#"
+                        href="/public/product/men"
                         key={idx}
                         underline="none"
                         display="block"
@@ -86,7 +88,7 @@ const Section2 = () => {
                         {subcategory.items.map((subitem, subitemIdx) => (
                           <Link
                             width="100px"
-                            href="#"
+                           href="/public/product/men"
                             key={subitemIdx}
                             underline="none"
                             display="block"

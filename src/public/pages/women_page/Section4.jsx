@@ -6,6 +6,7 @@ import s33 from "../../assets/images/women_page/s33.png";
 import s34 from "../../assets/images/women_page/s34.png";
 import s35 from "../../assets/images/women_page/s35.png";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import ImageModal from "./ImageModal";
 
 const images = [s31,s32, s33, s34, s35];
 
@@ -29,13 +30,9 @@ const Section4 = () => {
           Share your latest looks with #StyledByStylit for a chance to be
           featured.
         </Typography>
-        <Button
-          sx={{ background: "black", borderRadius: "0", padding: "10px 20px" }}
-        >
-          <Typography variant="body2_alata" color="white">
-            Add Your Photo
-          </Typography>
-        </Button>
+        
+        <ImageModal/>
+        
       </Stack>
       <Stack
         direction="row"
