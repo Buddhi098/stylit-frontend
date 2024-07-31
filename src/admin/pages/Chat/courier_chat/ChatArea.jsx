@@ -65,7 +65,7 @@ const ChatArea = ({ chat }) => {
                           sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            alignItems: msg.sender === 'shop' ? 'flex-start' : 'flex-end',
+                            alignItems: msg.sender === 'courier' ? 'flex-start' : 'flex-end',
                             mb: 1.5,
                             position: 'relative',
                           }}
@@ -74,8 +74,8 @@ const ChatArea = ({ chat }) => {
                             sx={{
                               p: 1.5,
                               borderRadius: 2,
-                              bgcolor: msg.sender === 'shop' ? '#EAEAEA' : '#C0A888',
-                              color: msg.sender === 'shop' ? 'black' : 'white',
+                              bgcolor: msg.sender === 'courier' ? '#EAEAEA' : '#C0A888',
+                              color: msg.sender === 'courier' ? 'black' : 'white',
                               maxWidth: '70%',
                               wordBreak: 'break-word',
                               display: 'flex',
@@ -93,7 +93,7 @@ const ChatArea = ({ chat }) => {
                             sx={{ 
                               fontSize: '0.65rem',
                               mt: 0.5,
-                              alignSelf: msg.sender === 'shop' ? 'flex-start' : 'flex-end',
+                              alignSelf: msg.sender === 'courier' ? 'flex-start' : 'flex-end',
                             }}
                           >
                             {formatTime(msg.time)}
