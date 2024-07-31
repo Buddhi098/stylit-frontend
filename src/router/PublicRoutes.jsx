@@ -29,6 +29,7 @@ const WomenDressPage = Loadable(lazy(() => import("../public/components/dress_co
 
 const MenProductPage = Loadable(lazy(()=>import('../public/pages/product_page_men/ProductPage')));
 const WomenProductPage = Loadable(lazy(()=>import('../public/pages/product_page_women/ProductPage')));
+const AdminLogin = Loadable(lazy(()=>import('../admin/pages/Login/Login')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 export const BaseRoute={
@@ -118,6 +119,10 @@ const PublicRoutes = {
     {
       path:'product/women',
       element:<WomenProductPage/>
+    },
+    {
+      path: 'admin_login',
+      element: <AdminLogin/>
     },
     {
       path: '*',
