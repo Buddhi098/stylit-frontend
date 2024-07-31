@@ -15,23 +15,23 @@ import Box from '@mui/material/Box';
 import { NumericFormat } from 'react-number-format';
 
 // project import
-import Dot from '../../components/@extended/Dot';
+//import Dot from '../../components/@extended/Dot';
 
-function createData(tracking_no, name, fat, carbs, protein) {
-  return { tracking_no, name, fat, carbs, protein };
+function createData(tracking_no, name, fat, protein) {
+  return { tracking_no, name, fat, protein };
 }
 
 const rows = [
-  createData(84564564, 'Camera Lens', 40, 2, 40570),
-  createData(98764564, 'Laptop', 300, 0, 180139),
-  createData(98756325, 'Mobile', 355, 1, 90989),
-  createData(98652366, 'Handset', 50, 1, 10239),
-  createData(13286564, 'Computer Accessories', 100, 1, 83348),
-  createData(86739658, 'TV', 99, 0, 410780),
-  createData(13256498, 'Keyboard', 125, 2, 70999),
-  createData(98753263, 'Mouse', 89, 2, 10570),
-  createData(98753275, 'Desktop', 185, 1, 98063),
-  createData(98753291, 'Chair', 100, 0, 14001)
+  createData(164, 'Casual Chic T-Shirt', 40, 4),
+  createData(165, 'Classic Denim Jeans', 300, 10),
+  createData(166, 'Sleek Leather Jacket', 355, 11),
+  createData(167, 'Tailored Trouser', 50, 11),
+  createData(168, 'Luxe Silk Scarf', 100, 11),
+  createData(169, 'Edgy Ripped Skinny Jeans', 99, 10),
+  createData(170, 'Minimalist Button-Down Shirt', 125, 2),
+  createData(171, 'Flowy Wrap Dress', 89, 2),
+  createData(172, 'Tailored Trousers', 185, 12),
+  createData(173, 'Modern High-Waist Skirt', 100, 10)
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -65,7 +65,7 @@ const headCells = [
     id: 'tracking_no',
     align: 'left',
     disablePadding: false,
-    label: 'Tracking No.'
+    label: 'Product ID'
   },
   {
     id: 'name',
@@ -75,22 +75,22 @@ const headCells = [
   },
   {
     id: 'fat',
-    align: 'right',
+    align: 'left',
     disablePadding: false,
-    label: 'Total Order'
-  },
+    label: 'Total Orders'
+  },/*
   {
     id: 'carbs',
     align: 'left',
     disablePadding: false,
 
-    label: 'Status'
-  },
+    label: 'Price (Rs.)'
+  },*/
   {
     id: 'protein',
     align: 'right',
     disablePadding: false,
-    label: 'Total Amount'
+    label: 'Price'
   }
 ];
 
@@ -116,30 +116,30 @@ function OrderTableHead({ order, orderBy }) {
 }
 
 function OrderStatus({ status }) {
-  let color;
+  //let color;
   let title;
 
-  switch (status) {
+  switch (status) {/*
     case 0:
-      color = 'warning';
+      //color = 'warning';
       title = 'Pending';
       break;
     case 1:
-      color = 'success';
+      //color = 'success';
       title = 'Approved';
       break;
     case 2:
-      color = 'error';
+      //color = 'error';
       title = 'Rejected';
       break;
     default:
-      color = 'primary';
-      title = 'None';
+      //color = 'primary';
+      title = '';*/
   }
 
   return (
     <Stack direction="row" spacing={1} alignItems="center">
-      <Dot color={color} />
+      {/*<Dot color={color} />*/}
       <Typography>{title}</Typography>
     </Stack>
   );
@@ -149,7 +149,7 @@ function OrderStatus({ status }) {
 
 export default function OrderTable() {
   const order = 'asc';
-  const orderBy = 'tracking_no';
+  const orderBy = 'fat';
 
   return (
     <Box>
@@ -181,11 +181,11 @@ export default function OrderTable() {
                     <Link color="secondary"> {row.tracking_no}</Link>
                   </TableCell>
                   <TableCell>{row.name}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
+                  <TableCell align="left">{row.fat}</TableCell>
                   <TableCell>
                     <OrderStatus status={row.carbs} />
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="left">
                     <NumericFormat value={row.protein} displayType="text" thousandSeparator prefix="$" />
                   </TableCell>
                 </TableRow>
@@ -200,4 +200,4 @@ export default function OrderTable() {
 
 OrderTableHead.propTypes = { order: PropTypes.any, orderBy: PropTypes.string };
 
-OrderStatus.propTypes = { status: PropTypes.number };
+//OrderStatus.propTypes = { status: PropTypes.number };

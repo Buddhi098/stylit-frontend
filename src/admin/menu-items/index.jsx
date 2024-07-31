@@ -1,15 +1,12 @@
 // project import
 import dashboard from './dashboard';
-import shopper from './Shopper';
-import shop from './Shop';
-import courier from './Courier';
-import finance from './Finance';
-import chat from './chat';
+import product from './services';
+
 
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-  items: [dashboard , shopper, shop, courier, finance, chat]
+  items: [dashboard , product]
 };
 
 export default menuItems;
