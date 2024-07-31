@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -17,7 +17,6 @@ import loginBackground from "../../assets/images/auth/thought-catalog-505eectW54
 import StylitLogo from "../../assets/images/logo/Stylit_logo.png";
 import AuthContext from "../../../context/auth_context/AuthContext";
 import { Alert } from "@mui/material";
-import { Copyright } from "@mui/icons-material";
 import { useNavigate } from "react-router";
 
 const theme = createTheme({
@@ -135,7 +134,7 @@ export default function SignInSide() {
               validationSchema={validationSchema}
               onSubmit={handleSubmit}
             >
-              {({ isSubmitting }) => (
+              {({ isSubmitting, errors, touched }) => (
                 <Form noValidate>
                   <Field
                     name="email"
@@ -150,6 +149,8 @@ export default function SignInSide() {
                     InputLabelProps={{
                       shrink: true,
                     }}
+                    error={touched.email && !!errors.email}
+                    helperText={touched.email && errors.email}
                     sx={{
                       borderRadius: "4px",
                       "& .MuiOutlinedInput-root": {
@@ -163,11 +164,7 @@ export default function SignInSide() {
                       },
                     }}
                   />
-                  <ErrorMessage
-                    name="email"
-                    component="div"
-                    style={{ color: "red" }}
-                  />
+
                   <Field
                     name="password"
                     as={TextField}
@@ -181,6 +178,8 @@ export default function SignInSide() {
                     InputLabelProps={{
                       shrink: true,
                     }}
+                    error={touched.password && !!errors.password}
+                    helperText={touched.password && errors.password}
                     sx={{
                       borderRadius: "4px",
                       "& .MuiOutlinedInput-root": {
@@ -194,17 +193,13 @@ export default function SignInSide() {
                       },
                     }}
                   />
-                  <ErrorMessage
-                    name="password"
-                    component="div"
-                    style={{ color: "red" }}
-                  />
+
                   <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
                     label="Remember me"
                   />
                   <Button
-                  ref={btnRef}
+                    ref={btnRef}
                     type="submit"
                     fullWidth
                     variant="contained"

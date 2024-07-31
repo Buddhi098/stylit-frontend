@@ -49,7 +49,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("refresh_token");
     setUser(null);
-    window.location.reload();
   };
 
   return (

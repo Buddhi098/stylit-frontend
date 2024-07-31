@@ -20,7 +20,7 @@ const categories = [
       "Blouses",
       "T-Shirts",
       "Shirts",
-      "Tank Tops",
+      "Crop Tops",
       "Sweaters",
     ],
   },

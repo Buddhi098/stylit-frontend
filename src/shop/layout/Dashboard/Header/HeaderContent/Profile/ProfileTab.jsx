@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // material-ui
@@ -13,12 +13,15 @@ import EditOutlined from '@ant-design/icons/EditOutlined';
 import UserOutlined from '@ant-design/icons/UserOutlined';
 import LogoutOutlined from '@ant-design/icons/LogoutOutlined';
 import WalletOutlined from '@ant-design/icons/WalletOutlined';
+import AuthContext from '../../../../../../context/auth_context/AuthContext';
 
 // ==============================|| HEADER PROFILE - PROFILE TAB ||============================== //
 
 export default function ProfileTab() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const navigate = useNavigate();
+
+  const {logout} = useContext(AuthContext)
 
   const handleListItemClick = (event, index, path) => {
     setSelectedIndex(index);
@@ -47,7 +50,7 @@ export default function ProfileTab() {
         </ListItemIcon>
         <ListItemText primary="Payment" />
       </ListItemButton>
-      <ListItemButton selected={selectedIndex === 3}>
+      <ListItemButton selected={selectedIndex === 3}  onClick={() => {logout()}}>
         <ListItemIcon>
           <LogoutOutlined />
         </ListItemIcon>

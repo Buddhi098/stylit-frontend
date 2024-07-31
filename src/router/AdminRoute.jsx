@@ -5,6 +5,7 @@ import Loadable from "../components/Loadable";
 
 import AdminLayout from "../admin/Admin";
 import { element } from "prop-types";
+import ActorBasedRoute from "./route_protector/ActorBasedRoute";
 
 const Dashboard = Loadable(
   lazy(() => import("../admin/pages/dashboard/index"))
@@ -66,24 +67,33 @@ const AdminRoutes = {
   children: [
     {
       path: "dashboard",
-      element: <Dashboard />,
+      element: <ActorBasedRoute element={Dashboard} requiredRoles={['admin']} />
     },
     {
       path: "shopper",
-      element: <AllShopper />,
+      element: <ActorBasedRoute element={AllShopper} requiredRoles={['admin']} />
     },
-    { path: "shop/new-account-request", element: <ShopRequest /> },
-    { path: "shop/all-shop-accounts", element: <AllShops /> },
-    { path: "shop/payment-requests", element: <ShopPaymentRequests /> },
-    { path: "shop/payment-history", element: <ShopPaymentHistory /> },
+    { path: "shop/new-account-request",
+      element: <ActorBasedRoute element={ShopRequest} requiredRoles={['admin']} />},
 
-    { path: "courier/new-courier-request", element: <CourierRequest /> },
-    { path: "courier/all-courier-accounts", element: <AllCouriers /> },
-    { path: "courier/payment-requests", element: <CourierPaymentRequests /> },
-    { path: "courier/payment-history", element: <CourierPaymentHistory /> },
+    { path: "shop/all-shop-accounts",
+      element: <ActorBasedRoute element={AllShops} requiredRoles={['admin']} />},
 
-    { path: "chat/shop_chat", element: <ShopChat /> },
-    { path: "chat/courier_chat", element: <CourierChat /> },
+    { path: "shop/payment-requests",
+      element: <ActorBasedRoute element={ShopPaymentRequests} requiredRoles={['admin']} /> },
+
+    { path: "shop/payment-history",element: <ActorBasedRoute element={ShopPaymentHistory} requiredRoles={['admin']} /> },
+
+    { path: "courier/new-courier-request",element: <ActorBasedRoute element={CourierRequest} requiredRoles={['admin']} /> },
+
+    { path: "courier/all-courier-accounts",element: <ActorBasedRoute element={AllCouriers} requiredRoles={['admin']} /> },
+
+    { path: "courier/payment-requests",element: <ActorBasedRoute element={CourierPaymentRequests} requiredRoles={['admin']} /> },
+
+    { path: "courier/payment-history",element: <ActorBasedRoute element={CourierPaymentHistory} requiredRoles={['admin']} /> },
+
+    { path: "chat/shop_chat", element: <ActorBasedRoute element={ShopChat} requiredRoles={['admin']} /> },
+    { path: "chat/courier_chat", element: <ActorBasedRoute element={CourierChat} requiredRoles={['admin']} />},
   ],
 };
 
