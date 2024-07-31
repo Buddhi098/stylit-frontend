@@ -11,7 +11,7 @@ import shopper from './Shopper';
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-  items: [dashboard , shopper ,shop ,courier , chat , finance  ]
+  items: [dashboard , shopper ,shop ,courier , chat  ]
 };
 
 export default menuItems;

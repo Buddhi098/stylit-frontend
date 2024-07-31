@@ -73,7 +73,7 @@ const DataTable = () => {
   };
 
   return (
-    <Stack>
+    <Stack sx={{p: { xs: 2, sm: 3 } }}>
       <FilterComponent
         search={search}
         handleSearch={setSearch}

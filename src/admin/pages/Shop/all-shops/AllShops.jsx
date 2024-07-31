@@ -4,7 +4,7 @@ import DataTable from './DataTable'
 
 const AllShops = () => {
   return (
-    <Stack>
+    <Stack >
         <DataTable/>
     </Stack>
   )
