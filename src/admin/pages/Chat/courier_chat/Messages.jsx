@@ -4,7 +4,7 @@ import SriLankaPostLogo from '../../../assets/images/Couriers/images (1).jpeg';
 import YamunaExpressLogo from '../../../assets/images/Couriers/authority_1586777963479.webp';
 import GROCourierLogo from '../../../assets/images/Couriers/images.png';
 import RedDotLogo from '../../../assets/images/Couriers/png-transparent-red-dot-design-award-of-the-federal-republic-of-germany-industrial-design-award-sphere-industrial-design-prize-thumbnail.png';
-import DialogDeliveryLogo from '../../../assets/images/Couriers/png-clipart-brand-dialog-business-services-sri-lanka-data-sim-card-works-immediately-no-registration-required-500mb-1gb-3gb-and-7gb-upgrades-available-free-voip-calls-logo-dialog-broadband.png';
+import DialogDeliveryLogo from '../../../assets/images/Couriers/png-clipart-brand-dialog-business-.png';
 import LankaLogisticsLogo from '../../../assets/images/Couriers/images (2).jpeg';
 import PickMeLogo from '../../../assets/images/Couriers/pick_me.png';
 import SriLankaExpressLogo from '../../../assets/images/Couriers/stock-vector-illustration-graphic-design-of-express-logistic-transportation-concept-logo-design-template-2151557443.jpg';
