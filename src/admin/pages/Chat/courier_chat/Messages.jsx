@@ -1,19 +1,20 @@
-import givenchy from "../../../assets/images/stores/givenchy.png"
-import ebony from "../../../assets/images/stores/ebony.png"
-import bearappeal from "../../../assets/images/stores/bearappeal.png"
-import nolimit from "../../../assets/images/stores/nolimit.png"
-import carnage from "../../../assets/images/stores/carnage.png"
-import hameedia from "../../../assets/images/stores/hameedia.png"
-import coolplanet from "../../../assets/images/stores/coolplanet.png"
-import tshirtrepublic from "../../../assets/images/stores/tshirtrepublic.jpeg"
-import street82 from "../../../assets/images/stores/street82.png"
+import AirtelLogo from '../../../assets/images/Couriers/airtel-logo-vector.png';
+import DHLLogo from '../../../assets/images/Couriers/images.jpeg';
+import SriLankaPostLogo from '../../../assets/images/Couriers/images (1).jpeg';
+import YamunaExpressLogo from '../../../assets/images/Couriers/authority_1586777963479.webp';
+import GROCourierLogo from '../../../assets/images/Couriers/images.png';
+import RedDotLogo from '../../../assets/images/Couriers/png-transparent-red-dot-design-award-of-the-federal-republic-of-germany-industrial-design-award-sphere-industrial-design-prize-thumbnail.png';
+import DialogDeliveryLogo from '../../../assets/images/Couriers/png-clipart-brand-dialog-business-services-sri-lanka-data-sim-card-works-immediately-no-registration-required-500mb-1gb-3gb-and-7gb-upgrades-available-free-voip-calls-logo-dialog-broadband.png';
+import LankaLogisticsLogo from '../../../assets/images/Couriers/images (2).jpeg';
+import PickMeLogo from '../../../assets/images/Couriers/pick_me.png';
+import SriLankaExpressLogo from '../../../assets/images/Couriers/stock-vector-illustration-graphic-design-of-express-logistic-transportation-concept-logo-design-template-2151557443.jpg';
 
 
 const messages = [
     {
         "id": 8,
         "name": "PickMe",
-        "avatar": carnage,
+        "avatar": PickMeLogo,
         "lastMessage": "Package is on its way to the customer.",
         "time": "2024-07-26T13:00:00",
         "unread": true,
@@ -30,7 +31,7 @@ const messages = [
     {
         "id": 9,
         "name": "DHL Sri Lanka",
-        "avatar": bearappeal,
+        "avatar": DHLLogo,
         "lastMessage": "Returning the package to the seller.",
         "time": "2024-07-26T14:00:00",
         "unread": true,
@@ -47,7 +48,7 @@ const messages = [
     {
         "id": 10,
         "name": "Sri Lanka Post",
-        "avatar": "https://www.srilankapost.gov.lk/wp-content/themes/srilanka_post/images/logo.png",
+        "avatar": SriLankaPostLogo,
         "lastMessage": "Delivered and confirmed by the recipient.",
         "time": "2024-07-26T15:15:00",
         "unread": false,
@@ -65,7 +66,7 @@ const messages = [
     {
         "id": 11,
         "name": "Yamuna Express",
-        "avatar": "https://www.yamunaexpress.lk/assets/images/logo.png",
+        "avatar": YamunaExpressLogo,
         "lastMessage": "On my way to pick up the urgent package.",
         "time": "2024-07-26T16:30:00",
         "unread": true,
@@ -78,7 +79,7 @@ const messages = [
     {
         "id": 12,
         "name": "GRO Courier",
-        "avatar": "https://www.grocourier.lk/assets/images/logo.png",
+        "avatar": GROCourierLogo,
         "lastMessage": "I have picked it up.",
         "time": "2024-07-26T17:40:00",
         "unread": false,
@@ -92,7 +93,7 @@ const messages = [
     {
         "id": 13,
         "name": "Red Dot",
-        "avatar": "https://www.reddot.lk/assets/images/logo.png",
+        "avatar": RedDotLogo,
         "lastMessage": "Returning package to the warehouse.",
         "time": "2024-07-26T18:20:00",
         "unread": true,
@@ -109,7 +110,7 @@ const messages = [
     {
         "id": 14,
         "name": "Dialog Delivery",
-        "avatar": "https://www.dialog.lk/sites/default/files/2020-06/Dialog-Logo.png",
+        "avatar": DialogDeliveryLogo,
         "lastMessage": "Package delivered to the customer.",
         "time": "2024-07-26T19:00:00",
         "unread": false,
@@ -126,7 +127,7 @@ const messages = [
     {
         "id": 15,
         "name": "Airtel Logistics",
-        "avatar": "https://www.airtel.lk/assets/images/logo.png",
+        "avatar": AirtelLogo,
         "lastMessage": "Package picked up successfully.",
         "time": "2024-07-26T20:10:00",
         "unread": false,
@@ -140,7 +141,7 @@ const messages = [
     {
         "id": 16,
         "name": "Lanka Logistics",
-        "avatar": "https://www.lankalogistics.lk/assets/images/logo.png",
+        "avatar": LankaLogisticsLogo,
         "lastMessage": "On my way to deliver the package.",
         "time": "2024-07-26T21:00:00",
         "unread": true,
@@ -155,7 +156,7 @@ const messages = [
     {
         "id": 17,
         "name": "Sri Lanka Express",
-        "avatar": "https://www.srilankaexpress.lk/assets/images/logo.png",
+        "avatar": SriLankaExpressLogo,
         "lastMessage": "Package delivered and recipient notified.",
         "time": "2024-07-26T22:15:00",
         "unread": false,
@@ -187,7 +188,7 @@ const messages = [
     {
         "id": 19,
         "name": "Kolonna Logistics",
-        "avatar": "https://www.kolonnalogistics.lk/assets/images/logo.png",
+        "avatar": "https://www.kolonnalogistics.com/assets/images/logo.png",
         "lastMessage": "On my way to deliver the package.",
         "time": "2024-07-27T09:30:00",
         "unread": false,

@@ -27,8 +27,13 @@ import Chip from '@mui/material/Chip';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import Switch from '@mui/material/Switch';
 
+<<<<<<< HEAD
 const courierDetailsDialog = ({ open, handleClose, selectedRow }) => {
   const selectedcourier = selectedRow;
+=======
+const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
+  const selectedCourier = selectedRow;
+>>>>>>> ae799b2 (all couriers updated.)
 
   const markerIcon = new L.Icon({
     iconUrl: require("leaflet/dist/images/marker-icon.png"),
@@ -55,6 +60,7 @@ const courierDetailsDialog = ({ open, handleClose, selectedRow }) => {
       <DialogTitle sx={{ backgroundColor: '#C0A888' }}>
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" alignItems="center">
+<<<<<<< HEAD
             {selectedcourier && (
               <>
                 {/* <img
@@ -69,6 +75,12 @@ const courierDetailsDialog = ({ open, handleClose, selectedRow }) => {
                 /> */}
                 <Typography variant="h6" component="span" ml={2} style={{ textTransform: 'uppercase', fontWeight: 'bold', color: 'white' }}>
                   {selectedcourier.courierName}
+=======
+            {selectedCourier && (
+              <>
+                <Typography variant="h6" component="span" ml={2} style={{ textTransform: 'uppercase', fontWeight: 'bold', color: 'white' }}>
+                  {selectedCourier.courierName}
+>>>>>>> ae799b2 (all couriers updated.)
                 </Typography>
               </>
             )}
@@ -78,8 +90,13 @@ const courierDetailsDialog = ({ open, handleClose, selectedRow }) => {
               Status
             </Typography>
             <Switch
+<<<<<<< HEAD
               checked={selectedcourier.isActive}
               // onChange={(event) => handleSwitchChange(event, selectedcourier.id)}
+=======
+              checked={selectedCourier.isActive}
+              // onChange={(event) => handleSwitchChange(event, selectedShop.id)}
+>>>>>>> ae799b2 (all couriers updated.)
               sx={{
                 '& .MuiSwitch-switchBase.Mui-checked': {
                   color: 'green',
@@ -97,7 +114,7 @@ const courierDetailsDialog = ({ open, handleClose, selectedRow }) => {
       </DialogTitle>
       <Divider />
       <DialogContent>
-        <Box display="flex" flexDirection="column" mb={2}>
+      <Box display="flex" flexDirection="column" mb={2}>
           <Box mb={2}>
             <Box display="flex" alignItems="center">
               <Box sx={{
@@ -111,6 +128,7 @@ const courierDetailsDialog = ({ open, handleClose, selectedRow }) => {
               }}>
                 <EmailIcon fontSize="small" sx={{ color: "black" }} />
               </Box>
+<<<<<<< HEAD
               <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>courier Contact Info</Typography>
             </Box>
             {selectedcourier && (
@@ -126,6 +144,19 @@ const courierDetailsDialog = ({ open, handleClose, selectedRow }) => {
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Contact Number</strong></Typography></Grid>
                   <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedcourier.courierContactNumber}</Typography></Grid>
+=======
+              <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Courier Contact Info</Typography>
+            </Box>
+            {selectedCourier && (
+              <>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Email</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierEmail}</Typography></Grid>
+                </Grid>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Contact Number</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierContactNumber}</Typography></Grid>
+>>>>>>> ae799b2 (all couriers updated.)
                 </Grid>
               </>
             )}
@@ -145,6 +176,7 @@ const courierDetailsDialog = ({ open, handleClose, selectedRow }) => {
               </Box>
               <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Courier Location</Typography>
             </Box>
+<<<<<<< HEAD
             {selectedcourier && (
               <Stack>
                 <MapContainer
@@ -159,6 +191,24 @@ const courierDetailsDialog = ({ open, handleClose, selectedRow }) => {
                   <LocationMarker />
                 </MapContainer>
               </Stack>
+=======
+            {selectedCourier && (
+              <>
+                <Stack>
+                  <MapContainer
+                    center={position}
+                    zoom={13}
+                    style={{ height: "50vh", marginTop: "20px" }}
+                  >
+                    <TileLayer
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    />
+                    <LocationMarker />
+                  </MapContainer>
+                </Stack>
+              </>
+>>>>>>> ae799b2 (all couriers updated.)
             )}
           </Box>
           <Box>
@@ -176,6 +226,7 @@ const courierDetailsDialog = ({ open, handleClose, selectedRow }) => {
               </Box>
               <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Business Information</Typography>
             </Box>
+<<<<<<< HEAD
             {selectedcourier && (
               <>
                 <Grid container spacing={1} ml={3} mt={0.25}>
@@ -193,6 +244,25 @@ const courierDetailsDialog = ({ open, handleClose, selectedRow }) => {
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Business Email</strong></Typography></Grid>
                   <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedcourier.courierBusinessData.businessEmail}</Typography></Grid>
+=======
+            {selectedCourier && (
+              <>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Registration No.</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBusinessData.businessRegNo}</Typography></Grid>
+                </Grid>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Registration Date</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBusinessData.businessRegDate}</Typography></Grid>
+                </Grid>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Business Type</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBusinessData.businessType}</Typography></Grid>
+                </Grid>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Business Email</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBusinessData.businessEmail}</Typography></Grid>
+>>>>>>> ae799b2 (all couriers updated.)
                 </Grid>
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Business Document</strong></Typography></Grid>
@@ -202,7 +272,11 @@ const courierDetailsDialog = ({ open, handleClose, selectedRow }) => {
                       size="small"
                       color="primary"
                       startIcon={<PictureAsPdfIcon />}
+<<<<<<< HEAD
                       onClick={() => window.open(selectedcourier.courierBusinessData.businessDocument, '_blank')}
+=======
+                      onClick={() => window.open(selectedCourier.courierBusinessData.businessDocument, '_blank')}
+>>>>>>> ae799b2 (all couriers updated.)
                     >
                       View PDF
                     </Button>
@@ -211,7 +285,69 @@ const courierDetailsDialog = ({ open, handleClose, selectedRow }) => {
               </>
             )}
           </Box>
+<<<<<<< HEAD
+=======
+          <Box mt={2}>
+            <Box display="flex" alignItems="center">
+              <Box sx={{
+                width: "35px",
+                height: "35px",
+                borderRadius: "50%",
+                backgroundColor: "#D9D9D9",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}>
+                <DescriptionIcon fontSize="small" sx={{ color: "black" }} />
+              </Box>
+              <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Courier Information</Typography>
+            </Box>
+            {selectedCourier && (
+              <>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Description</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBusinessData.businessType}</Typography></Grid>
+                </Grid>
+              </>
+            )}
+          </Box>
         </Box>
+        <Box>
+          <Box mt={2}>
+            <Box display="flex" alignItems="center">
+              <Box sx={{
+                width: "35px",
+                height: "35px",
+                borderRadius: "50%",
+                backgroundColor: "#D9D9D9",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}>
+                <AccountBalanceIcon fontSize="small" sx={{ color: "black" }} />
+              </Box>
+              <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Bank Details</Typography>
+            </Box>
+            {selectedCourier && (
+              <>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Bank Name</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBankDetails.bankName}</Typography></Grid>
+                </Grid>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Account Number</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBankDetails.accountNo}</Typography></Grid>
+                </Grid>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Branch</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBankDetails.branchName}</Typography></Grid>
+                </Grid>
+              </>
+            )}
+          </Box>
+>>>>>>> ae799b2 (all couriers updated.)
+        </Box>
+      
       </DialogContent>
     </Dialog>
   );
