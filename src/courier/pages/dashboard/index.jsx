@@ -89,7 +89,7 @@ export default function DashboardDefault() {
               <Typography variant="h6" color="text.secondary">
                 This Week Statistics
               </Typography>
-              <Typography variant="h3">Rs.27,650</Typography>
+              <Typography variant="h3">Rs 13,908</Typography>
             </Stack>
           </Box>
           <MonthlyBarChart />
