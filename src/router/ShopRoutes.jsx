@@ -15,6 +15,8 @@ import CustomerChat from '../shop/pages/chat/customer_chat/CustomerChat';
 import AdminChat from '../shop/pages/chat/admin_chat/AdminChat';
 import ManageConnections from '../shop/pages/manage_connections/ManageConnections';
 import PlacedOrders from '../shop/pages/order/recent_orders/RecentOrders';
+import EditProfile from '../shop/pages/profile/edit_profile/EditProfile';
+import Payment from '../shop/pages/profile/payment/Payment';
 // import ApprovedDelivery from '../shop/pages/approved_delivery/ApprovedDelivery';
 
 const Dashboard = Loadable(lazy(()=>import('../shop/pages/dashboard')))
@@ -77,6 +79,14 @@ const ShopRoutes = {
     {
       path:'manage_connections',
       element: <ManageConnections/>
+    },
+    {
+      path:'edit_profile',
+      element: <EditProfile/>
+    },
+    {
+      path:'payment',
+      element: <Payment/>
     },
    
 
