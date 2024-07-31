@@ -28,7 +28,7 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import Switch from '@mui/material/Switch';
 
 const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
-  const selectedShop = selectedRow;
+  const selectedCourier = selectedRow;
 
   const markerIcon = new L.Icon({
     iconUrl: require("leaflet/dist/images/marker-icon.png"),
@@ -48,27 +48,17 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
     );
   };
 
-  const position = [selectedRow.shopLocation.latitude, selectedRow.shopLocation.longitude];
+  const position = [selectedRow.courierLocation.latitude, selectedRow.courierLocation.longitude];
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogTitle sx={{ backgroundColor: '#C0A888' }}>
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" alignItems="center">
-            {selectedShop && (
+            {selectedCourier && (
               <>
-                <img
-                  src={selectedShop.shopInformation.logo}
-                  alt={selectedShop.shopName}
-                  width={72}
-                  height={69}
-                  style={{
-                    border: '1px solid black',
-                    borderRadius: '10%',
-                  }}
-                />
                 <Typography variant="h6" component="span" ml={2} style={{ textTransform: 'uppercase', fontWeight: 'bold', color: 'white' }}>
-                  {selectedShop.shopName}
+                  {selectedCourier.courierName}
                 </Typography>
               </>
             )}
@@ -78,7 +68,7 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
               Status
             </Typography>
             <Switch
-              checked={selectedShop.isActive}
+              checked={selectedCourier.isActive}
               // onChange={(event) => handleSwitchChange(event, selectedShop.id)}
               sx={{
                 '& .MuiSwitch-switchBase.Mui-checked': {
@@ -97,7 +87,7 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
       </DialogTitle>
       <Divider />
       <DialogContent>
-        <Box display="flex" flexDirection="column" mb={2}>
+      <Box display="flex" flexDirection="column" mb={2}>
           <Box mb={2}>
             <Box display="flex" alignItems="center">
               <Box sx={{
@@ -111,21 +101,17 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
               }}>
                 <EmailIcon fontSize="small" sx={{ color: "black" }} />
               </Box>
-              <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Shop Contact Info</Typography>
+              <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Courier Contact Info</Typography>
             </Box>
-            {selectedShop && (
+            {selectedCourier && (
               <>
                 <Grid container spacing={1} ml={3} mt={0.25}>
-                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Shop Name</strong></Typography></Grid>
-                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopName}</Typography></Grid>
-                </Grid>
-                <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Email</strong></Typography></Grid>
-                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopEmail}</Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierEmail}</Typography></Grid>
                 </Grid>
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Contact Number</strong></Typography></Grid>
-                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopContactNumber}</Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierContactNumber}</Typography></Grid>
                 </Grid>
               </>
             )}
@@ -143,22 +129,24 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
               }}>
                 <LocationOnIcon fontSize="small" sx={{ color: "black" }} />
               </Box>
-              <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Shop Location</Typography>
+              <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Courier Location</Typography>
             </Box>
-            {selectedShop && (
-              <Stack>
-                <MapContainer
-                  center={position}
-                  zoom={13}
-                  style={{ height: "50vh", marginTop: "20px" }}
-                >
-                  <TileLayer
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  />
-                  <LocationMarker />
-                </MapContainer>
-              </Stack>
+            {selectedCourier && (
+              <>
+                <Stack>
+                  <MapContainer
+                    center={position}
+                    zoom={13}
+                    style={{ height: "50vh", marginTop: "20px" }}
+                  >
+                    <TileLayer
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    />
+                    <LocationMarker />
+                  </MapContainer>
+                </Stack>
+              </>
             )}
           </Box>
           <Box>
@@ -176,23 +164,23 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
               </Box>
               <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Business Information</Typography>
             </Box>
-            {selectedShop && (
+            {selectedCourier && (
               <>
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Registration No.</strong></Typography></Grid>
-                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopBusinessData.businessRegNo}</Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBusinessData.businessRegNo}</Typography></Grid>
                 </Grid>
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Registration Date</strong></Typography></Grid>
-                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopBusinessData.businessRegDate}</Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBusinessData.businessRegDate}</Typography></Grid>
                 </Grid>
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Business Type</strong></Typography></Grid>
-                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopBusinessData.businessType}</Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBusinessData.businessType}</Typography></Grid>
                 </Grid>
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Business Email</strong></Typography></Grid>
-                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopBusinessData.businessEmail}</Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBusinessData.businessEmail}</Typography></Grid>
                 </Grid>
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Business Document</strong></Typography></Grid>
@@ -202,7 +190,7 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
                       size="small"
                       color="primary"
                       startIcon={<PictureAsPdfIcon />}
-                      onClick={() => window.open(selectedShop.shopBusinessData.businessDocument, '_blank')}
+                      onClick={() => window.open(selectedCourier.courierBusinessData.businessDocument, '_blank')}
                     >
                       View PDF
                     </Button>
@@ -224,49 +212,19 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
               }}>
                 <DescriptionIcon fontSize="small" sx={{ color: "black" }} />
               </Box>
-              <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Shop Information</Typography>
+              <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Courier Information</Typography>
             </Box>
-            {selectedShop && (
+            {selectedCourier && (
               <>
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Description</strong></Typography></Grid>
-                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopInformation.shopDescription}</Typography></Grid>
-                </Grid>
-                <Grid container spacing={1} ml={3} mt={0.25}>
-                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Categories</strong></Typography></Grid>
-                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>
-                    {selectedShop.shopInformation.categories.map(category => category.title).join(', ')}
-                  </Typography></Grid>
-                </Grid>
-                <Grid container spacing={1} ml={3} mt={0.25}>
-                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Facebook</strong></Typography></Grid>
-                  <Grid item xs={8}>
-                    <Link
-                      href={selectedShop.shopInformation.facebookLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      sx={{ textAlign: 'right', color: 'black' }}
-                    >
-                      {selectedShop.shopInformation.facebookLink}
-                    </Link>
-                  </Grid>
-                </Grid>
-                <Grid container spacing={1} ml={3} mt={0.25}>
-                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Instagram</strong></Typography></Grid>
-                  <Grid item xs={8}>
-                    <Link
-                      href={selectedShop.shopInformation.instagramLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      sx={{ textAlign: 'right', color: 'black' }}
-                    >
-                      {selectedShop.shopInformation.instagramLink}
-                    </Link>
-                  </Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBusinessData.businessType}</Typography></Grid>
                 </Grid>
               </>
             )}
           </Box>
+        </Box>
+        <Box>
           <Box mt={2}>
             <Box display="flex" alignItems="center">
               <Box sx={{
@@ -282,24 +240,25 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
               </Box>
               <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Bank Details</Typography>
             </Box>
-            {selectedShop && (
+            {selectedCourier && (
               <>
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Bank Name</strong></Typography></Grid>
-                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopBankDetails.bankName}</Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBankDetails.bankName}</Typography></Grid>
                 </Grid>
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Account Number</strong></Typography></Grid>
-                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopBankDetails.accountNo}</Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBankDetails.accountNo}</Typography></Grid>
                 </Grid>
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Branch</strong></Typography></Grid>
-                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopBankDetails.branchName}</Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBankDetails.branchName}</Typography></Grid>
                 </Grid>
               </>
             )}
           </Box>
         </Box>
+      
       </DialogContent>
     </Dialog>
   );

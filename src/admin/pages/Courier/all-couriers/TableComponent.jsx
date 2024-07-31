@@ -162,14 +162,14 @@ export default function TableComponent({ rows }) {
 
                       return (
                         <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)}>
-                          <TableCell align="right">{row.shopName}</TableCell>
-                          <TableCell align="right">{row.shopEmail}</TableCell>
-                          <TableCell align="right">{row.shopContactNumber}</TableCell>
-                          <TableCell align="right">{row.shopBusinessData.businessType}</TableCell>
+                          <TableCell align="right">{row.courierName}</TableCell>
+                          <TableCell align="right">{row.courierEmail}</TableCell>
+                          <TableCell align="right">{row.courierContactNumber}</TableCell>
+                          <TableCell align="right">{row.courierBusinessData.businessType}</TableCell>
                           <TableCell align="center"
                             onClick={(event) => event.stopPropagation()}><ViewLocation/></TableCell>
-                          <TableCell align="right">{row.shopBankDetails.accountNo}</TableCell>
-                          <TableCell align="right">{row.shopBankDetails.branchName}</TableCell>
+                          <TableCell align="right">{row.courierBankDetails.accountNo}</TableCell>
+                          <TableCell align="right">{row.courierBankDetails.branchName}</TableCell>
                           <TableCell align="center">
                             <Switch
                               defaultChecked

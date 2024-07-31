@@ -125,10 +125,10 @@ const FilterComponent = ({
             }}
           >
             <Typography variant="h4" ml="2px">
-              All Shops
+              All Couriers
             </Typography>
             <Typography variant="h6" ml="2px" color="#8E8B8B">
-            View full details of all shops
+            View full details of all couriers
             </Typography>
           </Box>
         </Grid>
