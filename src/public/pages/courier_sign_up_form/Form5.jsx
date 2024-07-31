@@ -16,11 +16,8 @@ const Form6 = (props) => {
         </Alert>
       ) : (
         <Stack>
-          <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-            <CheckCircleOutlineIcon color="success" sx={{ fontSize: 60 }} />
-          </Box>
           <Typography variant="title_alata" component="h1" gutterBottom>
-            Registration Complete
+          Registrations are under review.
           </Typography>
           <Typography variant="body1_nunito" sx={{ mb: 4 }} color="#999999">
             Your registration was successfully completed. We will activate your
