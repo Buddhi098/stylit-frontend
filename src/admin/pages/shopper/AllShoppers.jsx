@@ -2,7 +2,7 @@ import { Stack } from '@mui/system'
 import React from 'react'
 import DataTable from './DataTable'
 
-const AddNewProduct = () => {
+const AllShoppers = () => {
   return (
     <Stack>
         <DataTable/>
@@ -10,4 +10,4 @@ const AddNewProduct = () => {
   )
 }
 
-export default AddNewProduct
+export default AllShoppers
