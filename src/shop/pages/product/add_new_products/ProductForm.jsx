@@ -10,49 +10,81 @@ import {
   ToggleButtonGroup, 
   ToggleButton, 
   IconButton,
-  InputAdornment
+  InputAdornment,
+  InputLabel,
+  FormControl
 } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import AddIcon from '@mui/icons-material/Add';
+import { Autocomplete, Chip } from '@mui/material';
+
 
 const ProductForm = () => {
-  const [sizes, setSizes] = useState([]);
   const [gender, setGender] = useState('Women');
   const [basePrice, setBasePrice] = useState('');
-  const [quantity, setQuantity] = useState({});
   const [discount, setDiscount] = useState('');
   const [discountType, setDiscountType] = useState('');
-  const [colorVariants, setColorVariants] = useState([{ color: 'Yellow' }, { color: 'Red' }, { color: 'White' }]);
-  const [status, setStatus] = useState('Active');
   const [formData, setFormData] = useState({
     category: '',
     subcategory: '',
-    images: []
+    productImages: [],
+    sizeChartImages: []
   });
+
+  const [category, setCategory] = useState('');
+  const [subcategory, setSubcategory] = useState('');
+  const [occasions, setOccasions] = useState([]);
+
+  const [variantBoxes, setVariantBoxes] = useState([
+    {
+      colorVariant: '',
+      sizeQuantityChart: [{ size: '', quantity: '' }],
+      sizeChartImage: null,
+      status: 'Active'
+    }
+  ]);
 
   useEffect(() => {
     const saveDraft = () => {
       localStorage.setItem('productFormDraft', JSON.stringify({
-        sizes, gender, basePrice, quantity, discount, discountType, status, formData
+        gender, basePrice, discount, discountType, formData, variantBoxes
       }));
       console.log('Draft saved:', {
-        sizes, gender, basePrice, quantity, discount, discountType, status, formData
+        gender, basePrice, discount, discountType, formData, variantBoxes
       });
     };
 
     const timer = setTimeout(saveDraft, 1000);
 
     return () => clearTimeout(timer);
-  }, [sizes, gender, basePrice, quantity, discount, discountType, status, formData]);
+  }, [gender, basePrice, discount, discountType, formData, variantBoxes]);
 
-  const handleSizeChange = (event, newSizes) => {
-    setSizes(newSizes);
+  const categories = [
+    'Tops', 'Bottoms', 'Dresses', 'Suits', 'Outerwear', 'Footwear', 'Bags', 'Jewellery', 'Accessories'
+  ];
+
+  const subcategories = {
+    Tops: ['T shirts', 'Shirts', 'Blouses', 'Crop Tops', 'Sweaters'],
+    Bottoms: ['Jeans', 'Leggings', 'Skirts', 'Shorts', 'Trousers'],
+    Dresses: ['Maxi Dresses', 'Midi Dresses', 'Mini Dresses'],
+    Suits: ['Two-Piece Suits', 'Jumpsuits'],
+    Outerwear: ['Jackets', 'Coats', 'Blazers', 'Cardigans'],
+    Footwear: ['Sneakers', 'Shoes', 'Sandals', 'Heels'],
+    Bags: ['Handbags', 'Totes', 'Backpacks', 'Belt Bags'],
+    Jewellery: ['Necklaces', 'Earrings', 'Rings', 'Bracelets', 'Anklets', 'Watches'],
+    Accessories: ['Belts', 'Scarves', 'Hats', 'Gloves']
   };
 
-  const handleQuantityChange = (size, value) => {
-    setQuantity({ ...quantity, [size]: value });
+  const handleCategoryChange = (event) => {
+    const newCategory = event.target.value;
+    setCategory(newCategory);
+    setSubcategory('');
+  };
+
+  const handleSubcategoryChange = (event) => {
+    setSubcategory(event.target.value);
   };
 
   const handleGenderChange = (event, newGender) => {
@@ -61,22 +93,16 @@ const ProductForm = () => {
     }
   };
 
-  const handleAddImage = (event) => {
-    const newImages = [...formData.images];
+  const handleAddProductImage = (event) => {
+    const newImages = [...formData.productImages];
     newImages.push(URL.createObjectURL(event.target.files[0]));
-    setFormData({ ...formData, images: newImages });
+    setFormData({ ...formData, productImages: newImages });
   };
-
-  const handleAddVariant = () => {
-    const newVariants = [...colorVariants];
-    newVariants.push({ color: '' });
-    setColorVariants(newVariants);
-  };
-
-  const handleDeleteVariant = (index) => {
-    const newVariants = [...colorVariants];
-    newVariants.splice(index, 1);
-    setColorVariants(newVariants);
+  
+  const handleAddSizeChartImage = (boxIndex, event) => {
+    const newVariantBoxes = [...variantBoxes];
+    newVariantBoxes[boxIndex].sizeChartImage = URL.createObjectURL(event.target.files[0]);
+    setVariantBoxes(newVariantBoxes);
   };
 
   const handleDiscountChange = (event, newDiscountType) => {
@@ -88,71 +114,77 @@ const ProductForm = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-
-    // Clear sizes and quantity when category changes
-    if (name === 'category' || name === 'subcategory') {
-      setSizes([]);
-      setQuantity({});
-    }
   };
 
-  const getSizeOptions = () => {
-    if (formData.category === 'Clothing' && formData.subcategory === 'Bottom') {
-      return ['28', '30', '32', '34', '36'];
-    }
-    switch (formData.category) {
-      case 'Clothing':
-        return ['XS', 'S', 'M', 'L', 'XL'];
-      case 'Footwear':
-        return ['7', '8', '9', '10', '11'];
-      case 'Accessories':
-        return ['One Size'];
-      default:
-        return [];
-    }
+  const handleDeleteVariantBox = (index) => {
+    setVariantBoxes((prevBoxes) => prevBoxes.filter((_, i) => i !== index));
+  };
+
+  const addVariantBox = () => {
+    setVariantBoxes([...variantBoxes, {
+      colorVariant: '',
+      sizeQuantityChart: [{ size: '', quantity: '' }],
+      sizeChartImage: null,
+      status: 'Active'
+    }]);
+  };
+
+  const updateVariantBox = (index, field, value) => {
+    const newVariantBoxes = [...variantBoxes];
+    newVariantBoxes[index][field] = value;
+    setVariantBoxes(newVariantBoxes);
+  };
+
+  const addSizeQuantityRow = (boxIndex) => {
+    const newVariantBoxes = [...variantBoxes];
+    newVariantBoxes[boxIndex].sizeQuantityChart.push({ size: '', quantity: '' });
+    setVariantBoxes(newVariantBoxes);
   };
 
   return (
     <Box p={3} bgcolor="white" borderRadius={3} boxShadow={1}>
       <Grid container spacing={2}>
-        {/* Left Column: Product Info, Pricing, Material & Care, Addtional Info */}
+        {/* Left Column: Product Info, Pricing, Material & Care, Additional Info */}
         <Grid item xs={12} md={6}>
           <Box p={2} sx={{ border: null, borderRadius: 3, boxShadow: 1, marginBottom: 2 }}>
-          <Typography variant="h5" mb={2}>General Information</Typography>
+            <Typography variant="h5" mb={2}>General Information</Typography>
             <TextField
-              // label="Product Code"
+              label="SKU"
               fullWidth
               variant="outlined"
-              value="[Product Code]"
-              InputProps={{ readOnly: true }}
-              helperText="Code will be generated automatically"
               sx={{ mb: 2, color: "#F5F4F4" }} 
             />
-
             <TextField
               label="Product Name"
               fullWidth
               variant="outlined"
               sx={{ mb: 2, color: "#F5F4F4"}} 
             />
-            <TextField
-              label="Category"
-              fullWidth
-              variant="outlined"
-              name="category"
-              value={formData.category}
-              onChange={handleInputChange}
-              sx={{ mb: 2 }} 
-            />
-            <TextField
-              label="Sub Category"
-              fullWidth
-              variant="outlined"
-              name="subcategory"
-              value={formData.subcategory}
-              onChange={handleInputChange}
-              sx={{ mb: 2, color: "#F5F4F4" }} 
-            />
+            <FormControl fullWidth variant="outlined" sx={{ mb: 2 }}>
+              <InputLabel>Category</InputLabel>
+              <Select
+                value={category}
+                onChange={handleCategoryChange}
+                label="Category"
+              >
+                {categories.map((cat) => (
+                  <MenuItem key={cat} value={cat}>{cat}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl fullWidth variant="outlined" sx={{ mb: 2 }}>
+              <InputLabel>Sub Category</InputLabel>
+              <Select
+                value={subcategory}
+                onChange={handleSubcategoryChange}
+                label="Sub Category"
+                disabled={!category}
+              >
+                {category && subcategories[category].map((subcat) => (
+                  <MenuItem key={subcat} value={subcat}>{subcat}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <TextField
               label="Brand"
               fullWidth
@@ -228,11 +260,28 @@ const ProductForm = () => {
 
           <Box p={2} sx={{ border: null, borderRadius: 3, boxShadow: 1, marginBottom: 2 }}>
             <Typography variant="h5" mb={2}>Additional Information</Typography>
-            <TextField
-              label="Occasion"
-              fullWidth
-              variant="outlined"
-              sx={{ mb: 2, color: "#F5F4F4" }} 
+            <Autocomplete
+              multiple
+              id="occasions"
+              options={['Casual Wear', 'Formal Wear', 'Party Wear', 'Activewear']}
+              value={occasions}
+              onChange={(event, newValue) => {
+                setOccasions(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  label="Occasions"
+                  placeholder="Select occasions"
+                />
+              )}
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+                ))
+              }
+              sx={{ mb: 2 }}
             />
             <TextField
               label="Season"
@@ -250,61 +299,151 @@ const ProductForm = () => {
           </Box>
         </Grid>
 
-        {/* Right Column: Image Upload, Color Variant, Status, Size & Gender */}
+        {/* Right Column: Variant Boxes, Gender */}
         <Grid item xs={12} md={6}>
-          <Box p={2} sx={{ border: null, borderRadius: 3, boxShadow: 1, marginBottom: 2 }}>
-            <Typography variant="h5" mb={2}>Color Variants</Typography>
-            {colorVariants.map((variant, index) => (
-              <Box key={index} display="flex" alignItems="center" mb={2}>
-                <TextField
-                  label={`Color Variant ${index + 1}`}
-                  fullWidth
-                  variant="outlined"
-                  sx={{ mr: 1 }}
-                />
-                <IconButton onClick={() => handleDeleteVariant(index)}>
-                  <DeleteIcon />
-                </IconButton>
-              </Box>
-            ))}
-            <Button variant="contained" onClick={handleAddVariant} startIcon={<AddIcon />} sx={{backgroundColor: "#C0A888",}}>
-              Add Color Variant
-            </Button>
-          </Box>
+        {variantBoxes.map((box, boxIndex) => (
+            <Box key={boxIndex} p={2} sx={{ border: null, borderRadius: 3, boxShadow: 1, marginBottom: 2 }}>
+            <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+              <Typography variant="h5">Variant {boxIndex + 1}</Typography>
+              <IconButton onClick={() => handleDeleteVariantBox(boxIndex)}>
+                <DeleteIcon />
+              </IconButton>
+            </Box>
+              <TextField
+                label="Color Variant"
+                fullWidth
+                variant="outlined"
+                value={box.colorVariant}
+                onChange={(e) => updateVariantBox(boxIndex, 'colorVariant', e.target.value)}
+                sx={{ mb: 3 }}
+              />
+              
+              <Typography variant="h6" mb={2}>Size & Quantity Chart</Typography>
+              {box.sizeQuantityChart.map((row, rowIndex) => (
+                <Box key={rowIndex} sx={{ display: 'flex', mb: 2 }}>
+                  <TextField
+                    label="Size"
+                    value={row.size}
+                    onChange={(e) => {
+                      const newChart = [...box.sizeQuantityChart];
+                      newChart[rowIndex].size = e.target.value;
+                      updateVariantBox(boxIndex, 'sizeQuantityChart', newChart);
+                    }}
+                    sx={{ mr: 2, flexGrow: 1 }}
+                  />
+                  <TextField
+                    label="Quantity"
+                    type="number"
+                    value={row.quantity}
+                    inputProps={{min:1}}
+                    onChange={(e) => {
+                      const newChart = [...box.sizeQuantityChart];
+                      newChart[rowIndex].quantity = e.target.value;
+                      updateVariantBox(boxIndex, 'sizeQuantityChart', newChart);
+                    }}
+                    sx={{ flexGrow: 1 }}
+                  />
+                </Box>
+              ))}
+              <Button 
+                onClick={() => addSizeQuantityRow(boxIndex)}
+                variant="outlined"
+                sx={{ mb: 3, color: "#C0A888", border: "1px #C0A888 solid"}}
+              >
+                Add Size/Quantity
+              </Button>
+
+              <Typography variant="h6" mb={2}>Size Chart Image</Typography>
+                <Button
+                  variant="contained"
+                  component="label"
+                  startIcon={<AddPhotoAlternateIcon />}
+                  sx={{ mb: 3, backgroundColor: "#C0A888" }}
+                >
+                  Upload Size Chart
+                  <input 
+                    type="file" 
+                    hidden 
+                    onChange={(e) => handleAddSizeChartImage(boxIndex, e)} 
+                  />
+                </Button>
+                <Grid container spacing={2}>
+                  {box.sizeChartImage && (
+                    <Grid item xs={4}>
+                      <Box sx={{ position: 'relative' }}>
+                        <img src={box.sizeChartImage} alt="Size Chart" width="100%" height="auto" />
+                        <IconButton
+                          onClick={() => {
+                            const newVariantBoxes = [...variantBoxes];
+                            newVariantBoxes[boxIndex].sizeChartImage = null;
+                            setVariantBoxes(newVariantBoxes);
+                          }}
+                          sx={{ position: 'absolute', top: 8, right: 8 }}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Box>
+                    </Grid>
+                  )}
+                </Grid>
+                <Typography variant="h6" mb={2} mt={2}>Product Images</Typography>
+                <Button
+                  variant="contained"
+                  component="label"
+                  startIcon={<AddPhotoAlternateIcon />}
+                  sx={{ mb: 2, backgroundColor: "#C0A888", }}
+                >
+                  Upload Image
+                  <input type="file" hidden onChange={handleAddProductImage} />
+                </Button>
+                <Grid container spacing={2}>
+                  {formData.productImages.map((image, index) => (
+                    <Grid item xs={4} key={index}>
+                      <Box sx={{ position: 'relative' }}>
+                        <img src={image} alt={`Product ${index}`} width="100%" height="auto" />
+                        <IconButton
+                          onClick={() => {
+                            const newImages = [...formData.productImages];
+                            newImages.splice(index, 1);
+                            setFormData({ ...formData, productImages: newImages });
+                          }}
+                          sx={{ position: 'absolute', top: 8, right: 8 }}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>
+              <Typography variant="h6" mb={2} mt={2}>Status</Typography>
+              <ToggleButtonGroup
+                value={box.status}
+                exclusive
+                onChange={(e, newStatus) => {
+                  if (newStatus !== null) {
+                    updateVariantBox(boxIndex, 'status', newStatus);
+                  }
+                }}
+                aria-label="status"
+                sx={{ mb: 3 }}
+              >
+                <ToggleButton value="Active">Active</ToggleButton>
+                <ToggleButton value="Inactive">Inactive</ToggleButton>
+              </ToggleButtonGroup>
+            </Box>
+          ))}
+
+          <Button 
+            onClick={addVariantBox}
+            variant="contained"
+            startIcon={<AddIcon />}
+            sx={{ mb: 2, backgroundColor: "#C0A888" }}
+          >
+            Add Variant Box
+          </Button>
 
           <Box p={2} sx={{ border: null, borderRadius: 3, boxShadow: 1, marginBottom: 2}}>
-            <Typography variant="h5" mb={2}>Size & Gender</Typography>
-            <ToggleButtonGroup
-              value={sizes}
-              onChange={handleSizeChange}
-              aria-label="sizes"
-              sx={{ mb: 2 }}
-            >
-              {getSizeOptions().map((size) => (
-                <ToggleButton key={size} value={size}>
-                  {size}
-                </ToggleButton>
-              ))}
-            </ToggleButtonGroup>
-            {sizes.length > 0 && (
-              <Box>
-                <Typography variant="h6" mb={1}>Quantity</Typography>
-                {sizes.map((size) => (
-                  <TextField
-                    key={size}
-                    label={size}
-                    variant="outlined"
-                    type="number"
-                    value={quantity[size] || ''}
-                    onChange={(e) => handleQuantityChange(size, e.target.value)}
-                    fullWidth
-                    inputProps={{min:1}}
-                    sx={{ mb: 2, color: "#F5F4F4", width: '80px'}} 
-                  />
-                ))}
-              </Box>
-            )}
-            <Typography variant="h6" mb={1}>Gender</Typography>
+            <Typography variant="h5" mb={2}>Gender</Typography>
             <ToggleButtonGroup
               value={gender}
               exclusive
@@ -318,51 +457,8 @@ const ProductForm = () => {
             </ToggleButtonGroup>
           </Box>
 
-          <Box p={2} sx={{ border: null, borderRadius: 3, boxShadow: 1, marginBottom: 2 }}>
-            <Typography variant="h5">Status</Typography>
-            <Select
-              fullWidth
-              variant="outlined"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              sx={{ mt: 2 }} 
-            >
-              <MenuItem value="Active">Active</MenuItem>
-              <MenuItem value="Inactive">Inactive</MenuItem>
-            </Select>
-          </Box>
-
-          <Box p={2} sx={{ border: null, borderRadius: 3, boxShadow: 1, marginBottom: 2, marginTop: 2}}>
-            <Typography variant="h5" mb={2}>Product Images</Typography>
-            <Button
-              variant="contained"
-              component="label"
-              startIcon={<AddPhotoAlternateIcon />}
-              sx={{ mb: 2, backgroundColor: "#C0A888", }}
-            >
-              Upload Image
-              <input type="file" hidden onChange={handleAddImage} />
-            </Button>
-            <Grid container spacing={2}>
-              {formData.images.map((image, index) => (
-                <Grid item xs={4} key={index}>
-                  <Box sx={{ position: 'relative' }}>
-                    <img src={image} alt={`Product ${index}`} width="100%" height="auto" />
-                    <IconButton
-                      onClick={() => {
-                        const newImages = [...formData.images];
-                        newImages.splice(index, 1);
-                        setFormData({ ...formData, images: newImages });
-                      }}
-                      sx={{ position: 'absolute', top: 8, right: 8 }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Box>
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
+          {/* <Box p={2} sx={{ border: null, borderRadius: 3, boxShadow: 1, marginBottom: 2, marginTop: 2}}>
+          </Box> */}
         </Grid>
       </Grid>
       <Button
@@ -372,7 +468,7 @@ const ProductForm = () => {
         fullWidth
         startIcon={<SaveIcon />}
         onClick={() => console.log('Form submitted:', {
-          sizes, gender, basePrice, quantity, discount, discountType, status, formData
+           gender, basePrice, discount, discountType, formData
         })}
         sx={{ mt: 2, backgroundColor: "#C0A888", }}
       >

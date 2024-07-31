@@ -84,7 +84,7 @@ const FilterComponent = ({ search, handleSearch }) => {
               Manage Connections
             </Typography>
             <Typography variant="h6" ml="2px" color="#8E8B8B">
-              Efficiently Connect with Shops
+              Efficiently Connect with Couriers
             </Typography>
           </Box>
         </Grid>

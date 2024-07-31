@@ -13,7 +13,7 @@ import image12 from '../../../assets/images/products/perfume.jpg'
 
 
 // headCells.js
-export const headCellsAllRequests = [
+export const headCellsRecentOrders = [
   {
     id: "info", // this id should be same as the key of the object in tableData.js
     numeric: false,
@@ -63,7 +63,7 @@ export const headCellsAllRequests = [
   },
 ];
 
-export const headCellsPendingRequests = [
+export const headCellsAcceptedOrders = [
   {
     id: "info", // this id should be same as the key of the object in tableData.js
     numeric: false,
@@ -114,7 +114,7 @@ export const headCellsPendingRequests = [
   },
 ];
 
-export const headCellsRejectedRequests = [
+export const headCellsRejectedOrders = [
   {
     id: "info", // this id should be same as the key of the object in tableData.js
     numeric: false,
@@ -167,11 +167,6 @@ export const headCellsRejectedRequests = [
 
 export const additionalFields = [
 
-  {
-    id: "color",
-    numeric: true,
-    disablePadding: false,
-  },
   {
     id: "cardNo",
     numeric: true,
@@ -259,7 +254,7 @@ export const tableData = [
     brand: "Bear Appeal",
     category: "Tops",
     subcategory: "T-shirts",
-    color: "white", 
+    color: "White",
     size: "M",
     unit_price: 2000,
     customerEmail: "priya@example.com",
@@ -270,6 +265,7 @@ export const tableData = [
     storeName: "ArunStyles",
     phone: "9876543210",
     payment_method: "Credit Card",
+    orderStatus: "Recent",
     imageUrl: image1,
 },
 {
@@ -284,7 +280,7 @@ export const tableData = [
     brand: "Levi's",
     category: "Bottoms",
     subcategory: "Jeans",
-    color: "Blue", 
+    color: "Blue",
     size: "L",
     unit_price: 4000,
     customerEmail: "ruhina@example.com",
@@ -295,6 +291,7 @@ export const tableData = [
     storeName: "ArunStyles",
     phone: "9876543211",
     payment_method: "Credit Card",
+    orderStatus: "Recent",
     imageUrl: image2,
 },
 {
@@ -320,6 +317,7 @@ export const tableData = [
     storeName: "ArunStyles",
     phone: "9876543212",
     payment_method: "Credit Card",
+    orderStatus: "Recent",
     imageUrl: image3,
 },
 {
@@ -345,6 +343,7 @@ export const tableData = [
     storeName: "ArunStyles",
     phone: "9876543213",
     payment_method: "Credit Card",
+    orderStatus: "Recent",
     imageUrl: image4,
 },
 {
@@ -370,6 +369,7 @@ export const tableData = [
     storeName: "ArunStyles",
     phone: "9876543214",
     payment_method: "Credit Card",
+    orderStatus: "Recent",
     imageUrl: image5,
 },
 {
@@ -395,6 +395,7 @@ export const tableData = [
     storeName: "ArunStyles",
     phone: "9876543215",
     payment_method: "Credit Card",
+    orderStatus: "Recent",
     imageUrl: image6,
 },
 {
@@ -406,7 +407,7 @@ export const tableData = [
     quantity: 2,
     price: 3500,
     ordered_date: "2024-07-16",
-    brand: "No brand",
+    brand: "No Brand",
     category: "Jewelry",
     subcategory: "Rings",
     color: "Undefined",
@@ -420,6 +421,7 @@ export const tableData = [
     storeName: "ArunStyles",
     phone: "9876543216",
     payment_method: "Credit Card",
+    orderStatus: "Recent",
     imageUrl: image7,
 },
 {
@@ -445,6 +447,7 @@ export const tableData = [
     storeName: "ArunStyles",
     phone: "9876543217",
     payment_method: "Credit Card",
+    orderStatus: "Recent",
     imageUrl: image8,
 },
 {
@@ -470,6 +473,7 @@ export const tableData = [
     storeName: "ArunStyles",
     phone: "9876543218",
     payment_method: "Credit Card",
+    orderStatus: "Recent",
     imageUrl: image9,
 },
 {
@@ -495,6 +499,7 @@ export const tableData = [
     storeName: "ArunStyles",
     phone: "9876543219",
     payment_method: "Credit Card",
+    orderStatus: "Recent",
     imageUrl: image10,
 },
 {
@@ -520,6 +525,7 @@ export const tableData = [
     storeName: "ArunStyles",
     phone: "9876543220",
     payment_method: "Credit Card",
+    orderStatus: "Recent",
     imageUrl: image11,
 },
 {
@@ -545,11 +551,12 @@ export const tableData = [
     storeName: "ArunStyles",
     phone: "9876543221",
     payment_method: "Credit Card",
+    orderStatus: "Recent",
     imageUrl: image12,
 }
 ];
 
-export const pendingRequests = [
+export const acceptedOrders = [
   {
     id: 1,
     info: "Casual T-Shirts",
@@ -573,6 +580,7 @@ export const pendingRequests = [
     storeName: "ArunStyles",
     phone: "9876543210",
     payment_method: "Credit Card",
+    orderStatus: "Accepted",
     imageUrl: image1,
 },
 {
@@ -598,6 +606,7 @@ export const pendingRequests = [
     storeName: "ArunStyles",
     phone: "9876543211",
     payment_method: "Credit Card",
+    orderStatus: "Accepted",
     imageUrl: image2,
 },
 {
@@ -623,6 +632,7 @@ export const pendingRequests = [
     storeName: "ArunStyles",
     phone: "9876543212",
     payment_method: "Credit Card",
+    orderStatus: "Accepted",
     imageUrl: image3,
 },
 {
@@ -648,6 +658,7 @@ export const pendingRequests = [
     storeName: "ArunStyles",
     phone: "9876543213",
     payment_method: "Credit Card",
+    orderStatus: "Accepted",
     imageUrl: image4,
 },
 {
@@ -673,6 +684,7 @@ export const pendingRequests = [
     storeName: "ArunStyles",
     phone: "9876543214",
     payment_method: "Credit Card",
+    orderStatus: "Accepted",
     imageUrl: image5,
 },
 {
@@ -698,23 +710,24 @@ export const pendingRequests = [
     storeName: "ArunStyles",
     phone: "9876543215",
     payment_method: "Credit Card",
+    orderStatus: "Accepted",
     imageUrl: image6,
 },
 ];
 
-export const rejectedRequests =[
+export const rejectedOrders =[
 {
     id: 1,
-    info: "Rings",
+    info: "Baseball Cap",
     orderId: "081794MT",
     customerName: "Aashif",
     courier: "Domex",
     quantity: 2,
     price: 3500,
     ordered_date: "2024-07-16",
-    brand: "No brand",
-    category: "Jewelry",
-    subcategory: "Rings",
+    brand: "Sporty Gear",
+    category: "Accessories",
+    subcategory: "Hats",
     color: "Undefined",
     size: "One Size",
     unit_price: 1750,
@@ -726,6 +739,7 @@ export const rejectedRequests =[
     storeName: "ArunStyles",
     phone: "9876543216",
     payment_method: "Credit Card",
+    orderStatus: "Rejected",
     imageUrl: image7,
 },
 {
@@ -751,6 +765,7 @@ export const rejectedRequests =[
     storeName: "ArunStyles",
     phone: "9876543217",
     payment_method: "Credit Card",
+    orderStatus: "Rejected",
     imageUrl: image8,
 },
 {
@@ -776,6 +791,7 @@ export const rejectedRequests =[
     storeName: "ArunStyles",
     phone: "9876543218",
     payment_method: "Credit Card",
+    orderStatus: "Rejected",
     imageUrl: image9,
 },
 {
@@ -790,7 +806,7 @@ export const rejectedRequests =[
     brand: "Jansport",
     category: "Accessories",
     subcategory: "Bag",
-    color: "Black",
+    color: "Undefined",
     size: "One Size",
     unit_price: 6500,
     customerEmail: "dinesh@example.com",
@@ -801,6 +817,7 @@ export const rejectedRequests =[
     storeName: "ArunStyles",
     phone: "9876543219",
     payment_method: "Credit Card",
+    orderStatus: "Rejected",
     imageUrl: image10,
 },
 {
@@ -815,7 +832,7 @@ export const rejectedRequests =[
     brand: "Lenskart",
     category: "Accessories",
     subcategory: "Glasses",
-    color: "Black",
+    color: "Undefined",
     size: "One Size",
     unit_price: 2500,
     customerEmail: "sudarshan@example.com",
@@ -826,6 +843,7 @@ export const rejectedRequests =[
     storeName: "ArunStyles",
     phone: "9876543220",
     payment_method: "Credit Card",
+    orderStatus: "Rejected",
     imageUrl: image11,
 },
 {
@@ -851,6 +869,7 @@ export const rejectedRequests =[
     storeName: "ArunStyles",
     phone: "9876543221",
     payment_method: "Credit Card",
+    orderStatus: "Rejected",
     imageUrl: image12,
 }
 ];

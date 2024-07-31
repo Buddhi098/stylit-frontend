@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TableComponent from "./TableComponent";
 import FilterComponent from "./FilterComponent";
 import { Stack } from "@mui/material";
-import { filterOptions, tableData, headCellsAllRequests, headCellsPendingRequests, headCellsRejectedRequests, pendingRequests, rejectedRequests } from "./TableConfig";
+import { filterOptions, tableData, headCellsRecentOrders, headCellsAcceptedOrders, headCellsRejectedOrders, acceptedOrders, rejectedOrders } from "./TableConfig";
 
 const DataTable = () => {
   const [search, setSearch] = useState("");
@@ -16,13 +16,13 @@ const DataTable = () => {
   const getHeadCells = () => {
     switch (tab) {
       case 0:
-        return headCellsAllRequests;
+        return headCellsRecentOrders;
       case 1:
-        return headCellsPendingRequests;
+        return headCellsAcceptedOrders;
       case 2:
-        return headCellsRejectedRequests;
+        return headCellsRejectedOrders;
       default:
-        return headCellsAllRequests;
+        return headCellsRecentOrders;
     }
   };
 
@@ -31,9 +31,9 @@ const DataTable = () => {
       case 0:
         return tableData;
       case 1:
-        return pendingRequests;
+        return acceptedOrders;
       case 2:
-        return rejectedRequests;
+        return rejectedOrders;
       default:
         return tableData;
     }

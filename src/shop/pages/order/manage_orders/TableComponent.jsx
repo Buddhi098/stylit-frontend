@@ -90,7 +90,6 @@ EnhancedTableHead.propTypes = {
 };
 
 const statusIcons = {
-  pending: <PendingIcon style={{ color: '#C0A888' }} />,
   accepted: <AcceptedIcon style={{ color: '#008000' }} />,
   ongoing: <OngoingIcon style={{ color: '#1E90FF' }} />,
   completed: <CompletedIcon style={{ color: '#4CAF50' }} />,
@@ -142,7 +141,7 @@ export default function TableComponent({ rows }) {
   };
 
   const filterRows = () => {
-    const statusMap = ['all', 'pending', 'accepted', 'ongoing', 'completed'];
+    const statusMap = ['all','accepted', 'ongoing', 'completed'];
     const status = statusMap[tab];
     if (status === 'all') return rows;
     return rows.filter(row => row.status.toLowerCase() === status.toLowerCase());
@@ -167,7 +166,6 @@ export default function TableComponent({ rows }) {
             },
           }}>
           <Tab label="All Orders" />
-          <Tab label="Pending Orders" />
           <Tab label="Courier Accepted Orders" />
           <Tab label="Ongoing Orders" />
           <Tab label="Completed Orders" />
@@ -215,7 +213,6 @@ export default function TableComponent({ rows }) {
                         <TableCell align="right">{row.quantity}</TableCell>
                         <TableCell align="right">{row.price}</TableCell>
                         <TableCell align="right">{row.ordered_date}</TableCell>
-                        <TableCell align="right">{row.payment}</TableCell>
                         <TableCell align="center">{statusIcons[row.status.toLowerCase()]}</TableCell>
                     </TableRow>
                   );

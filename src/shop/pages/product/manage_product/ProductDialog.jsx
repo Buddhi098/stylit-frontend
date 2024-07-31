@@ -400,91 +400,50 @@ const ProductDialog = ({ open, handleClose, selectedRow }) => {
                     <LocalLaundryServiceIcon fontSize="small" sx={{ color: "black" }} />
                   </Box>
                   <Typography variant="h6" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Quantity</Typography>
-                </Box>
-                {selectedRow ? (
-                  selectedRow.category === 'Clothing' ? (
-                    selectedRow.subcategory === 'Bottom' ? (
-                      <>
-                        <Grid container spacing={1} ml={3} mt={0.25}>
-                          <Grid item xs={4}><Typography variant="body2"><strong>28</strong></Typography></Grid>
-                          <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.Q28}</Typography></Grid>
+                  </Box>
+                  {selectedRow ? (
+                    <Box ml={3} mt={0.25}>
+                      {selectedRow.category === 'Tops' ? (
+                        ['XS', 'S', 'M', 'L', 'XL'].map(size => (
+                          <Grid container spacing={1} key={size}>
+                            <Grid item xs={4}><Typography variant="body2"><strong>{size}</strong></Typography></Grid>
+                            <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow[`${size.toLowerCase()}q`] || 0}</Typography></Grid>
+                          </Grid>
+                        ))
+                      ) : selectedRow.category === 'Bottoms' ? (
+                        selectedRow.subcategory === 'Jeans' ? (
+                          ['28', '30', '32', '34', '36'].map(size => (
+                            <Grid container spacing={1} key={size}>
+                              <Grid item xs={4}><Typography variant="body2"><strong>{size}</strong></Typography></Grid>
+                              <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow[`Q${size}`] || 0}</Typography></Grid>
+                            </Grid>
+                          ))
+                        ) : (
+                          ['XS', 'S', 'M', 'L', 'XL'].map(size => (
+                            <Grid container spacing={1} key={size}>
+                              <Grid item xs={4}><Typography variant="body2"><strong>{size}</strong></Typography></Grid>
+                              <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow[`${size.toLowerCase()}q`] || 0}</Typography></Grid>
+                            </Grid>
+                          ))
+                        )
+                      ) : selectedRow.category === 'Footwear' ? (
+                        ['7', '8', '9', '10', '11'].map(size => (
+                          <Grid container spacing={1} key={size}>
+                            <Grid item xs={4}><Typography variant="body2"><strong>{size}</strong></Typography></Grid>
+                            <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow[`size${size}`] || 0}</Typography></Grid>
+                          </Grid>
+                        ))
+                      ) : (
+                        <Grid container spacing={1}>
+                          <Grid item xs={4}><Typography variant="body2"><strong>Total Quantity</strong></Typography></Grid>
+                          <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.quantity}</Typography></Grid>
                         </Grid>
-                        <Grid container spacing={1} ml={3} mt={0.25}>
-                          <Grid item xs={4}><Typography variant="body2"><strong>30</strong></Typography></Grid>
-                          <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.Q30}</Typography></Grid>
-                        </Grid>
-                        <Grid container spacing={1} ml={3} mt={0.25}>
-                          <Grid item xs={4}><Typography variant="body2"><strong>32</strong></Typography></Grid>
-                          <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.Q32}</Typography></Grid>
-                        </Grid>
-                        <Grid container spacing={1} ml={3} mt={0.25}>
-                          <Grid item xs={4}><Typography variant="body2"><strong>34</strong></Typography></Grid>
-                          <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.Q34}</Typography></Grid>
-                        </Grid>
-                        <Grid container spacing={1} ml={3} mt={0.25}>
-                          <Grid item xs={4}><Typography variant="body2"><strong>36</strong></Typography></Grid>
-                          <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.Q36}</Typography></Grid>
-                        </Grid>
-                      </>
-                    ) : (
-                      <>
-                        <Grid container spacing={1} ml={3} mt={0.25}>
-                          <Grid item xs={4}><Typography variant="body2"><strong>XS</strong></Typography></Grid>
-                          <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.xsq}</Typography></Grid>
-                        </Grid>
-                        <Grid container spacing={1} ml={3} mt={0.25}>
-                          <Grid item xs={4}><Typography variant="body2"><strong>S</strong></Typography></Grid>
-                          <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.sq}</Typography></Grid>
-                        </Grid>
-                        <Grid container spacing={1} ml={3} mt={0.25}>
-                          <Grid item xs={4}><Typography variant="body2"><strong>M</strong></Typography></Grid>
-                          <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.mq}</Typography></Grid>
-                        </Grid>
-                        <Grid container spacing={1} ml={3} mt={0.25}>
-                          <Grid item xs={4}><Typography variant="body2"><strong>L</strong></Typography></Grid>
-                          <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.lq}</Typography></Grid>
-                        </Grid>
-                        <Grid container spacing={1} ml={3} mt={0.25}>
-                          <Grid item xs={4}><Typography variant="body2"><strong>XL</strong></Typography></Grid>
-                          <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.xlq}</Typography></Grid>
-                        </Grid>
-                      </>
-                    )
-                  ) : selectedRow.category === 'Footwear' ? (
-                    <>
-                      <Grid container spacing={1} ml={3} mt={0.25}>
-                        <Grid item xs={4}><Typography variant="body2"><strong>7</strong></Typography></Grid>
-                        <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.size7}</Typography></Grid>
-                      </Grid>
-                      <Grid container spacing={1} ml={3} mt={0.25}>
-                        <Grid item xs={4}><Typography variant="body2"><strong>8</strong></Typography></Grid>
-                        <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.size8}</Typography></Grid>
-                      </Grid>
-                      <Grid container spacing={1} ml={3} mt={0.25}>
-                        <Grid item xs={4}><Typography variant="body2"><strong>9</strong></Typography></Grid>
-                        <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.size9}</Typography></Grid>
-                      </Grid>
-                      <Grid container spacing={1} ml={3} mt={0.25}>
-                        <Grid item xs={4}><Typography variant="body2"><strong>10</strong></Typography></Grid>
-                        <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.size10}</Typography></Grid>
-                      </Grid>
-                      <Grid container spacing={1} ml={3} mt={0.25}>
-                        <Grid item xs={4}><Typography variant="body2"><strong>11</strong></Typography></Grid>
-                        <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.size11}</Typography></Grid>
-                      </Grid>
-                    </>
+                      )}
+                    </Box>
                   ) : (
-                    <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Total Quantity</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.quantity}</Typography></Grid>
-                    </Grid>
-                  )
-                ) : (
-                  <Typography variant="body2" sx={{ textAlign: 'center', color: "grey" }}>No product selected.</Typography>
-                )}
-              </Box>
-
-
+                    <Typography variant="body2" sx={{ textAlign: 'center', color: "grey" }}>No product selected.</Typography>
+                  )}
+                  </Box>
             </Grid>
           </Grid>
         </DialogContentText>

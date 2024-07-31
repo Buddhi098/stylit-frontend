@@ -4,6 +4,7 @@ import AddchartIcon from '@mui/icons-material/Addchart';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import ArticleIcon from '@mui/icons-material/Article';
+import PushPinIcon from '@mui/icons-material/PushPin';
 
 // icons
 const icons = {
@@ -11,7 +12,8 @@ const icons = {
   AddchartIcon,
   QueryStatsIcon,
   LocalShippingIcon,
-  ArticleIcon
+  ArticleIcon,
+  PushPinIcon
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -21,6 +23,14 @@ const orders = {
   title: "Orders",
   type: "group",
   children: [
+    {
+      id: "recent_orders",
+      title: "Recent Orders",
+      type: "item",
+      url: "/shop/recent_orders",
+      icon: icons.PushPinIcon,
+      breadcrumbs: false,
+    },
     {
       id: "courier_request",
       title: "Courier Request",

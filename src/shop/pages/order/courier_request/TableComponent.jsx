@@ -16,11 +16,13 @@ import Button from "@mui/material/Button";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CancelIcon from '@mui/icons-material/Cancel';
+import PendingIcon from '@mui/icons-material/HourglassEmpty';
 import { visuallyHidden } from "@mui/utils";
-import { headCellsAllRequests, headCellsRejectedRequests, rejectedRequests } from "./TableConfig";
+import { headCellsAllRequests, headCellsPendingRequests, headCellsRejectedRequests, pendingRequests, rejectedRequests } from "./TableConfig";
 import RequestDialog from "./RequestDialog";
 import RejectedRequestDialog from "./RejectedRequestDialog"; 
 import SelectCourierDialog from "./SelectCourierDialog";
+import PendingRequestDialog from "./PendingRequestDialog";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -127,6 +129,8 @@ export default function TableComponent({ rows }) {
     if (tab === 0) {
       setOpenDialog("request");
     } else if (tab === 1) {
+      setOpenDialog("pending");
+    } else if (tab === 2) {
       setOpenDialog("reject");
     }
   };
@@ -145,11 +149,20 @@ export default function TableComponent({ rows }) {
     setTab(newValue);
   };
 
+  const statusIcons = {
+    pending: <PendingIcon style={{ color: '#C0A888' }} />,
+    rejected: <CancelIcon style={{ color: '#FF0000' }} />,
+  };
+  
+
   const filterRows = () => {
     if (tab === 0) {
       return rows;
     }
     if (tab === 1) {
+      return pendingRequests; 
+    }
+    if (tab === 2) {
       return rejectedRequests; 
     }
     return [];
@@ -159,7 +172,16 @@ export default function TableComponent({ rows }) {
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - filteredRows.length) : 0;
 
   const getHeadCells = () => {
-    return tab === 0 ? headCellsAllRequests : headCellsRejectedRequests;
+    switch (tab) {
+      case 0:
+        return headCellsAllRequests;
+      case 1:
+        return headCellsPendingRequests;
+      case 2:
+        return headCellsRejectedRequests;
+      default:
+        return headCellsAllRequests;
+    }
   };
 
   return (
@@ -179,168 +201,101 @@ export default function TableComponent({ rows }) {
           }}>
         
           <Tab label="All Requests" />
+          <Tab label="Pending Requests" />
           <Tab label="Rejected Requests" />
         </Tabs>
-
-        {tab === 0 && (
-          <>
-            <TableContainer>
-              <Table
-                sx={{ minWidth: 750 }}
-                aria-labelledby="tableTitle"
-                size={dense ? "small" : "medium"}
-              >
-                <EnhancedTableHead
-                  order={order}
-                  orderBy={orderBy}
-                  onRequestSort={handleRequestSort}
-                  headCells={getHeadCells()} // Pass headCells dynamically
-                />
-                <TableBody>
-                  {stableSort(filteredRows, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                      const labelId = `enhanced-table-checkbox-${index}`;
-
-                      return (
-                        <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)} sx={{ cursor: "pointer" }}>
-                           <TableCell
-                          align="left"
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
-                          colSpan={2} // This merges the two cells
-                        >
-                          <div style={{ display: "flex", alignItems: "center" }}>
-                            <img src={row.imageUrl} alt={row.info} width={50} style={{ marginRight: 10, marginLeft: 25}} />
-                            <div>
-                              {row.info}
-                              <div style={{ fontSize: "0.75em", color: "#888" }}>
-                                Order ID: {row.orderId}
-                              </div>
-                            </div>
-                          </div>
-                        </TableCell>
-                          <TableCell align="right">{row.courier}</TableCell>
-                          <TableCell align="right">{row.quantity}</TableCell>
-                          <TableCell align="right">{row.price}</TableCell>
-                          <TableCell align="right">{row.ordered_date}</TableCell>
-                          <TableCell align="right">{row.payment}</TableCell>
-                          <TableCell
-                            align="center"
-                            onClick={(event) => event.stopPropagation()}
-                          >
-                            <Button
-                              variant="contained"
-                              sx={{ margin: "3px", backgroundColor: "#C0A888",}}
-                              size="small"
-                              onClick={() => handleCourierRequestClick(row)}
+  
+        {[0, 1, 2].map((tabIndex) => (
+          tab === tabIndex && (
+            <React.Fragment key={tabIndex}>
+              <TableContainer>
+                <Table
+                  sx={{ minWidth: 750 }}
+                  aria-labelledby="tableTitle"
+                  size={dense ? "small" : "medium"}
+                >
+                  <EnhancedTableHead
+                    order={order}
+                    orderBy={orderBy}
+                    onRequestSort={handleRequestSort}
+                    headCells={getHeadCells()} // Pass headCells dynamically
+                  />
+                  <TableBody>
+                    {stableSort(filteredRows, getComparator(order, orderBy))
+                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .map((row, index) => {
+                        const labelId = `enhanced-table-checkbox-${index}`;
+  
+                        return (
+                          <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)} sx={{ cursor: "pointer" }}>
+                            <TableCell
+                              align="left"
+                              component="th"
+                              id={labelId}
+                              scope="row"
+                              padding="none"
+                              colSpan={2}
                             >
-                              Courier Request
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={filteredRows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </>
-        )}
-
-        {tab === 1 && (
-          <>
-            <TableContainer>
-              <Table
-                sx={{ minWidth: 750 }}
-                aria-labelledby="tableTitle"
-                size={dense ? "small" : "medium"}
-              >
-                <EnhancedTableHead
-                  order={order}
-                  orderBy={orderBy}
-                  onRequestSort={handleRequestSort}
-                  headCells={getHeadCells()} // Pass headCells dynamically
-                />
-                <TableBody>
-                  {stableSort(filteredRows, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                      const labelId = `enhanced-table-checkbox-${index}`;
-
-                      return (
-                        <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)} sx={{ cursor: "pointer" }}>
-                           <TableCell
-                          align="left"
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
-                          colSpan={2} // This merges the two cells
-                        >
-                          <div style={{ display: "flex", alignItems: "center" }}>
-                            <img src={row.imageUrl} alt={row.info} width={50} style={{ marginRight: 10, marginLeft: 25}} />
-                            <div>
-                              {row.info}
-                              <div style={{ fontSize: "0.75em", color: "#888" }}>
-                                Order ID: {row.orderId}
+                              <div style={{ display: "flex", alignItems: "center" }}>
+                                <img src={row.imageUrl} alt={row.info} width={50} style={{ marginRight: 10, marginLeft: 25}} />
+                                <div>
+                                  {row.info}
+                                  <div style={{ fontSize: "0.75em", color: "#888" }}>
+                                    Order ID: {row.orderId}
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                          </div>
-                        </TableCell>
-                          <TableCell align="right">{row.courier}</TableCell>
-                          <TableCell align="right">{row.quantity}</TableCell>
-                          <TableCell align="right">{row.price}</TableCell>
-                          <TableCell align="right">{row.ordered_date}</TableCell>
-                          <TableCell align="right">{row.payment}</TableCell>
-                          <TableCell
-                            align="center"
-                          >
-                            <CancelIcon sx={{ color: "#ff1744" }} />
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={filteredRows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </>
-        )}
+                            </TableCell>
+                            <TableCell align="right">{row.courier}</TableCell>
+                            <TableCell align="right">{row.quantity}</TableCell>
+                            <TableCell align="right">{row.price}</TableCell>
+                            <TableCell align="right">{row.ordered_date}</TableCell>
+                            <TableCell
+                              align="center"
+                              onClick={(event) => event.stopPropagation()}
+                            >
+                              {tabIndex === 0 ? (
+                                <Button
+                                  variant="contained"
+                                  sx={{ margin: "3px", backgroundColor: "#C0A888" }}
+                                  size="small"
+                                  onClick={() => handleCourierRequestClick(row)}
+                                >
+                                  Courier Request
+                                </Button>
+                              ) : (
+                                tabIndex === 1 ? statusIcons.pending : statusIcons.rejected
+                              )}
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    {emptyRows > 0 && (
+                      <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                        <TableCell colSpan={6} />
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={filteredRows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </React.Fragment>
+          )
+        ))}
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
-
+  
       {openDialog === "request" && (
         <RequestDialog
           open={openDialog === "request"}
@@ -349,6 +304,14 @@ export default function TableComponent({ rows }) {
         />
       )}
 
+      {openDialog === "pending" && (
+        <PendingRequestDialog
+          open={openDialog === "pending"}
+          handleClose={handleCloseDialog}
+          selectedRow={selectedRow}
+        />
+      )}
+  
       {openDialog === "reject" && (
         <RejectedRequestDialog
           open={openDialog === "reject"}
@@ -356,7 +319,7 @@ export default function TableComponent({ rows }) {
           selectedRow={selectedRow}
         />
       )}
-
+  
       {openDialog === "courier" && (
         <SelectCourierDialog
           open={openDialog === "courier"}
@@ -365,5 +328,5 @@ export default function TableComponent({ rows }) {
         />
       )}
     </Box>
-  );
+  )
 }

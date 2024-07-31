@@ -1,8 +1,8 @@
 import { Stack } from '@mui/system'
 import React from 'react'
-import DataTable from './Index'
+import DataTable from './ChatData'
 
-const OrderStatistics = () => {
+const ShopChat = () => {
   return (
     <Stack>
         <DataTable/>
@@ -10,4 +10,4 @@ const OrderStatistics = () => {
   )
 }
 
-export default OrderStatistics
+export default ShopChat

@@ -1,7 +1,7 @@
-import { lazy } from 'react';
+// import { lazy } from 'react';
 
-// project import
-import Loadable from '../components/Loadable';
+// // project import
+// import Loadable from '../components/Loadable';
 
 import CourierLayout from '../courier/Courier';
 import { element } from 'prop-types';
@@ -15,7 +15,7 @@ import ShopChat from '../courier/pages/shop_chat/ShopChat';
 import AdminChat from '../courier/pages/admin_chat/AdminChat';
 import ActorBasedRoute from './route_protector/ActorBasedRoute';
 
-const Dashboard = Loadable(lazy(()=>import('../courier/pages/dashboard')))
+// const Dashboard = Loadable(lazy(()=>import('../courier/pages/dashboard')))
 
 
 // ==============================|| MAIN ROUTING ||============================== //
@@ -61,7 +61,7 @@ const CourierRoutes = {
     }
 
 
-  ]
-};
+//   ]
+// };
 
-export default CourierRoutes;
+// export default CourierRoutes;

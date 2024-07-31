@@ -20,11 +20,11 @@ export default function TableComponent({ filteredCouriers }) {
   const [page, setPage] = useState(0);
   const [visibleCount, setVisibleCount] = useState(15);
   const [loadMoreEnabled, setLoadMoreEnabled] = useState(true); // Track if load more is enabled
-  const [tooltipOpen, setTooltipOpen] = useState({}); // Track tooltip open state for each courier
+  const [tooltipOpen, setTooltipOpen] = useState({}); // Track tooltip open state for each shop
 
   useEffect(() => {
-    setPage(0); // Reset page when filteredCouriers changes
-    setVisibleCount(15); // Reset visible count when couriers data changes
+    setPage(0); // Reset page when filteredShops changes
+    setVisibleCount(15); // Reset visible count when shops data changes
     setLoadMoreEnabled(true); // Reset load more enabled state
   }, [filteredCouriers]);
 
@@ -50,23 +50,23 @@ export default function TableComponent({ filteredCouriers }) {
     });
   };
 
-  const handleTooltipToggle = (courierId) => {
+  const handleTooltipToggle = (couriersId) => {
     setTooltipOpen((prev) => ({
       ...prev,
-      [courierId]: !prev[courierId],
+      [couriersId]: !prev[couriersId],
     }));
   };
 
-  const handleTooltipClose = (courierId) => {
+  const handleTooltipClose = (couriersId) => {
     setTooltipOpen((prev) => ({
       ...prev,
-      [courierId]: false,
+      [couriersId]: false,
     }));
   };
 
-  // Filter couriers based on the selected tab
+  // Filter shops based on the selected tab
   const filterCouriers = () => {
-    if (tab === 0) return filteredCouriers.filter(couriers => couriers.status !== 'following' && couriers.status !== 'requested'); // All Couriers
+    if (tab === 0) return filteredCouriers.filter(couriers => couriers.status !== 'following' && couriers.status !== 'requested'); // All Shops
     if (tab === 1) return filteredCouriers.filter(couriers => couriers.status === 'requested'); // Pending Requests
     if (tab === 2) return filteredCouriers.filter(couriers => couriers.status === 'following'); // Accepted Requests
     return [];
@@ -79,7 +79,7 @@ export default function TableComponent({ filteredCouriers }) {
   // Calculate the total number of pages
   const totalPages = Math.ceil(totalCouriers.length / 30);
 
-  // Check if more couriers are available on the current page
+  // Check if more shops are available on the current page
   const moreCouriersAvailable = visibleCount < currentCouriers.length;
 
   // Determine if the "Load More" button should be displayed
@@ -171,7 +171,7 @@ export default function TableComponent({ filteredCouriers }) {
                         }}
                        
                       >
-                        {tab === 0 ? "Follow" : (tab === 1 ? "Requested" : "Following")}
+                        {tab === 0 ? "Connect" : (tab === 1 ? "Requested" : "Connected")}
                       </Button>
                     </Box>
                   </Grid>

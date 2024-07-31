@@ -59,7 +59,7 @@ export default function DashboardDefault() {
       <Grid item xs={12} md={5} lg={4}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">Income Overview</Typography>
+            <Typography variant="h5">Order Overview</Typography>
           </Grid>
           <Grid item />
         </Grid>
@@ -69,7 +69,7 @@ export default function DashboardDefault() {
               <Typography variant="h6" color="text.secondary">
                 This Week Statistics
               </Typography>
-              <Typography variant="h3">$7,650</Typography>
+              <Typography variant="h3">650</Typography>
             </Stack>
           </Box>
           <MonthlyBarChart />

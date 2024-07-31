@@ -71,7 +71,7 @@ const MessagesInput = ({ onSendMessage }) => {
                 onClick={handleSendMessage}
                 sx={{ color: 'primary.main' }}
             >
-                <SendIcon sx={{color: "#C0A888"}}/>
+                <SendIcon sx={{marginLeft:1,color: "#C0A888"}}/>
             </IconButton>
 
             {/* Emoji Picker */}

@@ -85,11 +85,15 @@ const RejectedRequestDialog = ({ open, handleClose, selectedRow }) => {
                     </Grid>
                     <Grid container spacing={1} ml={3} mt={0.25}>
                       <Grid item xs={3}><Typography variant="body2"><strong>Sub Category</strong></Typography></Grid>
-                      <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.sub}</Typography></Grid>
+                      <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.subcategory}</Typography></Grid>
                     </Grid>
                     <Grid container spacing={1} ml={3} mt={0.25}>
                       <Grid item xs={3}><Typography variant="body2"><strong>Brand</strong></Typography></Grid>
                       <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.brand}</Typography></Grid>
+                    </Grid>
+                    <Grid container spacing={1} ml={3} mt={0.25}>
+                      <Grid item xs={3}><Typography variant="body2"><strong>Color</strong></Typography></Grid>
+                      <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.color}</Typography></Grid>
                     </Grid>
                     <Grid container spacing={1} ml={3} mt={0.25}>
                       <Grid item xs={3}><Typography variant="body2"><strong>Size</strong></Typography></Grid>

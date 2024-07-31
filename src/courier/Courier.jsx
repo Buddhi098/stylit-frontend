@@ -7,7 +7,7 @@ import ThemeCustomization from './themes';
 import ScrollTop from '../components/ScrollTop';
 import DashboardLayout from './layout/Dashboard';
 
-import DashboardDefault from './pages/dashboard';
+// import DashboardDefault from './pages/dashboard';
 
 // ==============================|| APP - THEME, ROUTER, LOCAL ||============================== //
 
