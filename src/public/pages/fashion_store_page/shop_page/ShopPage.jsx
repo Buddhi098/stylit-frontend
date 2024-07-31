@@ -7,12 +7,13 @@ import Footer from "../../home_page/Footer";
 import Section1 from './Section1';
 import { useParams } from 'react-router';
 import { Stack } from '@mui/material';
-import s21 from "../../../assets/images/men_page/cover.png";
-import s22 from "../../../assets/images/women_page/cover.png";
+
+import logo from "../../../../temp_images/Logo/img (3).png";
+import cover from "../../../../temp_images/Cover/img (4).jpg";
 import Section2 from './Section2';
 
 const stores = [
-  { id: 1, name: "Jamie & Annie", category: "Casual Wear Stores", cover: s22, logo: s21, favorite: false },
+  { id: 1, name: "Versace", category: "Casual Wear Stores", cover: cover, logo: logo, favorite: false },
   // Add more stores with unique ids as needed
 ];
 

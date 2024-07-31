@@ -15,6 +15,7 @@ import s12 from "../../assets/images/men_page/s12.png";
 import s13 from "../../assets/images/men_page/s13.png";
 import s14 from "../../assets/images/men_page/s14.png";
 import s15 from "../../assets/images/men_page/s15.png";
+import { useNavigate } from "react-router";
 
 const products = [
   { id: 1, name: "Concertina Phone Bag", image: s11 },
@@ -25,6 +26,18 @@ const products = [
 ];
 
 const Section2 = () => {
+  const navigate = useNavigate();
+
+  const handleSeeMoreNavigation = () => {
+    window.scroll(0,0);
+    navigate("/public/product/men");
+  }
+
+
+  const handleNavigations = (id) => {
+    window.scroll(0,0);
+    navigate(`/public/dress/men/${id}`)
+  }
   return (
     <Box sx={{ padding:"30px 90px" , marginTop:'30px' , marginBottom:'16px'}}>
       <Typography variant="subtitle_alata">
@@ -34,7 +47,7 @@ const Section2 = () => {
       <Grid container spacing={2} marginTop={5}>
   {products.map((product) => (
     <Grid item xs={12} sm={6} md={2.4} key={product.id}>
-      <Stack direction={"column"}>
+      <Stack direction={"column"} onClick={()=>handleNavigations(product.id)}>
         <Card sx={{ position: "relative", boxShadow: "none" }}>
           <CardMedia
             component="img"
@@ -92,6 +105,7 @@ const Section2 = () => {
           }}
           disableRipple
           disableFocusRipple
+          onClick={handleSeeMoreNavigation}
         >
           <Typography variant="body2_alata" padding="5px 10px">See More</Typography>
         </Button>

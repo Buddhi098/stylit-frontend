@@ -22,8 +22,13 @@ const FashionStore = Loadable(lazy(()=>import('../public/pages/fashion_store_pag
 const FashionStoreCategoryPage = Loadable(lazy(()=>import('../public/pages/fashion_store_page/fashion_store_category/FashionStoreCategory')));
 const AllFashionStore = Loadable(lazy(()=>import('../public/pages/fashion_store_page/all_fashion_store/AllFashionStore')));
 const ShopPage = Loadable(lazy(()=>import('../public/pages/fashion_store_page/shop_page/ShopPage')));
-const DressPage = Loadable(lazy(() => import("../public/components/dress_components/DressPage/DressPage")));
-const ProductPage = Loadable(lazy(()=>import('../public/pages/product_page/ProductPage')));
+
+
+const MenDressPage = Loadable(lazy(() => import("../public/components/dress_components_men/DressPage/DressPage")));
+const WomenDressPage = Loadable(lazy(() => import("../public/components/dress_components_women/DressPage/DressPage")));
+
+const MenProductPage = Loadable(lazy(()=>import('../public/pages/product_page_men/ProductPage')));
+const WomenProductPage = Loadable(lazy(()=>import('../public/pages/product_page_women/ProductPage')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 export const BaseRoute={
@@ -99,12 +104,20 @@ const PublicRoutes = {
       element:<ShopPage/>
     },
     {
-      path:'dress/:id',
-      element:<DressPage/>
+      path:'dress/men/:id',
+      element:<MenDressPage/>
     },
     {
-      path:'product/:gender',
-      element:<ProductPage/>
+      path:'dress/women/:id',
+      element:<WomenDressPage/>
+    },
+    {
+      path:'product/men',
+      element:<MenProductPage/>
+    },
+    {
+      path:'product/women',
+      element:<WomenProductPage/>
     },
     {
       path: '*',

@@ -12,8 +12,18 @@ import {
   Paper,
   Avatar,
 } from "@mui/material";
-import DressCard from "../../../components/dress_components/DressCard";
-import img from "../../../assets/images/women_page/cover.png"
+import DressCard from "../../../components/dress_components_women/DressCard";
+import img1 from "../../../../temp_images/Women/img (1).jpeg";
+import img2 from "../../../../temp_images/Women/img (2).jpeg";
+import img3 from "../../../../temp_images/Women/img (3).jpeg";
+import img4 from "../../../../temp_images/Women/img (4).jpeg";
+import img5 from "../../../../temp_images/Women/img (5).jpeg";
+import img6 from "../../../../temp_images/Women/img (6).jpeg";
+import img7 from "../../../../temp_images/Women/img (7).jpeg";
+import img8 from "../../../../temp_images/Women/img (8).jpeg";
+import img9 from "../../../../temp_images/Women/img (9).jpeg";
+import img10 from "../../../../temp_images/Women/img (10).jpeg";
+
 
 const Section2 = () => {
   const [sort, setSort] = useState("");
@@ -58,6 +68,8 @@ const Section2 = () => {
       price: 5400,
       colors: ["Black", "Gray"],
       size: "M",
+      image: img1,
+      inStock: true,
     },
     {
       id: 2,
@@ -65,6 +77,8 @@ const Section2 = () => {
       price: 4500,
       colors: ["White"],
       size: "L",
+      image: img2,
+      inStock: false,
     },
     {
       id: 3,
@@ -72,6 +86,8 @@ const Section2 = () => {
       price: 3200,
       colors: ["Blue"],
       size: "M",
+      image: img3,
+      inStock: true,
     },
     {
       id: 4,
@@ -79,6 +95,8 @@ const Section2 = () => {
       price: 2500,
       colors: ["Yellow", "Red"],
       size: "S",
+      image: img4,
+      inStock: true,
     },
     {
       id: 5,
@@ -86,8 +104,54 @@ const Section2 = () => {
       price: 4800,
       colors: ["Gray"],
       size: "XL",
+      image: img5,
+      inStock: false,
     },
-    { id: 6, name: "Red Party Dress", price: 6200, colors: ["Red"], size: "S" },
+    {
+      id: 6,
+      name: "Red Party Dress",
+      price: 6200,
+      colors: ["Red"],
+      size: "S",
+      image: img6,
+      inStock: true,
+    },
+    {
+      id: 7,
+      name: "Blue Denim Jacket",
+      price: 7500,
+      colors: ["Blue"],
+      size: "L",
+      image: img7,
+      inStock: true,
+    },
+    {
+      id: 8,
+      name: "Green Summer Dress",
+      price: 5600,
+      colors: ["Green"],
+      size: "M",
+      image: img8,
+      inStock: false,
+    },
+    {
+      id: 9,
+      name: "Black Leather Jacket",
+      price: 8500,
+      colors: ["Black"],
+      size: "L",
+      image: img9,
+      inStock: true,
+    },
+    {
+      id: 10,
+      name: "Floral Print Skirt",
+      price: 3000,
+      colors: ["Floral"],
+      size: "S",
+      image: img10,
+      inStock: false,
+    },
   ];
 
   const handleSortChange = (event) => {
@@ -286,7 +350,7 @@ const Section2 = () => {
       <Grid container spacing={2} sx={{ width: "85%" }}>
         {filteredClothes.map((item) => (
           <Grid item xs={4} sx={{display:"flex" , justifyContent:"flex-end"}}>
-            <DressCard colors={item.colors} name={item.name} price={item.price} img={img} id={item.id}/>
+            <DressCard colors={item.colors} name={item.name} price={item.price} img={item.image} id={item.id}/>
           </Grid>
         ))}
       </Grid>
