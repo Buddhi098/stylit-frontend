@@ -1,25 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import {
+  Button,
   Box,
   Dialog,
   DialogTitle,
   DialogContent,
+  Chip,
   DialogContentText,
   Divider,
   IconButton,
   Typography,
   Grid,
-  Button,
   DialogActions
 } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCartOutlined';
 import LocalShippingIcon from '@mui/icons-material/LocalShippingOutlined';
 import PersonIcon from '@mui/icons-material/Person';
-import SelectCourierDialog from "./SelectCourierDialog"; // Import the SelectCourierDialog component
 
-const RequestDialog = ({ open, handleClose, selectedRow }) => {
-  const [courierDialogOpen, setCourierDialogOpen] = useState(false);
+const PendingRequestDialog = ({ open, handleClose, selectedRow }) => {
+  const [courierDialogOpen, setCourierDialogOpen] = React.useState(false);
 
   const handleOpenCourierDialog = () => {
     setCourierDialogOpen(true);
@@ -40,6 +40,7 @@ const RequestDialog = ({ open, handleClose, selectedRow }) => {
                   <Typography variant="h6" component="div" ml={2} style={{ textTransform: 'uppercase', fontWeight: 'bold', color: 'white' }}>
                     {selectedRow.info}
                   </Typography>
+                  <Chip label="Pending" color="warning" sx={{ textTransform: 'uppercase', fontWeight: 'bold', fontSize: '0.7rem', height: "26px", ml: 4 }} />
                 </>
               )}
             </Box>
@@ -218,19 +219,9 @@ const RequestDialog = ({ open, handleClose, selectedRow }) => {
             </Box>
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleOpenCourierDialog} sx={{ backgroundColor: "#C0A888" }} variant="contained">Request Courier</Button>
-        </DialogActions>
       </Dialog>
-      
-      {/* SelectCourierDialog */}
-      <SelectCourierDialog
-        open={courierDialogOpen}
-        handleClose={handleCloseCourierDialog}
-        selectedRow={selectedRow}
-      />
     </>
   );
 };
 
-export default RequestDialog;
+export default PendingRequestDialog;

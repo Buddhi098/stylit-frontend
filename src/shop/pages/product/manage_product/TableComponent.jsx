@@ -301,8 +301,7 @@ export default function TableComponent({ rows }) {
                         </Button>
                         <Button
                           variant="contained"
-                          color="error"
-                          sx={{ margin: "3px" }}
+                          sx={{ margin: "3px", backgroundColor: "#BDBDBD" }}
                           size="small"
                         >
                           Delete

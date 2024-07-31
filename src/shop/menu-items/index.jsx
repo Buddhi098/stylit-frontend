@@ -10,7 +10,7 @@ import payment from './payment';
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-  items: [dashboard , product , order, connections, payment, chat]
+  items: [dashboard , product , order, connections, chat]
 };
 
 export default menuItems;

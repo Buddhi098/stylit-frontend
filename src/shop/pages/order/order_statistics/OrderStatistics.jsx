@@ -1,13 +1,12 @@
 import { Stack } from '@mui/system'
 import React from 'react'
-// import DataTable from './DataTable'
+import DataTable from './Index'
 
 const OrderStatistics = () => {
   return (
-    <div>Heyyyyyy</div>
-    // <Stack>
-    //     <DataTable/>
-    // </Stack>
+    <Stack>
+        <DataTable/>
+    </Stack>
   )
 }
 

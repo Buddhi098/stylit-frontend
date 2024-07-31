@@ -33,67 +33,78 @@ const ChatArea = ({ chat }) => {
     }, {});
 
     return (
-        <Box 
-            sx={{
-                flex: 1,
-                overflowY: 'auto',
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column'
-            }}
-        >
-            {Object.keys(groupedMessages).map((date, index) => (
-                <Box key={index}>
-                    <Typography
-                        variant="subtitle2"
-                        color="textSecondary"
-                        sx={{
-                            mb: 1,
-                            mt: 2,
-                            textAlign: 'center', // Center the text
-                        }}
-                    >
-                        {formatDate(date)}
-                    </Typography>
+      <Box 
+      sx={{
+          flex: 1,
+          overflowY: 'auto',
+          p: 2,
+          display: 'flex',
+          flexDirection: 'column',
+      }}
+  >
+      {Object.keys(groupedMessages).map((date, index) => (
+          <Box key={index}>
+              <Typography
+                  variant="subtitle2"
+                  color="textSecondary"
+                  sx={{
+                      mb: 1,
+                      mt: 2,
+                      textAlign: 'center', // Center the text
+                  }}
+              >
+                  {formatDate(date)}
+              </Typography>
 
-                    {groupedMessages[date].map((msg, index) => (
-                        <Box 
-                            key={index} 
-                            sx={{
-                                display: 'flex',
-                                justifyContent: msg.sender === 'admin' ? 'flex-start' : 'flex-end',
-                                mb: 1.5,
-                            }}
-                        >
-                            <Paper 
-                                sx={{
-                                    p: 1.5,
-                                    borderRadius: 1,
-                                    bgcolor: msg.sender === 'admin' ? '#e6e6e6' : '#C0A888',
-                                    color: msg.sender === 'admin' ? 'black' : 'white',
-                                    maxWidth: '70%',
-                                    wordBreak: 'break-word',
-                                }}
-                            >
-                                {msg.text}
-                            </Paper>
-                            <Typography 
-                                variant="caption" 
-                                color="textSecondary" 
-                                sx={{ 
-                                    ml: 2,
-                                    mt: 5,
-                                    textAlign: msg.sender === 'admin' ? 'left' : 'right',
-                                }}
-                            >
-                                {formatTime(msg.time)}
-                            </Typography>
-                        </Box>
-                    ))}
+              {groupedMessages[date].map((msg, index) => (
+                  <Box 
+                  key={index} 
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: msg.sender === 'admin' ? 'flex-start' : 'flex-end',
+                    mb: 1.5,
+                    position: 'relative',
+                    maxWidth: '100%',
+                  }}
+                >
+                  <Paper 
+                    sx={{
+                      p: 1.5,
+                      borderRadius: 2,
+                      bgcolor: msg.sender === 'admin' ? 'rgba(192, 168, 136,0.2)' : '#6CB4EE',
+                      color: msg.sender === 'admin' ? 'black' : 'white',
+                      maxWidth: '100%',
+                      wordBreak: 'break-word',
+                      maxHeight: '32px', 
+                      overflowY: 'auto',  
+                      display: 'flex',
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      textAlign: 'center',
+                      fontSize: '0.85rem', 
+                    }}
+                  >
+                    {msg.text}
+                  </Paper>
+                  <Typography 
+                    variant="caption" 
+                    color="textSecondary" 
+                    sx={{ 
+                      fontSize: '0.65rem',
+                      mt: 0.5,
+                      alignSelf: msg.sender === 'admin' ? 'flex-start' : 'flex-end',
+                    }}
+                  >
+                    {formatTime(msg.time)}
+                  </Typography>
                 </Box>
-            ))}
-            <div ref={messagesEndRef} />
-        </Box>
+                
+              ))}
+          </Box>
+      ))}
+      <div ref={messagesEndRef} />
+  </Box>
     );
 };
 

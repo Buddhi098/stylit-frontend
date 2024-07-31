@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, List, ListItem, ListItemAvatar, ListItemText, Box } from '@mui/material';
+import { Avatar, List, ListItem, ListItemAvatar, ListItemText, Box,Typography } from '@mui/material';
 import { styled } from '@mui/system';
 
 const CustomListItem = styled(ListItem)(({ theme }) => ({
@@ -8,12 +8,14 @@ const CustomListItem = styled(ListItem)(({ theme }) => ({
     borderBottom: `1px solid ${theme.palette.divider}`,
     '&:hover': {
         backgroundColor: theme.palette.action.hover,
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+        transition: 'box-shadow 0.3s ease, background-color 0.3s ease',
     },
 }));
 
 const countUnreadMessages = (messages) => {
-    // Find the last message from the shop
-    const lastShopMessageIndex = messages.slice().reverse().findIndex(m => m.sender === 'shop');
+    // Find the last message from the courier
+    const lastShopMessageIndex = messages.slice().reverse().findIndex(m => m.sender === 'courier');
     if (lastShopMessageIndex === -1) return 0; // No shop messages found
 
     const lastShopMessage = messages[messages.length - 1 - lastShopMessageIndex];
@@ -25,7 +27,7 @@ const countUnreadMessages = (messages) => {
 };
 
 // In MessageList.jsx
-const MessageList = ({ messages, onChatClick }) => {
+const MessageList = ({ messages, onChatClick, selectedChatId  }) => {
     return (
         <List>
             {messages.map(chat => {
@@ -37,31 +39,50 @@ const MessageList = ({ messages, onChatClick }) => {
                         key={chat.id} 
                         onClick={() => onChatClick(chat)}
                         sx={{ 
-                            borderBottom: '1px solid #e0e0e0',
-                            bgcolor: unreadCount > 0 ? '#f0f7ff' : 'transparent'
+                            border: '0.5px solid #e0e0e0',
+                            borderTopLeftRadius: 4,
+                            borderLeft: chat.id === selectedChatId ? '5px solid rgba(108, 180, 238, 0.9)' : '0.5px solid #e0e0e0',
+                            borderBottomLeftRadius: 4,
+                            bgcolor: chat.id === selectedChatId ? 'rgba(108, 180, 238, 0.2)' : (unreadCount > 0 ? 'rgba(192, 192, 192, 0.2)' : 'transparent'),
+                            '&:hover': {
+                                backgroundColor: chat.id === selectedChatId ? 'rgba(108, 180, 238, 0.2)' :'transparent',
+                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                                transition: 'box-shadow 0.3s ease, background-color 0.3s ease',
+                            }
                         }}
                     >
                         <ListItemAvatar>
-                            <Avatar src={chat.avatar}>{chat.name.charAt(0)}</Avatar>
+                            <Avatar src={chat.avatar} sx={{ width: 50, height: 50, border: '1px solid black' }}/>
                         </ListItemAvatar>
                         <ListItemText 
-                            primary={chat.name}
-                            secondary={chat.messages[chat.messages.length - 1].text}
+                            sx={{marginLeft:1}}
+                            primary={
+                                <Typography variant="body1" sx={{ fontWeight: unreadCount > 0 ? 'bold' : 'normal' }}>
+                                    {chat.name}
+                                </Typography>
+                            }
+                            secondary={
+                                <Typography variant="body2" sx={{ fontWeight: unreadCount > 0 ? 'bold' : 'normal' }}>
+                                    {chat.messages[chat.messages.length - 1].text}
+                                </Typography>
+                            }
                         />
                         {unreadCount > 0 && (
                             <Box 
                                 sx={{ 
-                                    bgcolor: 'primary.main', 
+                                    bgcolor: '#A68A6C', 
                                     color: 'white', 
                                     borderRadius: '50%', 
-                                    width: 20, 
-                                    height: 20, 
+                                    width: 17, 
+                                    height: 17, 
                                     display: 'flex', 
                                     justifyContent: 'center', 
                                     alignItems: 'center' 
                                 }}
                             >
-                                {unreadCount}
+                                <Typography variant="overline" sx={{ lineHeight: 1 }}>
+                                    {unreadCount}
+                                </Typography>
                             </Box>
                         )}
                     </ListItem>

@@ -17,18 +17,16 @@ import CloseIcon from '@mui/icons-material/Close';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCartOutlined';
 import LocalShippingIcon from '@mui/icons-material/LocalShippingOutlined';
 import PersonIcon from '@mui/icons-material/Person';
-import QRCode from 'qrcode.react';
 
-const getStatusColor = (status) => {
-  switch (status.toLowerCase()) {
-    case 'pending':
+
+const getStatusColor = (orderStatus) => {
+  switch (orderStatus.toLowerCase()) {
+    case 'recent':
+      return "#C0A888";
+    case 'rejected':
       return 'red';
     case 'accepted':
       return 'green';
-    case 'ongoing':
-      return 'blue';
-    case 'completed':
-      return '#C0A888';
     default:
       return 'black'; // Default color if status does not match any case
   }
@@ -56,7 +54,7 @@ const OrderDialog = ({ open, handleClose, selectedRow }) => {
   };
 
   // Conditionally render the button based on the order status
-  const showGenerateQRButton = selectedRow?.status.toLowerCase() === 'accepted';
+  const showGenerateQRButton = selectedRow?.orderStatus.toLowerCase() === 'accepted';
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
@@ -174,10 +172,10 @@ const OrderDialog = ({ open, handleClose, selectedRow }) => {
                         variant="body2" 
                         sx={{ 
                           textAlign: 'right', 
-                          color: getStatusColor(selectedRow.status) // Apply dynamic color based on status
+                          color: getStatusColor(selectedRow.orderStatus) // Apply dynamic color based on status
                         }}
                       >
-                        {selectedRow.status}
+                        {selectedRow.orderStatus}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -262,26 +260,7 @@ const OrderDialog = ({ open, handleClose, selectedRow }) => {
           </Box>
 
         </DialogContentText>
-        {qrCodeValue && showQrCode && (
-          <Box display="flex" justifyContent="center" mb={2}>
-            <Paper elevation={3} sx={{ padding: 2, textAlign: 'center', backgroundColor: '#f5f5f5' }}>
-              <Typography variant="h6" gutterBottom mb={2}>Order QR Code</Typography>
-              <QRCode value={qrCodeValue} size={256} />
-              <Typography variant="body2" mt={2}>Scan the QR code.</Typography>
-            </Paper>
-          </Box>
-        )}
       </DialogContent>
-      <DialogActions>
-        {showGenerateQRButton && (
-          <Button onClick={handleGenerateQR} variant="contained" color="primary">
-            Generate QR Code
-          </Button>
-        )}
-        <Button onClick={handleClose} color="secondary">
-          Close
-        </Button>
-      </DialogActions>
     </Dialog>
   );
 };

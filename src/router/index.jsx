@@ -8,6 +8,6 @@ import AdminRoutes from './AdminRoute';
 
 // ==============================|| ROUTING RENDER ||============================== //
 
-const router = createBrowserRouter([PublicRoutes , BaseRoute , ShopRoutes , CourierRoutes , AdminRoutes], { basename: process.env.VITE_APP_BASE_NAME });
+const router = createBrowserRouter([PublicRoutes , BaseRoute , ShopRoutes , CourierRoutes, AdminRoutes], { basename: process.env.VITE_APP_BASE_NAME });
 
 export default router;

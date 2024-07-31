@@ -14,8 +14,7 @@ import CourierChat from '../shop/pages/chat/courier_chat/CourierChat';
 import CustomerChat from '../shop/pages/chat/customer_chat/CustomerChat';
 import AdminChat from '../shop/pages/chat/admin_chat/AdminChat';
 import ManageConnections from '../shop/pages/manage_connections/ManageConnections';
-import PaymentMethods from '../shop/pages/payment/payment_method/PaymentMethod';
-import WithdrawCash from '../shop/pages/payment/withdraw_cash/WithdrawCash';
+import PlacedOrders from '../shop/pages/order/recent_orders/RecentOrders';
 // import ApprovedDelivery from '../shop/pages/approved_delivery/ApprovedDelivery';
 
 const Dashboard = Loadable(lazy(()=>import('../shop/pages/dashboard')))
@@ -42,6 +41,10 @@ const ShopRoutes = {
     {
       path:'product_statistics',
       element: <ProductStatistics/>
+    },
+    {
+      path:'recent_orders',
+      element: <PlacedOrders/>
     },
     {
       path:'courier_request',
@@ -75,14 +78,7 @@ const ShopRoutes = {
       path:'manage_connections',
       element: <ManageConnections/>
     },
-    {
-      path:'payment_method',
-      element: <PaymentMethods/>
-    },
-    {
-      path:'withdraw_cash',
-      element: <WithdrawCash/>
-    },
+   
 
   ]
 };

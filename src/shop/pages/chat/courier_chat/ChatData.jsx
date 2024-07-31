@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Box, TextField, InputAdornment, IconButton, Avatar, Menu, MenuItem, Fab, Typography } from '@mui/material';
+import { Box, TextField, InputAdornment, IconButton, Avatar, Menu, MenuItem,Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CallIcon from '@mui/icons-material/Call';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import AddIcon from '@mui/icons-material/Add'; // Import Add Icon
 import MessageList from './MessageList';
 import ChatArea from './ChatArea';
 import MessagesInput from './MessageInput';
-import initialMessages from './Messages'; // Adjust the path as needed
+import initialMessages from './Messages';
+import AdsClickIcon from '@mui/icons-material/AdsClick'; 
 
 const ChatData = () => {
     const [selectedChat, setSelectedChat] = useState(null);
@@ -49,17 +49,12 @@ const ChatData = () => {
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
-
-    const handleNewChat = () => {
-        // Handle creating a new chat
-        console.log('New chat button clicked');
-    };
-
+    
     return (
         <Box sx={{ display: 'flex', height: 'calc(100vh - 64px)' }}>
             {/* Message List */}
-            <Box sx={{ width: '300px', borderRight: '1px solid #e0e0e0', bgcolor: 'white', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-                <Box sx={{ p: 2, borderBottom: '1px solid #e0e0e0' }}>
+            <Box sx={{ width: '350px', borderRight: '1px solid #e0e0e0', bgcolor: 'white', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+                <Box sx={{ p: 2}}>
                     <TextField
                         fullWidth
                         size="small"
@@ -77,7 +72,7 @@ const ChatData = () => {
                             ),
                         }}
                     />
-                    <Typography variant="h6" sx={{ mt: 2 }}>Direct Messages</Typography>
+                    <Typography variant="h6" sx={{ mt: 2 ,fontWeight:'bold'}}>Direct Messages</Typography>
                 </Box>
                 <Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
                     <MessageList 
@@ -85,20 +80,9 @@ const ChatData = () => {
                             msg.name.toLowerCase().includes(searchTerm.toLowerCase())
                         )} 
                         onChatClick={handleChatClick}
+                        selectedChatId={selectedChat ? selectedChat.id : null}
                     />
                 </Box>
-                <Fab
-                    aria-label="add"
-                    onClick={handleNewChat}
-                    sx={{
-                        color: "#C0A888",
-                        position: 'absolute',
-                        bottom: 25,
-                        right: 16,
-                    }}
-                >
-                    <AddIcon sx={{ color: '#C0A888' }} /> {/* Icon color */}
-                </Fab>
             </Box>
 
             {/* Chat Area */}
@@ -108,17 +92,15 @@ const ChatData = () => {
                         {/* Header */}
                         <Box sx={{ display: 'flex', alignItems: 'center', p: 2, borderBottom: '1px solid #e0e0e0', bgcolor: 'white' }}>
                             {/* Profile Picture */}
-                            <Avatar src={selectedChat.avatar} sx={{ mr: 2 }}>
-                                {selectedChat.name.charAt(0)}
-                            </Avatar>
+                            <Avatar src={selectedChat.avatar} sx={{ width: 48, height: 48, border: '1px solid black' }}/> 
 
                             {/* Customer Name */}
-                            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                            <Typography variant="h6" sx={{ flexGrow: 1 ,marginLeft:1}}>
                                 {selectedChat.name}
                             </Typography>
 
                             {/* Call Icon */}
-                            <IconButton sx={{color: "#C0A888"}} edge="end" aria-label="call" onClick={() => handleCall(selectedChat.phoneNumber)}>
+                            <IconButton sx={{color: "#C0A888",marginRight:2}} edge="end" aria-label="call" onClick={() => handleCall(selectedChat.phoneNumber)}>
                                 <CallIcon />
                             </IconButton>
 
@@ -146,8 +128,9 @@ const ChatData = () => {
                     </>
                 ) : (
                     <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Typography variant="h5" color="textSecondary">
-                            Select a chat to start messaging
+                        <Typography variant="h6" color="textSecondary" sx={{fontWeight:'bold'}}>
+                            Select a Chat to Start Messaging
+                            <AdsClickIcon sx={{ ml: 1 }}/>
                         </Typography>
                     </Box>
                 )}
