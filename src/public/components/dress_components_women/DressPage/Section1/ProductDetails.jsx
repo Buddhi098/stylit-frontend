@@ -4,6 +4,7 @@ import BreadCrumb from "./BreadCrumb";
 import StarRating from "./StarRating";
 import SizeChart from "./SizeChart";
 import ClothAccordion from "./ClothAccordion";
+import Section1Drawer from "./Section1Drawer/Section1Drawer";
 
 const colorCode = {
   Black: "#000000",
@@ -63,29 +64,7 @@ const ProductDetails = () => {
         </Stack>
         <Stack direction={"row"} marginTop={1} spacing={1}>
           {colors.map((color) => (
-            <Box
-              key={color} // Move the key here
-              sx={{
-                width: "26px",
-                height: "26px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: "50%",
-                border: selectedColor === color ? "1px solid #999999" : "none",
-              }}
-            >
-              <Box
-                sx={{
-                  width: "20px",
-                  height: "20px",
-                  borderRadius: "50%",
-                  backgroundColor: colorCode[color],
-                  cursor: "pointer",
-                }}
-                onClick={() => setColor(color)}
-              />
-            </Box>
+            <Section1Drawer setColor={setColor} color={color} selectedColor={selectedColor}/>
           ))}
         </Stack>
       </Stack>

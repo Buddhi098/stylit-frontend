@@ -4,7 +4,6 @@ import BreadCrumb from "./BreadCrumb";
 import StarRating from "./StarRating";
 import SizeChart from "./SizeChart";
 import ClothAccordion from "./ClothAccordion";
-import Section1Drawer from "./Section1Drawer/Section1Drawer";
 
 const colorCode = {
   Black: "#000000",
@@ -64,7 +63,29 @@ const ProductDetails = () => {
         </Stack>
         <Stack direction={"row"} marginTop={1} spacing={1}>
           {colors.map((color) => (
-            <Section1Drawer setColor={setColor} color={color} selectedColor={selectedColor}/>
+            <Box
+              key={color} // Move the key here
+              sx={{
+                width: "26px",
+                height: "26px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "50%",
+                border: selectedColor === color ? "1px solid #999999" : "none",
+              }}
+            >
+              <Box
+                sx={{
+                  width: "20px",
+                  height: "20px",
+                  borderRadius: "50%",
+                  backgroundColor: colorCode[color],
+                  cursor: "pointer",
+                }}
+                onClick={() => setColor(color)}
+              />
+            </Box>
           ))}
         </Stack>
       </Stack>
@@ -73,7 +94,7 @@ const ProductDetails = () => {
         <SizeChart />
       </Stack>
 
-      <Stack marginTop={4} spacing={0.3}>
+      <Stack direction={"row"} marginTop={4} spacing={0.3}>
         {" "}
         {/* Increased marginTop to 4 */}
         <Button
@@ -89,6 +110,21 @@ const ProductDetails = () => {
           disableRipple
         >
           <Typography variant="body2_nunito">ADD TO BAG</Typography>
+          
+        </Button>
+        <Button
+          variant="outlined"
+          color="primary"
+          sx={{
+            width: "100%",
+            border: "1px solid #000000",
+            color: "#000000",
+            borderRadius: "0",
+          }}
+          disableFocusRipple
+          disableRipple
+        >
+          <Typography variant="body2_nunito">VIEW FULL DETAILS</Typography>
           
         </Button>
       </Stack>

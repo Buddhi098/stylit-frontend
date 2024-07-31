@@ -1,9 +1,9 @@
 import React from "react";
 import { Grid, Box } from "@mui/material";
-import img from "../../../../assets/images/women_page/cover.png";
-import img1 from "../../../../assets/images/women_page/s11.png";
-import img2 from "../../../../assets/images/women_page/s13.png";
-import img3 from "../../../../assets/images/women_page/s21.png";
+import img from "../../../../../../assets/images/women_page/cover.png";
+import img1 from "../../../../../../assets/images/women_page/s11.png";
+import img2 from "../../../../../../assets/images/women_page/s13.png";
+import img3 from "../../../../../../assets/images/women_page/s21.png";
 
 const images = [
   {
@@ -32,7 +32,7 @@ const ProductImage = () => {
   };
 
   return (
-    <Box sx={{ height: "600px", width: "700px" }}>
+    <Box sx={{ height: "600px", width: "100%" }}>
       <Grid container spacing={2} sx={{ height: "100%" }}>
         <Grid
           item

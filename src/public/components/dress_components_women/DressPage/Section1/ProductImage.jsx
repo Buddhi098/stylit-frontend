@@ -1,9 +1,9 @@
 import React from "react";
 import { Grid, Box } from "@mui/material";
-import img from "../../../../../temp_images/Women/with_women/img (1).jpeg";
-import img1 from "../../../../../temp_images/Women/with_women/img (2).jpeg";
-import img2 from "../../../../../temp_images/Women/with_women/img (3).jpeg";
-import img3 from "../../../../../temp_images/Women/with_women/img (4).jpeg";
+import img from "../../../../assets/images/women_page/cover.png";
+import img1 from "../../../../assets/images/women_page/s11.png";
+import img2 from "../../../../assets/images/women_page/s13.png";
+import img3 from "../../../../assets/images/women_page/s21.png";
 
 const images = [
   {
