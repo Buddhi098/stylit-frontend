@@ -36,7 +36,7 @@ const AnalyticEcommerce = ({ icon, title, count }) => {
 
 export default function ProductCards() {
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} sx={{p: { xs: 2, sm: 3 }}}>
       <Grid item xs={12} sx={{ mb: -2.25 }}>
         <Typography variant="h5">Product Statistics</Typography>
         <Typography variant="body2" gutterBottom sx={{ color: '#666', marginBottom: 2 }}>
