@@ -15,6 +15,7 @@ import ShopChat from '../courier/pages/shop_chat/ShopChat';
 import AdminChat from '../courier/pages/admin_chat/AdminChat';
 import EditProfile from '../courier/pages/edit_profile/EditProfile';
 import Payment from '../courier/pages/payment/Payment';
+import ActorBasedRoute from './route_protector/ActorBasedRoute';
 
 const Dashboard = Loadable(lazy(()=>import('../courier/pages/dashboard')))
 
@@ -58,15 +59,15 @@ const CourierRoutes = {
     },
     {
       path:'chat/admin_chat',
-      element:<AdminChat/>
+      element: <ActorBasedRoute element={AdminChat} requiredRoles={['courier']} />
     },
     {
       path:'edit_profile',
-      element:<EditProfile/>
+      element: <ActorBasedRoute element={EditProfile} requiredRoles={['courier']} />
     },
     {
       path:'payment',
-      element:<Payment/>
+      element: <ActorBasedRoute element={Payment} requiredRoles={['courier']} />
     }
 
 
