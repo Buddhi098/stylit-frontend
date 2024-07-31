@@ -17,6 +17,7 @@ import ManageConnections from '../shop/pages/manage_connections/ManageConnection
 import PlacedOrders from '../shop/pages/order/recent_orders/RecentOrders';
 import EditProfile from '../shop/pages/profile/edit_profile/EditProfile';
 import Payment from '../shop/pages/profile/payment/Payment';
+import ActorBasedRoute from './route_protector/ActorBasedRoute';
 // import ApprovedDelivery from '../shop/pages/approved_delivery/ApprovedDelivery';
 
 const Dashboard = Loadable(lazy(()=>import('../shop/pages/dashboard')))
@@ -42,11 +43,11 @@ const ShopRoutes = {
     },
     {
       path:'product_statistics',
-      element: <ProductStatistics/>
+      element: <ActorBasedRoute element={ProductStatistics} requiredRoles={['shop']} />
     },
     {
       path:'recent_orders',
-      element: <PlacedOrders/>
+      element: <ActorBasedRoute element={PlacedOrders} requiredRoles={['shop']} />
     },
     {
       path:'courier_request',
@@ -78,15 +79,15 @@ const ShopRoutes = {
     },
     {
       path:'manage_connections',
-      element: <ManageConnections/>
+      element: <ActorBasedRoute element={ManageConnections} requiredRoles={['shop']} />
     },
     {
       path:'edit_profile',
-      element: <EditProfile/>
+      element: <ActorBasedRoute element={EditProfile} requiredRoles={['shop']} />
     },
     {
       path:'payment',
-      element: <Payment/>
+      element: <ActorBasedRoute element={Payment} requiredRoles={['shop']} />
     },
    
 
