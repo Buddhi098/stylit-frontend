@@ -207,6 +207,7 @@ export default function CustomizedSteppers() {
         } else {
           console.error("Error message:", error.message);
         }
+        setSubmissionError(true);
       } finally {
         setLoading(false);
       }
