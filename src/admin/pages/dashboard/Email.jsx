@@ -13,22 +13,7 @@ export default function Email() {
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
 
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Remy Sharp"
-          secondary={
-            <React.Fragment>
-              
-              {"I'm having a trouble resetting my password"}
-            </React.Fragment>
-          }
-        />
-        <SendBox/>
-      </ListItem>
-
+      
       <Divider variant="inset" component="li" />
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
@@ -113,7 +98,9 @@ export default function Email() {
         />
         <SendBox/>
       </ListItem>
+      
 
+      
       
     </List>
 

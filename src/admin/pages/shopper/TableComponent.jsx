@@ -23,6 +23,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import Button from "@mui/material/Button";
 import { visuallyHidden } from "@mui/utils";
 import { headCells } from "./TableConfig";
+import CustomizedSwitches from "./CustomizedSwitches";
 
 // function createData(id, name, calories, fat, carbs, protein) {
 //   return { id, name, calories, fat, carbs, protein };
@@ -276,12 +277,12 @@ export default function TableComponent({ rows }) {
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.id)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.id}
-                      selected={isItemSelected}
+                      //onClick={(event) => handleClick(event, row.id)}
+                      //role="checkbox"
+                      //aria-checked={isItemSelected}
+                      //tabIndex={-1}
+                      //key={row.id}
+                      //selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
@@ -307,20 +308,9 @@ export default function TableComponent({ rows }) {
                       <TableCell align="right">{row.delete}</TableCell>
                       <TableCell align="right">{row.chat}</TableCell>
                 
-                      <TableCell
-                        align="left"
-                        onClick={(event) => event.stopPropagation()}
-                      >
-                        <Button
-                          variant="contained"
-                          color="secondary"
-                          sx={{ margin: "3px" }}
-                          size="small"
-                        >
-                          Change Status
-                        </Button>
-                        
-                      </TableCell>
+                      
+
+                      <TableCell><CustomizedSwitches/></TableCell>
 
                       <TableCell
                         align="left"
