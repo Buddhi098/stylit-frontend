@@ -17,6 +17,7 @@ import { Shop } from "@mui/icons-material";
 import ShopperSignUp from "../pages/shopper_sign_up/ShopperSignUp";
 import ShopperLoginPage from "../pages/shopper_login_page/ShopperLoginPage";
 import AuthContext from "../../context/auth_context/AuthContext";
+import ContactUs from "../pages/contact_us/ContactUs";
 
 export default function ProfileMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -114,19 +115,7 @@ export default function ProfileMenu() {
               </Typography>
             </MenuItem>
 
-            <MenuItem
-              onClick={handleClose}
-              sx={{
-                color: "#999999",
-                "&:hover": {
-                  color: "#000000",
-                },
-              }}
-            >
-              <Typography variant="body1_nunito" fontSize="15px">
-                Help Center
-              </Typography>
-            </MenuItem>
+            <ContactUs/>
 
             <MenuItem
               onClick={logout}
@@ -147,19 +136,8 @@ export default function ProfileMenu() {
             <ShopperSignUp />
 
             <ShopperLoginPage />
-            <MenuItem
-              onClick={handleClose}
-              sx={{
-                color: "#999999",
-                "&:hover": {
-                  color: "#000000",
-                },
-              }}
-            >
-              <Typography variant="body1_nunito" fontSize="15px">
-                Help Center
-              </Typography>
-            </MenuItem>
+            
+            <ContactUs/>
           </>
         )}
       </Menu>

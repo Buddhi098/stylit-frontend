@@ -1,28 +1,31 @@
 import React from "react";
 import { Box, Typography, Grid, Link, Stack } from "@mui/material";
-import img from "../../../assets/images/women_page/s22.png";
+import img from "../../../assets/images/men_page/s21.png";
 
 const categories = [
   {
     title: "CLOTHING BEST SELLERS",
     items: [
       "Shop All Clothing Best Sellers",
-      "Dresses",
-      "Tops",
-      "Bottoms",
+      "Shirts",
+      "Trousers",
       "Outerwear",
+      "Suits",
+      "Activewear",
     ],
   },
   {
-    title: "ACCESSORIES NEW ARRIVALS",
+    title: "ACCESSORIES BEST SELLERS",
     items: [
-      "Shop All Accessories New Arrivals",
+      "Shop All Accessories Best Sellers",
       "Bags",
-      "Jewelry",
-      "Scarves & Hats",
+      "Belts",
+      "Watches",
+      "Hats",
     ],
   },
 ];
+
 
 const Section3 = () => {
   return (

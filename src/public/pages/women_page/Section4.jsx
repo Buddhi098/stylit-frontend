@@ -30,7 +30,7 @@ const Section4 = () => {
           featured.
         </Typography>
         <Button
-          sx={{ background: "black", borderRadius: "0", padding: "10px 20px" }}
+          sx={{ background: "black", borderRadius: "0", padding: "10px 20px" , "&:hover":{background:'#444444'}}}
         >
           <Typography variant="body2_alata" color="white">
             Add Your Photo
