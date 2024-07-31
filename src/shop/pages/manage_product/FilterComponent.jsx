@@ -182,7 +182,7 @@ const FilterComponent = ({
                 size="small"
                 sx={{ borderRadius: "4px", fontSize: "13px" }}
               >
-                <MenuItem value="" disabled>
+                <MenuItem value="">
                   All
                 </MenuItem>
                 {filterOption.options.map((option, index) => (
