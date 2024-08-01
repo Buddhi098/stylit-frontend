@@ -25,7 +25,7 @@ const colorCode = {
     "repeating-linear-gradient(45deg, #000, #000 10px, #fff 10px, #fff 20px)",
 };
 
-const colors = ["Red", "Purple", "Blue"];
+const colors = ["Pink", "White", "Black"];
 
 const ProductDetails = () => {
   const [selectedColor, setColor] = React.useState(colors[0]);
@@ -38,7 +38,7 @@ const ProductDetails = () => {
 
       <Stack marginTop={2} spacing={0.3}>
         <Typography variant="subtitle_alata" fontSize={"20px"}>
-          Off shoulder flower corsage top
+        Knitted off shoulder crop top
         </Typography>
         <Typography variant="body2_nunito" fontSize={"10px"} color={"#999999"}>
           ALISA BOUTIQUE
@@ -47,7 +47,7 @@ const ProductDetails = () => {
 
       <Stack marginTop={2} spacing={0.3}>
         <Typography variant="subtitle_alata" color={"#000000"}>
-          $ 50.00
+          Rs 3500
         </Typography>
         <Typography variant="body2_nunito" color={"#999999"}>
           Inclusive of all taxes

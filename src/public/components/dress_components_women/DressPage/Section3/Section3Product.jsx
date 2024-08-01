@@ -11,39 +11,39 @@ import {
   IconButton,
   Stack,
 } from "@mui/material";
-import img1 from "../../../../../temp_images/Women/img (19).jpeg";
-import img2 from "../../../../../temp_images/Women/img (20).jpeg";
-import img3 from "../../../../../temp_images/Women/img (21).jpeg";
-import img4 from "../../../../../temp_images/Women/img (15).jpeg";
-import img5 from "../../../../../temp_images/Women/img (14).jpeg";
+import img1 from "../../../../../temp_images/Women/img (3).jpeg";
+import img2 from "../../../../../temp_images/Women/img (10).jpeg";
+import img3 from "../../../../../temp_images/Women/img (11).jpeg";
+import img4 from "../../../../../temp_images/Women/img (12).jpeg";
+import img5 from "../../../../../temp_images/Women/img (13).jpeg";
 
 const products = [
   {
     img: img1,
-    title: "AMANI Pull on wide leg jean",
-    brand: "JAMIE & ANNIE",
-    price: "Rs 6350",
-    color: "Black",
+    title: "Knitted off shoulder crop top",
+    brand: "ALISA Boutique",
+    price: "Rs 3500",
+    color: "Pink",
   },
   {
     img: img2,
-    title: "SARA Skinny fit jeans",
+    title: "Cargo wide leg jean",
     brand: "JAMIE & ANNIE",
-    price: "Rs 7250",
+    price: "Rs 6350",
     color: "Blue",
   },
   {
     img: img3,
-    title: "EMMA Straight leg jeans",
-    brand: "JAMIE & ANNIE",
-    price: "Rs 5800",
-    color: "Gray",
+    title: "Square Toe Flats",
+    brand: "Sole",
+    price: "Rs 5500",
+    color: "Pink",
   },
   {
     img: img4,
-    title: "AVA High waist jeans",
-    brand: "JAMIE & ANNIE",
-    price: "Rs 6900",
+    title: "Valentino Handbag",
+    brand: "Vault",
+    price: "Rs 9500",
     color: "White",
   },
 ];
