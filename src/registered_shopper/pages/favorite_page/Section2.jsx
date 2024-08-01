@@ -18,6 +18,27 @@ import { useNavigate } from "react-router";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import logo from "../../../public/assets/images/logo/Stylit_logo.png";
 import cover from "../../../public/assets/images/men_page/cover.png"
+import img1 from "../../../../src/temp_images/Women/img (1).jpeg";
+import img2 from "../../../../src/temp_images/Women/img (2).jpeg";
+import img3 from "../../../../src/temp_images/Women/img (3).jpeg";
+import img4 from "../../../../src/temp_images/Women/img (4).jpeg";
+import img5 from "../../../../src/temp_images/Women/img (5).jpeg";
+import img6 from "../../../../src/temp_images/Women/img (6).jpeg";
+import img7 from "../../../../src/temp_images/Women/img (7).jpeg";
+import img8 from "../../../../src/temp_images/Women/img (8).jpeg";
+import img9 from "../../../../src/temp_images/Women/img (9).jpeg";
+
+import logo1 from "../../../../src/temp_images/Logo/img (10).png";
+import logo2 from "../../../../src/temp_images/Logo/img (5).png";
+import logo3 from "../../../../src/temp_images/Logo/img (6).png";
+import logo4 from "../../../../src/temp_images/Logo/img (7).png";
+import logo5 from "../../../../src/temp_images/Logo/img (8).png";
+
+import cover1 from "../../../../src/temp_images/Cover/img (1).jpg";
+import cover2 from "../../../../src/temp_images/Cover/img (2).jpg";
+import cover3 from "../../../../src/temp_images/Cover/img (3).jpg";
+import cover4 from "../../../../src/temp_images/Cover/img (4).jpg";
+import cover5 from "../../../../src/temp_images/Cover/img (5).jpg";
 
 const sampleItems = [
   {
@@ -26,7 +47,7 @@ const sampleItems = [
     brand: "ALISA",
     price: 4500,
     color: "White",
-    image: img,
+    image: img1,
   },
   {
     id: 2,
@@ -34,7 +55,7 @@ const sampleItems = [
     brand: "JAMIE & ANNIE",
     price: 5500,
     color: "Black",
-    image: img,
+    image: img2,
   },
   {
     id: 3,
@@ -42,7 +63,7 @@ const sampleItems = [
     brand: "GFlock",
     price: 7500,
     color: "Red",
-    image: img,
+    image: img3,
   },
   {
     id: 4,
@@ -50,7 +71,7 @@ const sampleItems = [
     brand: "ALISA",
     price: 6000,
     color: "Blue",
-    image: img,
+    image: img4,
   },
   {
     id: 5,
@@ -58,7 +79,7 @@ const sampleItems = [
     brand: "JAMIE & ANNIE",
     price: 8500,
     color: "Green",
-    image: img,
+    image: img5,
   },
   {
     id: 6,
@@ -66,7 +87,7 @@ const sampleItems = [
     brand: "GFlock",
     price: 3500,
     color: "Yellow",
-    image: img,
+    image: img6,
   },
   {
     id: 7,
@@ -74,7 +95,7 @@ const sampleItems = [
     brand: "ALISA",
     price: 4000,
     color: "Pink",
-    image: img,
+    image: img7,
   },
   {
     id: 8,
@@ -82,7 +103,7 @@ const sampleItems = [
     brand: "JAMIE & ANNIE",
     price: 9500,
     color: "Grey",
-    image: img,
+    image: img8,
   },
   {
     id: 9,
@@ -90,7 +111,7 @@ const sampleItems = [
     brand: "GFlock",
     price: 5000,
     color: "Orange",
-    image: img,
+    image: img9,
   },
 ];
 
@@ -255,71 +276,71 @@ const Store = ({ shopName, cover, logo, id, favorite }) => {
     {
       id: 1,
       shopName: "ALISA",
-      cover: cover,
-      logo: logo,
+      cover: cover1,
+      logo: logo1,
       favorite: true,
     },
     {
       id: 2,
       shopName: "JAMIE & ANNIE",
-      cover: cover,
-      logo: logo,
+      cover: cover2,
+      logo: logo2,
       favorite: true,
     },
     {
       id: 3,
       shopName: "GFlock",
-      cover: cover,
-      logo: logo,
+      cover: cover3,
+      logo: logo3,
       favorite: true,
     },
     {
       id: 4,
       shopName: "XYZ Store",
-      cover: cover,
-      logo: logo,
+      cover: cover1,
+      logo: logo4,
       favorite: true,
     },
     {
       id: 5,
       shopName: "ABC Boutique",
-      cover: cover,
-      logo: logo,
+      cover: cover5,
+      logo: logo1,
       favorite: true,
     },
     {
       id: 6,
       shopName: "Fashion Hub",
-      cover: cover,
-      logo: logo,
+      cover: cover2,
+      logo: logo2,
       favorite: true,
     },
     {
       id: 7,
       shopName: "Style Corner",
-      cover: cover,
-      logo: logo,
+      cover: cover1,
+      logo: logo5,
       favorite: true,
     },
     {
       id: 8,
       shopName: "Chic Store",
-      cover: cover,
-      logo: logo,
+      cover: cover5,
+      logo: logo2,
       favorite: true,
     },
     {
       id: 9,
       shopName: "Trend Shop",
-      cover: cover,
-      logo: logo,
+      cover: cover3,
+      logo: logo1,
       favorite: true,
     },
     {
       id: 10,
       shopName: "Urban Fashion",
-      cover: cover,
-      logo: logo,
+      cover: cover2,
+      logo: logo5,
       favorite: true,
     },
   ];

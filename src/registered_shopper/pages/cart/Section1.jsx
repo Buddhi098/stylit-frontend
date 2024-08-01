@@ -13,8 +13,15 @@ import {
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import img from "../../../public/assets/images/men_page/cover.png";
 import { Link } from "react-router-dom";
+
+import img1 from "../../../../src/temp_images/Women/img (1).jpeg";
+import img2 from "../../../../src/temp_images/Women/img (2).jpeg";
+import img3 from "../../../../src/temp_images/Women/img (3).jpeg";
+import img4 from "../../../../src/temp_images/Women/img (4).jpeg";
+import img5 from "../../../../src/temp_images/Women/img (5).jpeg";
+import img6 from "../../../../src/temp_images/Women/img (6).jpeg";
+import img7 from "../../../../src/temp_images/Women/img (7).jpeg";
 
 const CartItem = ({ image, name, size, color, price }) => {
   const [quantity, setQuantity] = React.useState(1);
@@ -103,7 +110,7 @@ const Section1 = () => {
 
       <Box sx={{ overflowY: "scroll", maxHeight: "65vh", margin: "32px 0px" }}>
         <CartItem
-          image={img}
+          image={img1}
           name="The Frolic Dress in Linen"
           size="XS"
           color="Dusty Pink"
@@ -111,7 +118,7 @@ const Section1 = () => {
         />
 
         <CartItem
-          image={img}
+          image={img2}
           name="The Frolic Dress in Linen"
           size="XS"
           color="Dusty Pink"
@@ -119,7 +126,7 @@ const Section1 = () => {
         />
 
         <CartItem
-          image={img}
+          image={img3}
           name="The Frolic Dress in Linen"
           size="XS"
           color="Dusty Pink"
@@ -127,28 +134,28 @@ const Section1 = () => {
         />
 
         <CartItem
-          image={img}
+          image={img4}
           name="The Frolic Dress in Linen"
           size="XS"
           color="Dusty Pink"
           price="3500"
         />
         <CartItem
-          image={img}
+          image={img5}
           name="The Frolic Dress in Linen"
           size="XS"
           color="Dusty Pink"
           price="3500"
         />
         <CartItem
-          image={img}
+          image={img6}
           name="The Frolic Dress in Linen"
           size="XS"
           color="Dusty Pink"
           price="3500"
         />
         <CartItem
-          image={img}
+          image={img7}
           name="The Frolic Dress in Linen"
           size="XS"
           color="Dusty Pink"
