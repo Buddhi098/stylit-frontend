@@ -13,15 +13,15 @@ export default function BreadCrumb({gender}) {
     <div role="presentation" onClick={handleClick}>
       <Breadcrumbs aria-label="breadcrumb">
         <Link color="inherit" to="/">
-         <Typography variant='body2_nunito' sx={{"&:hover":{textDecoration:"underline"}}} color={"#999999"}>Public</Typography> 
+         <Typography variant='body2_nunito' sx={{"&:hover":{textDecoration:"underline"}}} color={"#999999"}>Women</Typography> 
         </Link>
         <Link
           color="inherit"
           to={gender==="women" ? "/public/women" : "public/men"}
         >
-           <Typography variant='body2_nunito' sx={{"&:hover":{textDecoration:"underline"}}} color={"#999999"}>Dress</Typography> 
+           <Typography variant='body2_nunito' sx={{"&:hover":{textDecoration:"underline"}}} color={"#999999"}>Tops</Typography> 
         </Link>
-        <Typography variant='body2_nunito' color="text.primary" sx={{"&:hover":{textDecoration:"underline"}}}>Women</Typography>
+        <Typography variant='body2_nunito' color="text.primary" sx={{"&:hover":{textDecoration:"underline"}}}>Crop Tops</Typography>
       </Breadcrumbs>
     </div>
   );

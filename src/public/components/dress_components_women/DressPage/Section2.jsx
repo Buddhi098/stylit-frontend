@@ -16,15 +16,15 @@ import img9 from "../../../../temp_images/Women/img (20).jpeg"
 import Section2Drawer from "./Section2/Section2Drawer";
 
 const dresses = [
-  { id: 1, name: "Casual Wear Stores", image: img1 },
-  { id: 2, name: "Formal Wear Stores", image: img2 },
-  { id: 3, name: "Occasion Wear Stores", image: img3 },
-  { id: 4, name: "Denim Stores", image: img4 },
-  { id: 5, name: "Active Wear Stores", image: img5 },
-  { id: 6, name: "Outerwear Stores", image: img6 },
-  { id: 7, name: "Bag Stores", image: img7 },
-  { id: 8, name: "Footwear Stores", image: img8 },
-  { id: 9, name: "Accessories Stores", image: img9 },
+  { id: 1, name: "Ruffle off shoulder top", image: img1 },
+  { id: 2, name: "Pink crop top", image: img2 },
+  { id: 3, name: "Ribbed off shoulder top", image: img3 },
+  { id: 4, name: "Off shoulder crop top in pink", image: img4 },
+  { id: 5, name: "Ruffle off shoulder top", image: img5 },
+  { id: 6, name: "Off shoulder top", image: img6 },
+  { id: 7, name: "Ribbed off shoulder top", image: img7 },
+  { id: 8, name: "Ruffle off shoulder top", image: img8 },
+  { id: 9, name: "Ribbed off shoulder top", image: img9 },
 ];
 
 const Section2 = () => {
