@@ -82,7 +82,7 @@ const Form1 = forwardRef((props, ref) => {
       courierEmail: Yup.string()
         .email("Invalid email address")
         .required("Email is required"),
-      courierContactNumber: Yup.string().required("Contact Number is required"),
+      courierContactNumber: Yup.string().required("Contact Number is required").min(9, "Enter Valid Phone Number"),
       password: Yup.string()
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
