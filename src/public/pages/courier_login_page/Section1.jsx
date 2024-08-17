@@ -17,7 +17,7 @@ import { useNavigate } from "react-router";
 import AuthContext from "../../../context/auth_context/AuthContext";
 
 const Section1 = () => {
-  const [error, setError] = React.useState('');
+  const [error, setError] = React.useState("");
   const btnRef = useRef();
   const [btnLabel, setBtnLabel] = useState("Login");
   const { login } = useContext(AuthContext);
@@ -47,11 +47,36 @@ const Section1 = () => {
 
         navigate("/courier/dashboard");
       } catch (error) {
+        if (error.response) {
+          // Check the status code and set the error message accordingly
+          const statusCode = error.response.status;
+          switch (statusCode) {
+            case 400:
+              setError("Invalid email or password.");
+              break;
+            case 403:
+              setError("Forbidden: You don't have access to this resource.");
+              break;
+            case 404:
+              setError("Not Found: The requested resource was not found.");
+              break;
+            case 500:
+              setError("Internal Server Error: Please try again later.");
+              break;
+            default:
+              setError("An unexpected error occurred. Please try again.");
+              break;
+          }
+        } else {
+          // Handle errors without a response (e.g., network errors)
+          setError(
+            "Network error: Please check your connection and try again."
+          );
+        }
         console.error(
           "There was an error adding the user:",
           error.response?.data
         );
-        setError("Invalid email or password");
       } finally {
         btnRef.current.disabled = false;
         setBtnLabel("Login");
@@ -59,15 +84,15 @@ const Section1 = () => {
     },
   });
 
-  const handleEmailChange = (e)=>{
-    setError('');
+  const handleEmailChange = (e) => {
+    setError("");
     formik.handleChange(e);
-  }
+  };
 
-  const handlePasswordChange = (e)=>{
-    setError('');
-    formik.handleChange(e)
-  }
+  const handlePasswordChange = (e) => {
+    setError("");
+    formik.handleChange(e);
+  };
 
   return (
     <Box
@@ -130,14 +155,19 @@ const Section1 = () => {
               STYLIT!
             </Typography>
           </Typography>
-          {error!=='' && (
-          <Alert severity="error" sx={{ marginTop: "10px" }}>
-            {error}
-          </Alert>
-        )}
-          <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 2 }}>
+          {error !== "" && (
+            <Alert severity="error" sx={{ marginTop: "10px" }}>
+              {error}
+            </Alert>
+          )}
+          <Box
+            component="form"
+            noValidate
+            onSubmit={formik.handleSubmit}
+            sx={{ mt: 2 }}
+          >
             <TextField
-            variant="filled"
+              variant="filled"
               margin="normal"
               required
               fullWidth
@@ -153,7 +183,7 @@ const Section1 = () => {
               helperText={formik.touched.email && formik.errors.email}
             />
             <TextField
-            variant="filled"
+              variant="filled"
               margin="normal"
               required
               fullWidth
@@ -171,13 +201,19 @@ const Section1 = () => {
             <Link
               href="#"
               variant="body2"
-              sx={{ display: "block", textAlign: "right", mb: 2 ,textDecoration:'none' , fontStyle: 'italic'}}
+              sx={{
+                display: "block",
+                textAlign: "right",
+                mb: 2,
+                textDecoration: "none",
+                fontStyle: "italic",
+              }}
               color="#000000"
             >
               Forgot password?
             </Link>
             <Button
-            ref={btnRef}
+              ref={btnRef}
               type="submit"
               fullWidth
               variant="contained"
@@ -192,7 +228,14 @@ const Section1 = () => {
             </Button>
             <Box sx={{ textAlign: "center", mt: 2 }}>
               <Typography variant="body2">
-                Not Registered? <Link href="/public/courier_signup_form" color="#999999" sx={{fontStyle: 'italic'}}>Register Here</Link>
+                Not Registered?{" "}
+                <Link
+                  href="/public/courier_signup_form"
+                  color="#999999"
+                  sx={{ fontStyle: "italic" }}
+                >
+                  Register Here
+                </Link>
               </Typography>
             </Box>
           </Box>

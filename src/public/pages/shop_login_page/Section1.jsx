@@ -22,7 +22,7 @@ const Section1 = () => {
   const [btnLabel, setBtnLabel] = useState("Login");
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -37,7 +37,6 @@ const Section1 = () => {
         .required("Password is required"),
     }),
     onSubmit: async (values) => {
-      // console.log("Form values:", values);
       const { email, password } = values;
       try {
         btnRef.current.disabled = true;
@@ -47,11 +46,36 @@ const Section1 = () => {
 
         navigate("/shop/dashboard");
       } catch (error) {
+        if (error.response) {
+          // Check the status code and set the error message accordingly
+          const statusCode = error.response.status;
+          switch (statusCode) {
+            case 400:
+              setError("Invalid email or password.");
+              break;
+            case 403:
+              setError("Forbidden: You don't have access to this resource.");
+              break;
+            case 404:
+              setError("Not Found: The requested resource was not found.");
+              break;
+            case 500:
+              setError("Internal Server Error: Please try again later.");
+              break;
+            default:
+              setError("An unexpected error occurred. Please try again.");
+              break;
+          }
+        } else {
+          // Handle errors without a response (e.g., network errors)
+          setError(
+            "Network error: Please check your connection and try again."
+          );
+        }
         console.error(
           "There was an error adding the user:",
           error.response?.data
         );
-        setError("Invalid email or password");
       } finally {
         btnRef.current.disabled = false;
         setBtnLabel("Login");
@@ -209,7 +233,7 @@ const Section1 = () => {
               <Typography variant="body2">
                 Not Registered?{" "}
                 <Link
-                  href="/public/courier_signup_form"
+                  href="/public/shop_signup_form"
                   color="#999999"
                   sx={{ fontStyle: "italic" }}
                 >
