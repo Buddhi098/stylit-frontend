@@ -10,46 +10,99 @@ import {
   Typography,
   Grid,
   Button,
-  DialogActions
+  DialogActions,
+  List,
+  ListItem,
+  ListItemText,
+  Card,
+  CardMedia,
+  CardContent,
 } from "@mui/material";
-import { Link } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import InventoryIcon from '@mui/icons-material/Inventory';
-import TableChartIcon from '@mui/icons-material/TableChart';
-import LocalLaundryServiceIcon from '@mui/icons-material/LocalLaundryService';
-import ImageIcon from '@mui/icons-material/Image';
-import InfoIcon from '@mui/icons-material/Info';
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import { Link } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import InventoryIcon from "@mui/icons-material/Inventory";
+import TableChartIcon from "@mui/icons-material/TableChart";
+import LocalLaundryServiceIcon from "@mui/icons-material/LocalLaundryService";
+import ImageIcon from "@mui/icons-material/Image";
+import InfoIcon from "@mui/icons-material/Info";
+import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
+import fallbackImage from "../../../assets/images/fallback.jpg";
+import { getDownloadURL, ref } from "firebase/storage";
+import { storage } from "../../../../config/firebaseConfig";
 
 const colorMap = {
-    White: '#FFFFFF',
-    Green: '#008000',
-    Yellow: '#FFFF00',
-    Blue: '#0000FF',
-    Black: '#000000',
-    Brown: '#A52A2A',
-    Grey: '#808080',
-    Beige: '#F5F5DC',
-    'Light-Green': '#90EE90',
-    Purple: '#800080',
-    Pink: '#FFC0CB',
-    Teal: '#008080'
+  White: "#FFFFFF",
+  Green: "#008000",
+  Yellow: "#FFFF00",
+  Blue: "#0000FF",
+  Black: "#000000",
+  Brown: "#A52A2A",
+  Grey: "#808080",
+  Beige: "#F5F5DC",
+  "Light-Green": "#90EE90",
+  Purple: "#800080",
+  Pink: "#FFC0CB",
+  Teal: "#008080",
 };
 
 const getColorHex = (color) => {
-    return colorMap[color] || '#000000'; // Default to black if color not found
+  return colorMap[color] || "#000000"; // Default to black if color not found
+};
+
+const ImageComponent = ({ id, color }) => {
+  const [imageUrl, setImageUrl] = React.useState("");
+  console.log("ImageComponent", id, color);
+  React.useEffect(() => {
+    const downloadImage = async () => {
+      try {
+        const imageRef = ref(storage, `productImages/${id}${color}/img0`);
+        const url = await getDownloadURL(imageRef);
+        setImageUrl(url);
+      } catch (error) {
+        console.error("Error fetching image URL:", error);
+      }
+    };
+    downloadImage();
+  }, []);
+
+  return (
+    <Box
+      component="img"
+      sx={{
+        width: "100%",
+        height: "auto",
+        borderRadius: "8px",
+      }}
+      alt="image Not Found"
+      src={imageUrl || fallbackImage}
+    />
+  );
 };
 
 const ProductDialog = ({ open, handleClose, selectedRow }) => {
-
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth sx={{ height: "100vh" }}>
-      <DialogTitle sx={{ backgroundColor: '#C0A888' }}>
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      maxWidth="sm"
+      fullWidth
+      sx={{ height: "100vh" }}
+    >
+      <DialogTitle sx={{ backgroundColor: "#C0A888" }}>
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" alignItems="center">
             {selectedRow && (
-              <Typography variant="h6" component="div" ml={2} style={{ textTransform: 'uppercase', fontWeight: 'bold', color: 'white' }}>
-                {selectedRow.info}
+              <Typography
+                variant="h6"
+                component="div"
+                ml={2}
+                style={{
+                  textTransform: "uppercase",
+                  fontWeight: "bold",
+                  color: "white",
+                }}
+              >
+                {selectedRow.generalInformation.productName}
               </Typography>
             )}
           </Box>
@@ -63,7 +116,7 @@ const ProductDialog = ({ open, handleClose, selectedRow }) => {
         <DialogContentText>
           <Grid container spacing={2}>
             {/* Left Column */}
-            <Grid item xs={4.5}>
+            <Grid item xs={4.5} mr={6}>
               <Box mb={2}>
                 <Box display="flex" alignItems="center">
                   <Box
@@ -75,36 +128,111 @@ const ProductDialog = ({ open, handleClose, selectedRow }) => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                    }}>
+                    }}
+                  >
                     <InventoryIcon fontSize="small" sx={{ color: "black" }} />
                   </Box>
-                  <Typography variant="h6" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Product Info</Typography>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    ml={2}
+                    mt={1}
+                    sx={{ fontWeight: "bold", color: "black" }}
+                  >
+                    General Info
+                  </Typography>
                 </Box>
                 {selectedRow && (
                   <>
                     <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Product ID</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.orderId}</Typography></Grid>
+                      <Grid item xs={4}>
+                        <Typography variant="body2">
+                          <strong>Product SkuCode</strong>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Typography
+                          variant="body2"
+                          sx={{ textAlign: "right", color: "black" }}
+                        >
+                          {selectedRow.generalInformation.sku}
+                        </Typography>
+                      </Grid>
                     </Grid>
                     <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Description</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.description}</Typography></Grid>
+                      <Grid item xs={4}>
+                        <Typography variant="body2">
+                          <strong>Description</strong>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Typography
+                          variant="body2"
+                          sx={{ textAlign: "right", color: "black" }}
+                        >
+                          {selectedRow.generalInformation.description}
+                        </Typography>
+                      </Grid>
                     </Grid>
                     <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Pattern</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.pattern}</Typography></Grid>
+                      <Grid item xs={4}>
+                        <Typography variant="body2">
+                          <strong>gender</strong>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Typography
+                          variant="body2"
+                          sx={{ textAlign: "right", color: "black" }}
+                        >
+                          {selectedRow.generalInformation.gender}swear
+                        </Typography>
+                      </Grid>
                     </Grid>
                     <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Category</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.category}</Typography></Grid>
+                      <Grid item xs={4}>
+                        <Typography variant="body2">
+                          <strong>Category</strong>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Typography
+                          variant="body2"
+                          sx={{ textAlign: "right", color: "black" }}
+                        >
+                          {selectedRow.generalInformation.category}
+                        </Typography>
+                      </Grid>
                     </Grid>
                     <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Sub Category</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.subcategory}</Typography></Grid>
+                      <Grid item xs={4}>
+                        <Typography variant="body2">
+                          <strong>Sub Category</strong>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Typography
+                          variant="body2"
+                          sx={{ textAlign: "right", color: "black" }}
+                        >
+                          {selectedRow.generalInformation.subcategory}
+                        </Typography>
+                      </Grid>
                     </Grid>
                     <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Brand</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.brand}</Typography></Grid>
+                      <Grid item xs={4}>
+                        <Typography variant="body2">
+                          <strong>Brand</strong>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Typography
+                          variant="body2"
+                          sx={{ textAlign: "right", color: "black" }}
+                        >
+                          {selectedRow.generalInformation.brand}
+                        </Typography>
+                      </Grid>
                     </Grid>
                   </>
                 )}
@@ -120,24 +248,66 @@ const ProductDialog = ({ open, handleClose, selectedRow }) => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                    }}>
+                    }}
+                  >
                     <TableChartIcon fontSize="small" sx={{ color: "black" }} />
                   </Box>
-                  <Typography variant="h6" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Pricing & Availability</Typography>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    ml={2}
+                    mt={1}
+                    sx={{ fontWeight: "bold", color: "black" }}
+                  >
+                    Pricing & Availability
+                  </Typography>
                 </Box>
                 {selectedRow && (
                   <>
                     <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Unit Price (Rs.)</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.price}</Typography></Grid>
+                      <Grid item xs={4}>
+                        <Typography variant="body2">
+                          <strong>Unit Price (Rs.)</strong>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Typography
+                          variant="body2"
+                          sx={{ textAlign: "right", color: "black" }}
+                        >
+                          {selectedRow.pricing.basePrice}
+                        </Typography>
+                      </Grid>
                     </Grid>
                     <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Discount Price (Rs.)</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.discount}</Typography></Grid>
+                      <Grid item xs={4}>
+                        <Typography variant="body2">
+                          <strong>Discount Type</strong>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Typography
+                          variant="body2"
+                          sx={{ textAlign: "right", color: "black" }}
+                        >
+                          {selectedRow.pricing.discountType}
+                        </Typography>
+                      </Grid>
                     </Grid>
                     <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Availability</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.availability}</Typography></Grid>
+                      <Grid item xs={4}>
+                        <Typography variant="body2">
+                          <strong>Discount</strong>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Typography
+                          variant="body2"
+                          sx={{ textAlign: "right", color: "black" }}
+                        >
+                          {selectedRow.pricing.discount}
+                        </Typography>
+                      </Grid>
                     </Grid>
                   </>
                 )}
@@ -153,304 +323,269 @@ const ProductDialog = ({ open, handleClose, selectedRow }) => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                    }}>
+                    }}
+                  >
                     <InfoIcon fontSize="small" sx={{ color: "black" }} />
                   </Box>
-                  <Typography variant="h6" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Additional Info</Typography>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    ml={2}
+                    mt={1}
+                    sx={{ fontWeight: "bold", color: "black" }}
+                  >
+                    Additional Info
+                  </Typography>
                 </Box>
                 {selectedRow && (
                   <>
                     <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Occasions</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.occasion}</Typography></Grid>
+                      <Grid item xs={4}>
+                        <Typography variant="body2">
+                          <strong>Occasions</strong>
+                        </Typography>
+                      </Grid>
+                      {selectedRow.additionalInfo.occasions.map(
+                        (occasion, index) => (
+                          <Grid item xs={8} key={index}>
+                            <Typography
+                              variant="body2"
+                              sx={{ textAlign: "right", color: "black" }}
+                            >
+                              {occasion}
+                            </Typography>
+                          </Grid>
+                        )
+                      )}
                     </Grid>
                     <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Season</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.season}</Typography></Grid>
+                      <Grid item xs={4}>
+                        <Typography variant="body2">
+                          <strong>Season</strong>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Typography
+                          variant="body2"
+                          sx={{ textAlign: "right", color: "black" }}
+                        >
+                          {selectedRow.additionalInfo.season}
+                        </Typography>
+                      </Grid>
                     </Grid>
                     <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Gender</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.gender}</Typography></Grid>
+                      <Grid item xs={4}>
+                        <Typography variant="body2">
+                          <strong>Age Group</strong>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Typography
+                          variant="body2"
+                          sx={{ textAlign: "right", color: "black" }}
+                        >
+                          {selectedRow.additionalInfo.ageGroup}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    {/* <Grid container spacing={1} ml={3} mt={0.25}>
+                      <Grid item xs={4}>
+                        <Typography variant="body2">
+                          <strong>Age Group</strong>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Typography
+                          variant="body2"
+                          sx={{ textAlign: "right", color: "black" }}
+                        >
+                          {selectedRow.ageGroup}
+                        </Typography>
+                      </Grid>
+                    </Grid> */}
+                  </>
+                )}
+              </Box>
+              <Box mb={2}>
+                <Box display="flex" alignItems="center">
+                  <Box
+                    sx={{
+                      width: "35px",
+                      height: "35px",
+                      borderRadius: "50%",
+                      backgroundColor: "#D9D9D9",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <LocalLaundryServiceIcon
+                      fontSize="small"
+                      sx={{ color: "black" }}
+                    />
+                  </Box>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    ml={2}
+                    mt={1}
+                    sx={{ fontWeight: "bold", color: "black" }}
+                  >
+                    Material & Care
+                  </Typography>
+                </Box>
+                {selectedRow && (
+                  <>
+                    <Grid container spacing={1} ml={3} mt={0.25}>
+                      <Grid item xs={4}>
+                        <Typography variant="body2">
+                          <strong>material</strong>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Typography
+                          variant="body2"
+                          sx={{ textAlign: "right", color: "black" }}
+                        >
+                          {selectedRow.materialCare.material}
+                        </Typography>
+                      </Grid>
                     </Grid>
                     <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Age Group</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.ageGroup}</Typography></Grid>
+                      <Grid item xs={4}>
+                        <Typography variant="body2">
+                          <strong>Pattern</strong>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Typography
+                          variant="body2"
+                          sx={{ textAlign: "right", color: "black" }}
+                        >
+                          {selectedRow.materialCare.pattern}
+                        </Typography>
+                      </Grid>
                     </Grid>
+                    <Grid container spacing={1} ml={3} mt={0.25}>
+                      <Grid item xs={4}>
+                        <Typography variant="body2">
+                          <strong>Care Instructions</strong>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Typography
+                          variant="body2"
+                          sx={{ textAlign: "right", color: "black" }}
+                        >
+                          {selectedRow.materialCare.careInstructions}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    {/* <Grid container spacing={1} ml={3} mt={0.25}>
+                      <Grid item xs={4}>
+                        <Typography variant="body2">
+                          <strong>Age Group</strong>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Typography
+                          variant="body2"
+                          sx={{ textAlign: "right", color: "black" }}
+                        >
+                          {selectedRow.ageGroup}
+                        </Typography>
+                      </Grid>
+                    </Grid> */}
                   </>
                 )}
               </Box>
             </Grid>
-            {/* Right Column */}
+
             <Grid item xs={6}>
-              <Box mb={2} ml={10}>
-                <Box display="flex" alignItems="center">
-                  <Box
-                    sx={{
-                      width: "35px",
-                      height: "35px",
-                      borderRadius: "50%",
-                      backgroundColor: "#D9D9D9",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}>
-                    <ImageIcon fontSize="small" sx={{ color: "black"}} />
-                  </Box>
-                  <Typography variant="h6" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Visual & Aesthetic</Typography>
+              <Box display="flex" alignItems="center" mb={2}>
+                <Box
+                  sx={{
+                    width: "35px",
+                    height: "35px",
+                    borderRadius: "50%",
+                    backgroundColor: "#D9D9D9",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <LocalLaundryServiceIcon
+                    fontSize="small"
+                    sx={{ color: "black" }}
+                  />
                 </Box>
-                {selectedRow && (
-                  <>
-                    <Grid mt={1}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Product Images</strong></Typography></Grid>
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  ml={2}
+                  mt={1}
+                  sx={{ fontWeight: "bold", color: "black" }}
+                >
+                  Variants
+                </Typography>
+              </Box>
+              {selectedRow?.variantBoxes.map((box) => (
+                <Grid item key={box.id} md={12}>
+                  <Grid container spacing={0} alignItems="center">
+                    {/* Text Section */}
+                    <Grid item xs={8}>
+                      <Typography variant="h6" component="div" color="black">
+                        {box.colorVariant} - {box.status}
+                      </Typography>
+                      <Grid container spacing={1}>
+                        <Grid item xs={6}>
+                          <Typography variant="body2">
+                            <strong>Size</strong>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Typography variant="body2">
+                            <strong>Quantity</strong>
+                          </Typography>
+                        </Grid>
+                        {box.sizeQuantityChart.map((sizeChart) => (
+                          <React.Fragment key={sizeChart.id}>
+                            <Grid item xs={6}>
+                              <Typography variant="body2" color="black">
+                                {sizeChart.size}
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Typography variant="body2" color="black">
+                                {sizeChart.quantity}
+                              </Typography>
+                            </Grid>
+                          </React.Fragment>
+                        ))}
                       </Grid>
-                      <Grid container spacing={1} ml={1} mt={0.25}>
-                    {/* <Grid item xs={4} mr={2}>
-                        <Box
-                        sx={{
-                            width: "100px",
-                            height: "100px",
-                            borderRadius: "10%",
-                            backgroundColor: "#D9D9D9",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            mb: 1, // margin-bottom to add space between the two boxes
-                            mr: 2, // increased margin-right to ensure the boxes don't overlap with the image
-                        }}
-                        />
-                        <Box
-                        sx={{
-                            width: "100px",
-                            height: "100px",
-                            borderRadius: "10%",
-                            backgroundColor: "#D9D9D9",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            mr: 2, // increased margin-right to ensure the boxes don't overlap with the image
-                        }}
-                        />
-                    </Grid> */}
-                    <Grid item xs={4} mr={2}>
-                    <Box
-                        sx={{
-                            width: "100px",
-                            height: "100px",
-                            borderRadius: "10%",
-                            backgroundColor: "#D9D9D9",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            mb: 1, // margin-bottom to add space between the two boxes
-                            mr: 2, // increased margin-right to ensure the boxes don't overlap with the image
-                        }}>
-                        <img
-                            src={selectedRow.imageUrl}
-                            alt={selectedRow.info}
-                            style={{
-                                width: "100%", // make the image responsive to the box size
-                                height: "100%", // make the image responsive to the box size
-                                borderRadius: "10%",
-                                border: '1px solid black',
-                                objectFit: 'cover', // maintains aspect ratio while covering the box
-                            }}
-                        />
-                    </Box>
-
-                    <Box
-                        sx={{
-                            width: "100px",
-                            height: "100px",
-                            borderRadius: "10%",
-                            backgroundColor: "#D9D9D9",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            mb: 1, // margin-bottom to add space between the two boxes
-                            mr: 2, // increased margin-right to ensure the boxes don't overlap with the image
-                        }}>
-                        <img
-                            src={selectedRow.imageUrl}
-                            alt={selectedRow.info}
-                            style={{
-                                width: "100%", // make the image responsive to the box size
-                                height: "100%", // make the image responsive to the box size
-                                borderRadius: "10%",
-                                border: '1px solid black',
-                                objectFit: 'cover', // maintains aspect ratio while covering the box
-                            }}
-                        />
-                    </Box>
                     </Grid>
-                    <Grid item xs={7} sx={{ display: 'flex', alignItems: 'center' }}>
-                        <img
-                        src={selectedRow.imageUrl}
-                        alt={selectedRow.info}
-                        style={{
-                            maxWidth: '100%',
-                            height: 'auto',
-                            border: '1px solid black',
-                            borderRadius: '10%',
-                            gridRow: 'span 2', // make the image span two rows
-                        }}
-                        />
+                    {/* Image Section */}
+                    <Grid item xs={4}>
+                      <ImageComponent id={selectedRow.id} color={box.colorVariant}/>
                     </Grid>
-                    </Grid>
-
-                    <Grid container spacing={1} ml={3} mt={2}>
-                        <Grid item xs={4}>
-                            <Typography variant="body2"><strong>Colour</strong></Typography>
-                        </Grid>
-                        <Grid item xs={8}>
-                            <Box display="flex" flexDirection="column" alignItems="flex-end">
-                                {selectedRow.color.split(',').map((color, index) => (
-                                    <Box key={index} display="flex" alignItems="center" mb={1}>
-                                        <Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>
-                                            {color.trim()}
-                                        </Typography>
-                                        <Box
-                                            sx={{
-                                                width: "20px",
-                                                height: "20px",
-                                                borderRadius: "50%",
-                                                backgroundColor: getColorHex(color.trim()),
-                                                border: "1px solid grey", // Black border
-                                                display: "inline-block",
-                                                ml: 1,
-                                            }}
-                                        />
-                                    </Box>
-                                ))}
-                            </Box>
-                        </Grid>
-                    </Grid>
-                  </>
-                )}
-              </Box>
-              <Box mb={2} ml={10}>
-                <Box display="flex" alignItems="center">
-                  <Box
-                    sx={{
-                      width: "35px",
-                      height: "35px",
-                      borderRadius: "50%",
-                      backgroundColor: "#D9D9D9",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}>
-                    <LocalLaundryServiceIcon fontSize="small" sx={{ color: "black" }} />
-                  </Box>
-                  <Typography variant="h6" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Material & Care</Typography>
-                </Box>
-                {selectedRow && (
-                  <>
-                    <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Material</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.material}</Typography></Grid>
-                    </Grid>
-                    <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Care Instructions</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.care}</Typography></Grid>
-                    </Grid>
-                  </>
-                )}
-              </Box>
-               <Box mb={2} ml={10}>
-                <Box display="flex" alignItems="center">
-                  <Box
-                    sx={{
-                      width: "35px",
-                      height: "35px",
-                      borderRadius: "50%",
-                      backgroundColor: "#D9D9D9",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}>
-                    <TableChartIcon fontSize="small" sx={{ color: "black" }} />
-                  </Box>
-                  <Typography variant="h6" gutterBottom ml={2} mt={3} sx={{ fontWeight: 'bold', color: "black" }}>Size & Fitting</Typography>
-                </Box>
-                {selectedRow && (
-                  <>
-                    <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Size</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.size}</Typography></Grid>
-                    </Grid>
-                    <Grid container spacing={1} ml={3} mt={0.25}>
-                      <Grid item xs={4}><Typography variant="body2"><strong>Fit-Type</strong></Typography></Grid>
-                      <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.fitType}</Typography></Grid>
-                    </Grid>
-                  </>
-                )}
-              </Box>
-              <Box mb={2} ml={10}>
-                <Box display="flex" alignItems="center">
-                  <Box
-                    sx={{
-                      width: "35px",
-                      height: "35px",
-                      borderRadius: "50%",
-                      backgroundColor: "#D9D9D9",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}>
-                    <LocalLaundryServiceIcon fontSize="small" sx={{ color: "black" }} />
-                  </Box>
-                  <Typography variant="h6" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Quantity</Typography>
-                  </Box>
-                  {selectedRow ? (
-                    <Box ml={3} mt={0.25}>
-                      {selectedRow.category === 'Tops' ? (
-                        ['XS', 'S', 'M', 'L', 'XL'].map(size => (
-                          <Grid container spacing={1} key={size}>
-                            <Grid item xs={4}><Typography variant="body2"><strong>{size}</strong></Typography></Grid>
-                            <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow[`${size.toLowerCase()}q`] || 0}</Typography></Grid>
-                          </Grid>
-                        ))
-                      ) : selectedRow.category === 'Bottoms' ? (
-                        selectedRow.subcategory === 'Jeans' ? (
-                          ['28', '30', '32', '34', '36'].map(size => (
-                            <Grid container spacing={1} key={size}>
-                              <Grid item xs={4}><Typography variant="body2"><strong>{size}</strong></Typography></Grid>
-                              <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow[`Q${size}`] || 0}</Typography></Grid>
-                            </Grid>
-                          ))
-                        ) : (
-                          ['XS', 'S', 'M', 'L', 'XL'].map(size => (
-                            <Grid container spacing={1} key={size}>
-                              <Grid item xs={4}><Typography variant="body2"><strong>{size}</strong></Typography></Grid>
-                              <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow[`${size.toLowerCase()}q`] || 0}</Typography></Grid>
-                            </Grid>
-                          ))
-                        )
-                      ) : selectedRow.category === 'Footwear' ? (
-                        ['7', '8', '9', '10', '11'].map(size => (
-                          <Grid container spacing={1} key={size}>
-                            <Grid item xs={4}><Typography variant="body2"><strong>{size}</strong></Typography></Grid>
-                            <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow[`size${size}`] || 0}</Typography></Grid>
-                          </Grid>
-                        ))
-                      ) : (
-                        <Grid container spacing={1}>
-                          <Grid item xs={4}><Typography variant="body2"><strong>Total Quantity</strong></Typography></Grid>
-                          <Grid item xs={8}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.quantity}</Typography></Grid>
-                        </Grid>
-                      )}
-                    </Box>
-                  ) : (
-                    <Typography variant="body2" sx={{ textAlign: 'center', color: "grey" }}>No product selected.</Typography>
-                  )}
-                  </Box>
+                  </Grid>
+                </Grid>
+              ))}
             </Grid>
           </Grid>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} sx={{backgroundColor: "#C0A888"}} variant="contained">Edit</Button>
-        <Button onClick={handleClose} color="error" variant="contained">Delete</Button>
+        <Button
+          onClick={handleClose}
+          sx={{ backgroundColor: "#C0A888" }}
+          variant="contained"
+        >
+          Edit
+        </Button>
+        <Button onClick={handleClose} color="error" variant="contained">
+          Delete
+        </Button>
       </DialogActions>
     </Dialog>
   );

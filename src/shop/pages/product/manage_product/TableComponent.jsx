@@ -22,8 +22,11 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import Button from "@mui/material/Button";
 import { visuallyHidden } from "@mui/utils";
 import { headCells, additionalFields } from "../TableConfig";
-import ProductDialog from "./ProductDialog"
-
+import ProductDialog from "./ProductDialog";
+import WebApi from "../../../api/WebApi";
+import { storage } from "../../../../config/firebaseConfig";
+import { getDownloadURL, ref } from "firebase/storage";
+import img from "../../../assets/images/fallback.jpg"
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -52,11 +55,7 @@ function stableSort(array, comparator) {
 }
 
 function EnhancedTableHead(props) {
-  const {
-    order,
-    orderBy,
-    onRequestSort,
-  } = props;
+  const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) =>
     onRequestSort(event, property);
 
@@ -153,16 +152,15 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-
 export default function TableComponent({ rows }) {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("quantity");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5); 
-  const [selectedRow, setSelectedRow] = React.useState(null); 
-  const [open, setOpen] = React.useState(false); 
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [selectedRow, setSelectedRow] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -188,7 +186,7 @@ export default function TableComponent({ rows }) {
     setOpen(false);
     setSelectedRow(null);
   };
-  
+
   // const handleClick = (event, id) => {
   //   const selectedIndex = selected.indexOf(id);
   //   let newSelected = [];
@@ -218,9 +216,34 @@ export default function TableComponent({ rows }) {
     setPage(0);
   };
 
-
   const handleChangeDense = (event) => {
     setDense(event.target.checked);
+  };
+
+  const ImageComponent = ({ id, color }) => {
+    const [imageUrl, setImageUrl] = React.useState("");
+    console.log("ImageComponent", id, color);
+    React.useEffect(() => {
+      const downloadImage = async () => {
+        try {
+          const imageRef = ref(storage, `productImages/${id}${color}/img0`);
+          const url = await getDownloadURL(imageRef);
+          setImageUrl(url);
+        } catch (error) {
+          console.error("Error fetching image URL:", error);
+        }
+      };
+      downloadImage();
+    }, []);
+
+    return (
+      <img
+        src={imageUrl || img}
+        alt="Image Not Found"
+        width={50}
+        style={{ marginRight: 10, marginLeft: 25 }}
+      />
+    );
   };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
@@ -247,46 +270,57 @@ export default function TableComponent({ rows }) {
               rowCount={rows.length}
             />
             <TableBody>
-            {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const labelId = `enhanced-table-label-${index}`;
 
                   return (
                     <TableRow
-                    hover
-                    onClick={() => handleRowClick(row)}
-                    tabIndex={-1}
-                    key={row.id}
-                    selected={isSelected(row.id)}
-                    sx={{ cursor: "pointer" }}
+                      hover
+                      onClick={() => handleRowClick(row)}
+                      tabIndex={-1}
+                      key={row.id}
+                      selected={isSelected(row.id)}
+                      sx={{ cursor: "pointer" }}
                     >
                       <TableCell
-                          align="left"
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
-                          colSpan={2} // This merges the two cells
-                        >
-                          <div style={{ display: "flex", alignItems: "center" }}>
-                            <img src={row.imageUrl} alt={row.info} width={50} style={{ marginRight: 10, marginLeft: 25}} />
-                            <div>
-                              {row.info}
-                              <div style={{ fontSize: "0.75em", color: "#888" }}>
-                                Order ID: {row.orderId}
-                              </div>
+                        align="left"
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="none"
+                        colSpan={2} // This merges the two cells
+                      >
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <ImageComponent
+                            id={row.id}
+                            color={row.variantBoxes?.[0]?.colorVariant}
+                          />
+                          <div>
+                            {row.generalInformation.productName}
+                            <div style={{ fontSize: "0.75em", color: "#888" }}>
+                              Product ID: {row.id}
                             </div>
                           </div>
-                        </TableCell>
-                      <TableCell align="right">{row.brand}</TableCell>
-                      <TableCell align="right">{row.category}</TableCell>
-                      <TableCell align="right">{row.size}</TableCell>
+                        </div>
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.generalInformation.brand}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.generalInformation.category}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.generalInformation.subcategory}
+                      </TableCell>
                       {/* <TableCell align="left">{row.color}</TableCell> */}
-                      <TableCell align="right">{row.color}</TableCell>
-                      <TableCell align="right">{row.quantity}</TableCell> 
-                      <TableCell align="right">{row.price}</TableCell> 
-                      <TableCell align="right">{row.status}</TableCell>
+                      <TableCell align="right">
+                        {row.generalInformation.gender}swear
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.pricing.basePrice}
+                      </TableCell>
                       {/* <TableCell align="right">{row.payment}</TableCell> */}
                       <TableCell
                         align="left"
@@ -333,9 +367,9 @@ export default function TableComponent({ rows }) {
         label="Dense padding"
       />
       <ProductDialog
-      open={open}
-      handleClose={handleClose}
-      selectedRow={selectedRow}
+        open={open}
+        handleClose={handleClose}
+        selectedRow={selectedRow}
       />
     </Box>
   );

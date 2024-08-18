@@ -2,10 +2,29 @@ import React, { useState } from "react";
 import TableComponent from "./TableComponent";
 import FilterComponent from "./FilterComponent";
 import { Stack } from "@mui/material";
-import { filterOptions, tableData, headCells } from "../TableConfig";
+import { filterOptions,headCells } from "../TableConfig";
+import WebApi from "../../../api/WebApi";
 
 const DataTable = () => {
   // implement search feature
+  const [tableData, setTableData] = useState([]);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await WebApi.get(
+          `/shop/product/get_all_product_by_shop_id?id=${localStorage.getItem("id")}`
+        );
+        console.log(response.data.data.products);
+        const tableData = response.data.data.products
+        setTableData(tableData);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const [search, setSearch] = useState("");
 
   const columnIdArray = headCells.map((column) => column.id);
@@ -41,9 +60,9 @@ const DataTable = () => {
         return true;
       }
       if (checked) {
-        return filter === row[filteridArray[index]];
+        return filter === row.generalInformation[filteridArray[index]];
       }
-      return row[filteridArray[index]].includes(filter);
+      return row.generalInformation[filteridArray[index]].includes(filter);
     });
 
   });
