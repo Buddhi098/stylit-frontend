@@ -27,6 +27,7 @@ import WebApi from "../../../api/WebApi";
 import { storage } from "../../../../config/firebaseConfig";
 import { getDownloadURL, ref } from "firebase/storage";
 import img from "../../../assets/images/fallback.jpg"
+import WarningModal from "./WarningModal";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -152,7 +153,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function TableComponent({ rows }) {
+export default function TableComponent({ rows , setTrigger }) {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("quantity");
   const [selected, setSelected] = React.useState([]);
@@ -333,13 +334,7 @@ export default function TableComponent({ rows }) {
                         >
                           Update
                         </Button>
-                        <Button
-                          variant="contained"
-                          sx={{ margin: "3px", backgroundColor: "#BDBDBD" }}
-                          size="small"
-                        >
-                          Delete
-                        </Button>
+                        <WarningModal id={row.id} setTrigger={setTrigger}/>
                       </TableCell>
                     </TableRow>
                   );

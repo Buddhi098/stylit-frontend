@@ -1,29 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TableComponent from "./TableComponent";
 import FilterComponent from "./FilterComponent";
 import { Stack } from "@mui/material";
-import { filterOptions,headCells } from "../TableConfig";
+import { filterOptions, headCells } from "../TableConfig";
 import WebApi from "../../../api/WebApi";
+import { fetchTableData } from "./FetchTableData";
 
 const DataTable = () => {
   // implement search feature
   const [tableData, setTableData] = useState([]);
-  React.useEffect(() => {
+  const [trigger , setTrigger] = useState(false);
+
+  useEffect(() => {
+    const shopId = localStorage.getItem("id");
     const fetchData = async () => {
-      try {
-        const response = await WebApi.get(
-          `/shop/product/get_all_product_by_shop_id?id=${localStorage.getItem("id")}`
-        );
-        console.log(response.data.data.products);
-        const tableData = response.data.data.products
-        setTableData(tableData);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
+      const data = await fetchTableData(shopId);
+      setTableData(data);
     };
 
     fetchData();
-  }, []);
+  }, [trigger]);
 
   const [search, setSearch] = useState("");
 
@@ -47,14 +43,13 @@ const DataTable = () => {
   const [filter3, setFilter3] = useState("");
   const [checked, setChecked] = useState(false);
 
-  console.log(filter0, filter1, filter2, filter3, checked)
+  console.log(filter0, filter1, filter2, filter3, checked);
 
   const filters = [filter0, filter1, filter2, filter3];
 
   const filteridArray = filterOptions.map((filter) => filter.id);
 
   const filteredData = tableData.filter((row) => {
-    
     return filters.every((filter, index) => {
       if (filter === "") {
         return true;
@@ -64,18 +59,17 @@ const DataTable = () => {
       }
       return row.generalInformation[filteridArray[index]].includes(filter);
     });
-
   });
 
   let finalData;
-  if(checked) {
+  if (checked) {
     finalData = filteredData;
-  }else{
+  } else {
     finalData = filteredRows;
   }
 
   return (
-    <Stack sx={{p: { xs: 2, sm: 3 }}}>
+    <Stack sx={{ p: { xs: 2, sm: 3 } }}>
       <FilterComponent
         search={search}
         handleSearch={setSearch}
@@ -90,7 +84,7 @@ const DataTable = () => {
         checked={checked}
         setChecked={setChecked}
       />
-      <TableComponent rows={finalData} />
+      <TableComponent rows={finalData} setTrigger={setTrigger}/>
     </Stack>
   );
 };
