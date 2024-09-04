@@ -28,6 +28,7 @@ import { storage } from "../../../../config/firebaseConfig";
 import { getDownloadURL, ref } from "firebase/storage";
 import img from "../../../assets/images/fallback.jpg"
 import WarningModal from "./WarningModal";
+import { Link } from "react-router-dom";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -221,31 +222,31 @@ export default function TableComponent({ rows , setTrigger }) {
     setDense(event.target.checked);
   };
 
-  const ImageComponent = ({ id, color }) => {
-    const [imageUrl, setImageUrl] = React.useState("");
-    console.log("ImageComponent", id, color);
-    React.useEffect(() => {
-      const downloadImage = async () => {
-        try {
-          const imageRef = ref(storage, `productImages/${id}${color}/img0`);
-          const url = await getDownloadURL(imageRef);
-          setImageUrl(url);
-        } catch (error) {
-          console.error("Error fetching image URL:", error);
-        }
-      };
-      downloadImage();
-    }, []);
+  // const ImageComponent = ({ id, color }) => {
+  //   const [imageUrl, setImageUrl] = React.useState("");
+  //   console.log("ImageComponent", id, color);
+  //   React.useEffect(() => {
+  //     const downloadImage = async () => {
+  //       try {
+  //         const imageRef = ref(storage, `productImages/${id}${color}/img0`);
+  //         const url = await getDownloadURL(imageRef);
+  //         setImageUrl(url);
+  //       } catch (error) {
+  //         console.error("Error fetching image URL:", error);
+  //       }
+  //     };
+  //     downloadImage();
+  //   }, []);
 
-    return (
-      <img
-        src={imageUrl || img}
-        alt="Image Not Found"
-        width={50}
-        style={{ marginRight: 10, marginLeft: 25 }}
-      />
-    );
-  };
+  //   return (
+  //     <img
+  //       src={imageUrl || img}
+  //       alt="Image Not Found"
+  //       width={50}
+  //       style={{ marginRight: 10, marginLeft: 25 }}
+  //     />
+  //   );
+  // };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
@@ -294,10 +295,10 @@ export default function TableComponent({ rows , setTrigger }) {
                         colSpan={2} // This merges the two cells
                       >
                         <div style={{ display: "flex", alignItems: "center" }}>
-                          <ImageComponent
+                          {/* <ImageComponent
                             id={row.id}
                             color={row.variantBoxes?.[0]?.colorVariant}
-                          />
+                          /> */}
                           <div>
                             {row.generalInformation.productName}
                             <div style={{ fontSize: "0.75em", color: "#888" }}>
@@ -327,6 +328,7 @@ export default function TableComponent({ rows , setTrigger }) {
                         align="left"
                         onClick={(event) => event.stopPropagation()}
                       >
+                        <Link to="/shop/update_product">
                         <Button
                           variant="contained"
                           sx={{ margin: "3px", backgroundColor: "#C0A888" }}
@@ -334,6 +336,8 @@ export default function TableComponent({ rows , setTrigger }) {
                         >
                           Update
                         </Button>
+                        </Link>
+                        
                         <WarningModal id={row.id} setTrigger={setTrigger}/>
                       </TableCell>
                     </TableRow>
