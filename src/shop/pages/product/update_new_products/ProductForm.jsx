@@ -31,7 +31,7 @@ import { storage } from "../../../../config/firebaseConfig";
 import { ref, uploadBytes } from "firebase/storage";
 import ProductUpdateResult from "./ProductUpdateResult";
 
-const ProductForm = () => {
+const ProductForm = ({id}) => {
   const [gender, setGender] = useState("");
   const [category, setCategory] = useState("");
   const [subcategory, setSubcategory] = useState("");
@@ -39,32 +39,67 @@ const ProductForm = () => {
   const [loading, setLoading] = useState(false);
   const [addProduct, setAddProduct] = useState(false);
   const [responseStatus, setResponseStatus] = useState();
+  const [initialData , setInitialData] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const shopId = localStorage.getItem("id");
+        const response = await WebApi.get(`/shop/product/get_product_by_id/${id}/${shopId}`);
+        
+        // Handle the response data
+        console.log(response.data);
+        setInitialData(response.data);
+      } catch (error) {
+        // Handle the error
+        console.error("An error occurred while fetching the product data:", error.message);
+      }
+    };
+
+    fetchData();
+  }, []); // Dependency array to run effect when 'id' changes
+
+  useEffect(()=>{
+    setGender(initialData.generalInformation?.gender)
+    setCategory(initialData.generalInformation?.category)
+    setSubcategory(initialData.generalInformation?.subcategory)
+    
+    let discountType = initialData.pricing?.discountType
+    if(discountType == ""){
+      discountType = "No Discount"
+    }
+
+    formik.setFieldValue('pricing.discountType', discountType);
+
+  } , [initialData])
+
+  console.log("pusjs" , initialData);
 
   const formik = useFormik({
     initialValues: {
       generalInformation: {
-        sku: "",
-        productName: "",
-        gender: "",
-        category: "",
-        subcategory: "",
-        brand: "",
-        description: "",
+        sku: initialData.generalInformation?.sku,
+        productName: initialData.generalInformation?.productName,
+        gender: initialData.generalInformation?.gender,
+        category: initialData.generalInformation?.category,
+        subcategory: initialData.generalInformation?.subcategory,
+        brand: initialData.generalInformation?.brand,
+        description: initialData.generalInformation?.description,
       },
       pricing: {
-        basePrice: "",
-        discount: 0,
-        discountType: "",
+        basePrice: initialData.pricing?.basePrice,
+        discount: initialData.pricing?.discount,
+        discountType: initialData.pricing?.discountType,
       },
       materialCare: {
-        material: "",
-        pattern: "",
-        careInstructions: "",
+        material: initialData.materialCare?.material,
+        pattern: initialData.materialCare?.pattern,
+        careInstructions: initialData.materialCare?.careInstructions,
       },
       additionalInfo: {
-        occasions: [],
-        season: "",
-        ageGroup: "",
+        occasions: initialData.additionalInfo?.occasions,
+        season: initialData.additionalInfo?.season,
+        ageGroup: initialData.additionalInfo?.ageGroup,
       },
       variantBoxes: [
         {
@@ -122,6 +157,7 @@ const ProductForm = () => {
         })
       ),
     }),
+    enableReinitialize: true,
     onSubmit: async (values) => {
       values["shopId"] = localStorage.getItem("id");
       console.log("Form Data", values);
@@ -334,6 +370,9 @@ const ProductForm = () => {
                     formik.touched.generalInformation?.sku &&
                     formik.errors.generalInformation?.sku
                   }
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
                 <TextField
                   label="Product Name"
@@ -352,6 +391,9 @@ const ProductForm = () => {
                     formik.touched.generalInformation?.productName &&
                     formik.errors.generalInformation?.productName
                   }
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
                 <FormControl
                   fullWidth
@@ -445,6 +487,9 @@ const ProductForm = () => {
                     formik.touched.generalInformation?.brand &&
                     formik.errors.generalInformation?.brand
                   }
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
                 <TextField
                   label="Description of the Product"
@@ -465,6 +510,9 @@ const ProductForm = () => {
                     formik.touched.generalInformation?.description &&
                     formik.errors.generalInformation?.description
                   }
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </Box>
 
@@ -502,6 +550,9 @@ const ProductForm = () => {
                     formik.touched.pricing?.basePrice &&
                     formik.errors.pricing?.basePrice
                   }
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
                 <Typography variant="h6" mb={1}>
                   Discount Type
@@ -549,6 +600,9 @@ const ProductForm = () => {
                     formik.touched.pricing?.discount &&
                     formik.errors.pricing?.discount
                   }
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   disabled={discountType == "No Discount" || discountType == ""}
                 />
               </Box>
@@ -582,6 +636,9 @@ const ProductForm = () => {
                     formik.touched.materialCare?.material &&
                     formik.errors.materialCare?.material
                   }
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
                 <TextField
                   label="Pattern"
@@ -600,6 +657,9 @@ const ProductForm = () => {
                     formik.touched.materialCare?.pattern &&
                     formik.errors.materialCare?.pattern
                   }
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
                 <TextField
                   label="Care Instructions"
@@ -620,6 +680,9 @@ const ProductForm = () => {
                     formik.touched.materialCare?.careInstructions &&
                     formik.errors.materialCare?.careInstructions
                   }
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </Box>
 
@@ -685,6 +748,9 @@ const ProductForm = () => {
                     formik.touched.additionalInfo?.season &&
                     formik.errors.additionalInfo?.season
                   }
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
                 <TextField
                   label="Age Group"
@@ -704,6 +770,9 @@ const ProductForm = () => {
                     formik.touched.additionalInfo?.ageGroup &&
                     formik.errors.additionalInfo?.ageGroup
                   }
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </Box>
             </Grid>
@@ -823,6 +892,9 @@ const ProductForm = () => {
                                 rowIndex
                               ]?.quantity
                             }
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
                           />
                         </Box>
                       ))}
