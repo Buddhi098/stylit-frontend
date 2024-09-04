@@ -35,6 +35,7 @@ const EditProfile = Loadable(lazy(()=>import('../shop/pages/profile/edit_profile
 const Payment = Loadable(lazy(()=>import('../shop/pages/profile/payment/Payment')))
 const AddNewProduct = Loadable(lazy(()=>import('../shop/pages/product/add_new_products/AddNewProduct')))
 const ActorBasedRoute = Loadable(lazy(()=>import('./route_protector/ActorBasedRoute')))
+const UpdateProduct = Loadable(lazy(()=>import('../shop/pages/product/update_new_products/UpdateProduct')))
 
 
 // ==============================|| MAIN ROUTING ||============================== //
@@ -101,6 +102,10 @@ const ShopRoutes = {
     {
       path:'payment',
       element: <ActorBasedRoute element={Payment} requiredRoles={['shop']} />
+    },
+    {
+      path:'update_product',
+      element: <ActorBasedRoute element={UpdateProduct} requiredRoles={['shop']} />
     },
    
 
