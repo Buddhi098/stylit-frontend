@@ -104,7 +104,7 @@ const ShopRoutes = {
       element: <ActorBasedRoute element={Payment} requiredRoles={['shop']} />
     },
     {
-      path:'update_product',
+      path:'update_product/:id',
       element: <ActorBasedRoute element={UpdateProduct} requiredRoles={['shop']} />
     },
    
