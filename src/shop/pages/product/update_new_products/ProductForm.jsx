@@ -58,48 +58,52 @@ const ProductForm = ({id}) => {
 
     fetchData();
   }, []); // Dependency array to run effect when 'id' changes
-
-  useEffect(()=>{
-    setGender(initialData.generalInformation?.gender)
-    setCategory(initialData.generalInformation?.category)
-    setSubcategory(initialData.generalInformation?.subcategory)
-    
-    let discountType = initialData.pricing?.discountType
-    if(discountType == ""){
-      discountType = "No Discount"
+  useEffect(() => {
+    if (initialData) {
+      const { generalInformation, pricing, additionalInfo } = initialData;
+  
+      setGender(generalInformation?.gender);
+      setCategory(generalInformation?.category);
+      setSubcategory(generalInformation?.subcategory);
+  
+      let discountType = pricing?.discountType || "No Discount";
+  
+      formik.setFieldValue('pricing.discountType', discountType);
+      // formik.setFieldValue('additionalInfo.occasions', additionalInfo?.occasions);
+  
+      console.log("Occasions:", additionalInfo?.occasions);
     }
-
-    formik.setFieldValue('pricing.discountType', discountType);
-
-  } , [initialData])
+  }, [initialData]);
+  
 
   console.log("pusjs" , initialData);
+  console.log("form" , initialData.additionalInfo?.occasions)
 
   const formik = useFormik({
     initialValues: {
       generalInformation: {
-        sku: initialData.generalInformation?.sku,
-        productName: initialData.generalInformation?.productName,
-        gender: initialData.generalInformation?.gender,
-        category: initialData.generalInformation?.category,
-        subcategory: initialData.generalInformation?.subcategory,
-        brand: initialData.generalInformation?.brand,
-        description: initialData.generalInformation?.description,
+        sku: initialData.generalInformation?.sku || '',
+        productName: initialData.generalInformation?.productName || '',
+        gender: initialData.generalInformation?.gender || '',
+        category: initialData.generalInformation?.category || '',
+        subcategory: initialData.generalInformation?.subcategory || '',
+        brand: initialData.generalInformation?.brand || '',
+        description: initialData.generalInformation?.description || '',
       },
       pricing: {
-        basePrice: initialData.pricing?.basePrice,
-        discount: initialData.pricing?.discount,
-        discountType: initialData.pricing?.discountType,
+        basePrice: initialData.pricing?.basePrice || 0,
+        discount: initialData.pricing?.discount || 0,
+        discountType: initialData.pricing?.discountType || 'No Discount',
       },
       materialCare: {
-        material: initialData.materialCare?.material,
-        pattern: initialData.materialCare?.pattern,
-        careInstructions: initialData.materialCare?.careInstructions,
+        material: initialData.materialCare?.material || '',
+        pattern: initialData.materialCare?.pattern || '',
+        careInstructions: initialData.materialCare?.careInstructions || '',
       },
       additionalInfo: {
-        occasions: initialData.additionalInfo?.occasions,
-        season: initialData.additionalInfo?.season,
-        ageGroup: initialData.additionalInfo?.ageGroup,
+        occasions: initialData.additionalInfo?.occasions || [],
+        season: initialData.additionalInfo?.season || '',
+        ageGroup: initialData.additionalInfo?.ageGroup || '',
       },
       variantBoxes: [
         {
@@ -777,7 +781,7 @@ const ProductForm = ({id}) => {
               </Box>
             </Grid>
 
-            {/* Right Column: Variant Boxes, Gender */}
+            {/* Right Column: Variant Boxes */}
             <Grid item xs={12} md={6}>
               {variantBoxes.map((box, boxIndex) => (
                 <Box
