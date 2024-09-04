@@ -328,7 +328,7 @@ export default function TableComponent({ rows , setTrigger }) {
                         align="left"
                         onClick={(event) => event.stopPropagation()}
                       >
-                        <Link to="/shop/update_product">
+                        <Link to={`/shop/update_product/${row.id}`}>
                         <Button
                           variant="contained"
                           sx={{ margin: "3px", backgroundColor: "#C0A888" }}
