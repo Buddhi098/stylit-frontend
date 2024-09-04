@@ -41,6 +41,16 @@ const ProductForm = ({id}) => {
   const [responseStatus, setResponseStatus] = useState();
   const [initialData , setInitialData] = useState({});
 
+    const [variantBoxes, setVariantBoxes] = useState([
+    {
+      colorVariant: "",
+      sizeQuantityChart: [{ size: "", quantity: "" }],
+      sizeChartImage: null,
+      productImages: [],
+      status: "Active",
+    },
+  ]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -58,6 +68,8 @@ const ProductForm = ({id}) => {
 
     fetchData();
   }, []); // Dependency array to run effect when 'id' changes
+
+
   useEffect(() => {
     if (initialData) {
       const { generalInformation, pricing, additionalInfo } = initialData;
@@ -70,6 +82,31 @@ const ProductForm = ({id}) => {
   
       formik.setFieldValue('pricing.discountType', discountType);
       // formik.setFieldValue('additionalInfo.occasions', additionalInfo?.occasions);
+
+      if (initialData?.variantBoxes?.length > 0) {
+        setVariantBoxes(
+          initialData.variantBoxes.map(variant => ({
+            colorVariant: variant.colorVariant || "",
+            sizeQuantityChart: variant.sizeQuantityChart?.map(size => ({
+              size: size.size || "",
+              quantity: size.quantity || 0,
+            })) || [{ size: "", quantity: 0 }],
+            sizeChartImage: variant.sizeChartImage || null,
+            productImages: variant.productImages || [],
+            status: variant.status || "Active",
+          }))
+        );
+      } else {
+        setVariantBoxes([
+          {
+            colorVariant: "",
+            sizeQuantityChart: [{ size: "", quantity: 0 }],
+            sizeChartImage: null,
+            productImages: [],
+            status: "Active",
+          },
+        ]);
+      }
   
       console.log("Occasions:", additionalInfo?.occasions);
     }
@@ -242,15 +279,7 @@ const ProductForm = ({id}) => {
     formik.setFieldValue("generalInformation.subcategory", event.target.value);
   };
 
-  const [variantBoxes, setVariantBoxes] = useState([
-    {
-      colorVariant: "",
-      sizeQuantityChart: [{ size: "", quantity: "" }],
-      sizeChartImage: null,
-      productImages: [],
-      status: "Active",
-    },
-  ]);
+
 
   const handleAddSizeChartImage = (boxIndex, event) => {
     const newVariantBoxes = [...variantBoxes];
