@@ -9,15 +9,20 @@ import Section2 from "./Section2";
 import Section3 from "./Section3";
 import Section4 from "./Section4";
 import Section5 from "./Section5";
+import { useParams } from "react-router";
+import MenFinalHeader from "../../final_headers/MenFinalHeader";
 
 const DressPage = () => {
+
+  const {gender , id , color} = useParams();
+  console.log(id , gender);
   
   const isDesktop = useMediaQuery("(min-width:600px)");
 
   return (
     <ThemeProvider theme={theme}>
-      <WomenFinalHeader/>
-      <Section1/>
+      {gender=="men" ? (<MenFinalHeader/>) : (<WomenFinalHeader/>)}
+      <Section1 gender={gender} id={id} color={color}/>
       <Section2/>
       <Section3/>
       <Section4/>

@@ -42,40 +42,14 @@ const Section1 = () => {
         btnRef.current.disabled = true;
         setBtnLabel("Logging In...");
 
-        await login(email, password, "shop");
+        const response = await login(email, password, "shop" , setError);
 
-        navigate("/shop/dashboard");
+        if (response) {
+          navigate("/shop/dashboard");
+        } 
+
       } catch (error) {
-        if (error.response) {
-          // Check the status code and set the error message accordingly
-          const statusCode = error.response.status;
-          switch (statusCode) {
-            case 400:
-              setError("Invalid email or password.");
-              break;
-            case 403:
-              setError("Forbidden: You don't have access to this resource.");
-              break;
-            case 404:
-              setError("Not Found: The requested resource was not found.");
-              break;
-            case 500:
-              setError("Internal Server Error: Please try again later.");
-              break;
-            default:
-              setError("An unexpected error occurred. Please try again.");
-              break;
-          }
-        } else {
-          // Handle errors without a response (e.g., network errors)
-          setError(
-            "Network error: Please check your connection and try again."
-          );
-        }
-        console.error(
-          "There was an error adding the user:",
-          error.response?.data
-        );
+        console.error("Login failed:", error);
       } finally {
         btnRef.current.disabled = false;
         setBtnLabel("Login");

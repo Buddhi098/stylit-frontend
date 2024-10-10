@@ -5,23 +5,23 @@ const categories = [
   {
     title: "Dresses",
     items: [
-      "Shop All Dresses",
-      "Casual Dresses",
-      "Evening Dresses",
       "Maxi Dresses",
       "Midi Dresses",
       "Mini Dresses",
+      "Bodycon Dresses",
+      "A-line Dresses",
+      "Wrap Dresses",
     ],
   },
   {
     title: "Tops",
     items: [
-      "Shop All Tops",
-      "Blouses",
-      "T-Shirts",
+      "Short Sleeve T-Shirts",
+      "Long Sleeve T-Shirts",
       "Shirts",
-      "Crop Tops",
-      "Sweaters",
+      "Tank Tops",
+      "Off-the-Shoulder Tops",
+      "High-Neck Blouses",
     ],
   },
   {
@@ -29,32 +29,30 @@ const categories = [
     subcategories: [
       {
         subtitle: "Pants",
-        items: ["Shop All Jeans", "Jeans", "Trousers", "Leggings"],
+        items: ["Jeans", "Palazzo Pants", "Joggers", "Leggings"],
       },
       {
         subtitle: "Skirts",
-        items: ["Shop All Skirts", "A-Line Skirts", "Pencil Skirts"],
+        items: ["A-line Skirts", "Pencil Skirts", "Dress Trousers"],
       },
       {
         subtitle: "Shorts",
-        items: ["Shop All Shorts"],
+        items: ["Denim Shorts" , "Shorts"],
       },
     ],
     items: ["Shop All Bottoms"],
   },
   {
     title: "Outwear",
-    items: ["Shop All Outwear", "Jackets", "Coats"],
+    items: ["Jackets", "Coats", "Blazers" , "Cardigans"],
   },
   {
-    title: "Activewear",
+    title: "Suits",
     items: [
-      "Shop All Activewear",
-      "Leggings",
-      "Sports Bras",
-      "Workout Tops",
-      "Jackets",
-      "Shorts",
+      "Two-Piece Suits",
+      "Jumpsuits",
+      "Blazer & Skirt Suits",
+      "Blazer & Trouser Suits",
     ],
   },
 ];

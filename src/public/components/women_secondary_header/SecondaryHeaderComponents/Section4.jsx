@@ -6,28 +6,29 @@ const categories = [
   {
     title: "BAGS",
     items: [
-      "Shop All Bags",
       "Handbags",
+      "Tote Bags",
       "Backpacks",
-      "Clutches",
+      "Crossbody Bags",
+      "Envelope Bags",
     ],
   },
   {
-    title: "JEWELRY",
+    title: "ACCERORIES",
     items: [
-      "Shop All Jewelry",
-      "Necklaces",
-      "Earrings",
-      "Bracelets",
-    ],
-  },
-  {
-    title: "SCARVES & HATS",
-    items: [
-      "Shop All Scarves & Hats",
+      "Belts",
+      "Hats",
       "Scarves",
-      "Beanies",
-      "Fedoras",
+      "Sunglasses",
+    ],
+  },
+  {
+    title: "FOOTWEAR",
+    items: [
+      "Sneakers",
+      "Sandals",
+      "Heels",
+      "Ankle Boots",
     ],
   },
 ];

@@ -4,24 +4,22 @@ import img from "../../../assets/images/men_page/s21.png";
 
 const categories = [
   {
-    title: "CLOTHING BEST SELLERS",
+    title: "CLOTHING NEW ARRIVALS",
     items: [
-      "Shop All Clothing Best Sellers",
-      "Shirts",
-      "Trousers",
-      "Outerwear",
+      "Tops",
+      "Bottoms",
       "Suits",
-      "Activewear",
+      "Outerwear",
+      "Footwear",
     ],
   },
   {
-    title: "ACCESSORIES BEST SELLERS",
+    title: "ACCESSORIES NEW ARRIVALS",
     items: [
-      "Shop All Accessories Best Sellers",
       "Bags",
-      "Belts",
-      "Watches",
-      "Hats",
+      "Accessories",
+      "Underwear",
+
     ],
   },
 ];

@@ -4,22 +4,22 @@ import img from "../../../assets/images/women_page/s22.png";
 
 const categories = [
   {
-    title: "CLOTHING BEST SELLERS",
+    title: "CLOTHING NEW ARRIVALS",
     items: [
-      "Shop All Clothing Best Sellers",
-      "Dresses",
-      "Tops",
       "Bottoms",
+      "Tops",
       "Outerwear",
+      "Dresses",
+      "Suits",
     ],
   },
   {
     title: "ACCESSORIES NEW ARRIVALS",
     items: [
-      "Shop All Accessories New Arrivals",
-      "Bags",
-      "Jewelry",
-      "Scarves & Hats",
+      "Accessories",
+      "Footwear",
+      "Suits",
+      "Bags"
     ],
   },
 ];

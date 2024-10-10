@@ -1,33 +1,5 @@
 export const Colors = {
-  colors: [
-    {
-      name: "Beige",
-      hexCode: "#F5F5DC",
-    },
-    {
-      name: "Denim",
-      hexCode: "#1560BD",
-    },
-    {
-      name: "Silver",
-      hexCode: "#C0C0C0",
-    },
-    {
-      name: "Nude",
-      hexCode: "#F2D2BD",
-    },
-    {
-      name: "Navy",
-      hexCode: "#000080",
-    },
-    {
-      name: "Light Wash Blue",
-      hexCode: "#ADD8E6",
-    },
-    {
-      name: "Khaki",
-      hexCode: "#C3B091",
-    },
+  colors : [
     {
       name: "Black",
       hexCode: "#000000",
@@ -37,96 +9,60 @@ export const Colors = {
       hexCode: "#FFFFFF",
     },
     {
+      name: "Gray",
+      hexCode: "#BDBDBD",
+    },
+    {
       name: "Red",
-      hexCode: "#FF0000",
-    },
-    {
-      name: "Blue",
-      hexCode: "#0000FF",
-    },
-    {
-      name: "Green",
-      hexCode: "#008000",
-    },
-    {
-      name: "Yellow",
-      hexCode: "#FFFF00",
+      hexCode: "#D21B28",
     },
     {
       name: "Pink",
-      hexCode: "#FFC0CB",
-    },
-    {
-      name: "Purple",
-      hexCode: "#800080",
+      hexCode: "#FFB6B6",
     },
     {
       name: "Orange",
-      hexCode: "#FFA500",
+      hexCode: "#FFBA09",
+    },
+    {
+      name: "Yellow",
+      hexCode: "#FFF72E",
+    },
+    {
+      name: "Green",
+      hexCode: "#4ECB71",
+    },
+    {
+      name: "Blue",
+      hexCode: "#6CB4EE",
+    },
+    {
+      name: "Purple",
+      hexCode: "#A669B0",
     },
     {
       name: "Brown",
-      hexCode: "#A52A2A",
+      hexCode: "#C0A888",
     },
     {
-      name: "Gray",
-      hexCode: "#808080",
+      name: "Beige",
+      hexCode: "#F8E8DC",
     },
     {
-      name: "Maroon",
-      hexCode: "#800000",
+      name: "Multicolor",
+      hexCode: "linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)",
     },
     {
-      name: "Olive",
-      hexCode: "#808000",
+      name: "B&W",
+      hexCode: "repeating-linear-gradient(45deg, #000, #000 10px, #fff 10px, #fff 20px)",
     },
-    {
-      name: "Turquoise",
-      hexCode: "#40E0D0",
-    },
-    {
-      name: "Coral",
-      hexCode: "#FF7F50",
-    },
-    {
-      name: "Lavender",
-      hexCode: "#E6E6FA",
-    },
-    {
-      name: "Burgundy",
-      hexCode: "#800020",
-    },
-    {
-      name: "Teal",
-      hexCode: "#008080",
-    },
-    {
-      name: "Gold",
-      hexCode: "#FFD700",
-    },
-    {
-      name: "Mint",
-      hexCode: "#98FF98",
-    },
-    {
-      name: "Ivory",
-      hexCode: "#FFFFF0",
-    },
-    {
-      name: "Peach",
-      hexCode: "#FFE5B4",
-    },
-    {
-      name: "Magenta",
-      hexCode: "#FF00FF",
-    },
-  ],
+  ]
 };
 
 const ProductCategory = {
   women: {
     categories: {
-      tops: [
+      Tops: [
         "Short Sleeve T-Shirts",
         "Long Sleeve T-Shirts",
         "Shirts",
@@ -138,7 +74,7 @@ const ProductCategory = {
         "Blouson Tops",
         "Peplum Tops",
       ],
-      bottoms: [
+      Bottoms: [
         "Jeans",
         "A-line Skirts",
         "Pencil Skirts",
@@ -150,7 +86,7 @@ const ProductCategory = {
         "Culottes",
         "Palazzo Pants",
       ],
-      dresses: [
+      Dresses: [
         "Maxi Dresses",
         "Midi Dresses",
         "Mini Dresses",
@@ -159,7 +95,7 @@ const ProductCategory = {
         "Wrap Dresses",
         "Shift Dresses",
       ],
-      outerwear: [
+      Outerwear: [
         "Jackets",
         "Coats",
         "Blazers",
@@ -169,13 +105,13 @@ const ProductCategory = {
         "Trench Coats",
         "Puffer Jackets",
       ],
-      suits: [
+      Suits: [
         "Two-Piece Suits",
         "Jumpsuits",
         "Blazer & Skirt Suits",
         "Blazer & Trouser Suits",
       ],
-      footwear: [
+      Footwear: [
         "Sneakers",
         "Sandals",
         "Heels",
@@ -186,7 +122,7 @@ const ProductCategory = {
         "Espadrilles",
         "Wedges",
       ],
-      bags: [
+      Bags: [
         "Handbags",
         "Tote Bags",
         "Backpacks",
@@ -195,7 +131,7 @@ const ProductCategory = {
         "Clutches",
         "Sling Bags",
       ],
-      accessories: [
+      Accessories: [
         "Belts",
         "Hats",
         "Scarves",
@@ -205,7 +141,7 @@ const ProductCategory = {
         "Jewelry",
         "Hair Accessories",
       ],
-      lingerie: [
+      Lingerie: [
         "Bras",
         "Panties",
         "Bodysuits",
@@ -218,7 +154,7 @@ const ProductCategory = {
   },
   men: {
     categories: {
-      tops: [
+      Tops: [
         "Short Sleeve T-Shirts",
         "Long Sleeve T-Shirts",
         "Polo Shirts",
@@ -228,7 +164,7 @@ const ProductCategory = {
         "Hoodies",
         "Tank Tops",
       ],
-      bottoms: [
+      Bottoms: [
         "Slim-fit Jeans",
         "Shorts",
         "Denim Shorts",
@@ -238,14 +174,14 @@ const ProductCategory = {
         "Chinos",
         "Cargo Pants",
       ],
-      suits: [
+      Suits: [
         "Two-Piece Suits",
         "Three-Piece Suits",
         "Tuxedos",
         "Blazer & Trouser Suits",
         "Vest & Trouser Suits",
       ],
-      outerwear: [
+      Outerwear: [
         "Jackets",
         "Coats",
         "Blazers",
@@ -254,7 +190,7 @@ const ProductCategory = {
         "Trench Coats",
         "Parkas",
       ],
-      footwear: [
+      Footwear: [
         "Sneakers",
         "Slip-on Shoes",
         "Canvas Shoes",
@@ -264,7 +200,7 @@ const ProductCategory = {
         "Derbies",
         "Monk Straps",
       ],
-      bags: [
+      Bags: [
         "Backpacks",
         "Messenger Bags",
         "Briefcases",
@@ -273,7 +209,7 @@ const ProductCategory = {
         "Duffel Bags",
         "Laptop Bags",
       ],
-      accessories: [
+      Accessories: [
         "Belts",
         "Hats",
         "Scarves",
@@ -283,7 +219,7 @@ const ProductCategory = {
         "Ties",
         "Cufflinks",
       ],
-      underwear: [
+      Underwear: [
         "Boxers",
         "Briefs",
         "Boxer Briefs",

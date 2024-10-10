@@ -3,7 +3,7 @@ import { Select, MenuItem, Box, Stack, Typography } from "@mui/material";
 import SizeChartModal from "./SizeChartModal";
 import { Link } from "react-router-dom";
 
-const SizeChart = () => {
+const SizeChart = ({id , sizeChart}) => {
   const [size, setSize] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -59,10 +59,13 @@ const SizeChart = () => {
             <MenuItem value="">
               <Typography variant="body2_nunito">Please Select</Typography>
             </MenuItem>
-            <MenuItem value={"S"}>S</MenuItem>
-            <MenuItem value={"M"}>M</MenuItem>
-            <MenuItem value={"L"}>L</MenuItem>
-            <MenuItem value={"XL"}>XL</MenuItem>
+            {
+              sizeChart.map((size) => (
+                <MenuItem key={size} value={size}>
+                  <Typography variant="body2_nunito">{size}</Typography>
+                </MenuItem>
+              ))
+            }
           </Select>
         </Stack>
       </Stack>

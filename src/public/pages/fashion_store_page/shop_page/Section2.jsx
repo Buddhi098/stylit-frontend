@@ -12,7 +12,7 @@ import {
   Paper,
   Avatar,
 } from "@mui/material";
-import DressCard from "../../../components/dress_components_women/DressCard";
+import DressCard from "../../../components/dress_component/DressCard";
 import img1 from "../../../../temp_images/Women/img (1).jpeg";
 import img2 from "../../../../temp_images/Women/img (2).jpeg";
 import img3 from "../../../../temp_images/Women/img (3).jpeg";
