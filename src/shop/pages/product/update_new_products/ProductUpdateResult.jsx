@@ -37,11 +37,11 @@ const ProductUpdateResult = ({ status, setAddProduct }) => {
   );
 
   const title = isSuccess
-    ? "Product Added Successfully!"
-    : "Error Adding Product";
+    ? "Product Updated Successfully!"
+    : "Error Updating Product";
   const message = isSuccess
-    ? "Your new product has been added to the inventory."
-    : "There was an error while adding your product. Please try again.";
+    ? "Your new product has been Updated to the inventory."
+    : "There was an error while Updating your product. Please try again.";
 
   const primaryButtonText = isSuccess ? "Add New Product" : "Try Again";
   const primaryButtonIcon = isSuccess ? <InventoryIcon /> : <ArrowBackIcon />;

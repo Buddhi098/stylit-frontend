@@ -31,7 +31,7 @@ import { storage } from "../../../../config/firebaseConfig";
 import { ref, uploadBytes } from "firebase/storage";
 import ProductUpdateResult from "./ProductUpdateResult";
 
-const ProductForm = ({id}) => {
+const ProductForm = ({ id }) => {
   const [gender, setGender] = useState("");
   const [category, setCategory] = useState("");
   const [subcategory, setSubcategory] = useState("");
@@ -39,9 +39,9 @@ const ProductForm = ({id}) => {
   const [loading, setLoading] = useState(false);
   const [addProduct, setAddProduct] = useState(false);
   const [responseStatus, setResponseStatus] = useState();
-  const [initialData , setInitialData] = useState({});
+  const [initialData, setInitialData] = useState({});
 
-    const [variantBoxes, setVariantBoxes] = useState([
+  const [variantBoxes, setVariantBoxes] = useState([
     {
       colorVariant: "",
       sizeQuantityChart: [{ size: "", quantity: "" }],
@@ -56,7 +56,7 @@ const ProductForm = ({id}) => {
       try {
         const shopId = localStorage.getItem("id");
         const response = await WebApi.get(`/shop/product/get_product_by_id/${id}/${shopId}`);
-        
+
         // Handle the response data
         console.log(response.data);
         setInitialData(response.data);
@@ -73,13 +73,13 @@ const ProductForm = ({id}) => {
   useEffect(() => {
     if (initialData) {
       const { generalInformation, pricing, additionalInfo } = initialData;
-  
+
       setGender(generalInformation?.gender);
       setCategory(generalInformation?.category);
       setSubcategory(generalInformation?.subcategory);
-  
+
       let discountType = pricing?.discountType || "No Discount";
-  
+
       formik.setFieldValue('pricing.discountType', discountType);
       // formik.setFieldValue('additionalInfo.occasions', additionalInfo?.occasions);
 
@@ -107,14 +107,14 @@ const ProductForm = ({id}) => {
           },
         ]);
       }
-  
+
       console.log("Occasions:", additionalInfo?.occasions);
     }
   }, [initialData]);
-  
 
-  console.log("pusjs" , initialData);
-  console.log("form" , initialData.additionalInfo?.occasions)
+
+  console.log("pusjs", initialData);
+  console.log("form", initialData.additionalInfo?.occasions)
 
   const formik = useFormik({
     initialValues: {
@@ -187,7 +187,7 @@ const ProductForm = ({id}) => {
       }),
       variantBoxes: Yup.array().of(
         Yup.object({
-          colorVariant: Yup.string().required("Color variant is required"),
+          colorVariant: Yup.string(),
           sizeQuantityChart: Yup.array().of(
             Yup.object({
               size: Yup.string(),
@@ -203,10 +203,10 @@ const ProductForm = ({id}) => {
       values["shopId"] = localStorage.getItem("id");
       console.log("Form Data", values);
       setLoading(true);
-
+      console.log(id)
       try {
         const response = await WebApi.post(
-          "/shop/product/add_new_product",
+          `/shop/product/update_product/${id}`,
           values
         );
         console.log("Response Data", response.data);
@@ -232,7 +232,7 @@ const ProductForm = ({id}) => {
 
         // Wait for all image uploads to complete
         await Promise.all(uploadPromises);
-        
+
 
         setResponseStatus(true);
         setAddProduct(true);
@@ -340,7 +340,7 @@ const ProductForm = ({id}) => {
   };
 
   const handleAddProductImage = (boxIndex, event) => {
-    if(variantBoxes[boxIndex].productImages.length == 5) {
+    if (variantBoxes[boxIndex].productImages.length == 5) {
       alert("Maximum of 5 images can be uploaded for each product variant.");
       return;
     }
@@ -468,13 +468,14 @@ const ProductForm = ({id}) => {
                     disabled={!gender}
                   >
                     {gender &&
-                      Object.keys(ProductCategory[gender].categories).map(
-                        (cat) => (
-                          <MenuItem key={cat} value={cat}>
-                            {cat}
-                          </MenuItem>
-                        )
-                      )}
+                      ProductCategory[gender]?.categories &&
+                      Object.keys(ProductCategory[gender].categories).map((cat) => (
+                        <MenuItem key={cat} value={cat}>
+                          {cat}
+                        </MenuItem>
+                      ))
+                    }
+
                   </Select>
                 </FormControl>
                 <FormControl
@@ -493,14 +494,13 @@ const ProductForm = ({id}) => {
                     label="Sub Category"
                     disabled={!category}
                   >
-                    {category &&
-                      ProductCategory[gender].categories[category].map(
-                        (subcat) => (
-                          <MenuItem key={subcat} value={subcat}>
-                            {subcat}
-                          </MenuItem>
-                        )
-                      )}
+                    {category && ProductCategory[gender] && ProductCategory[gender].categories[category] ? (
+                      ProductCategory[gender].categories[category].map((subcat) => (
+                        <MenuItem key={subcat} value={subcat}>
+                          {subcat}
+                        </MenuItem>
+                      ))
+                    ) : null}
                   </Select>
                 </FormControl>
                 <TextField
