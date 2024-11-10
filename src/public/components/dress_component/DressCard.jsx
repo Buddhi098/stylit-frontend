@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Stack,
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router";
+import { storage } from "../../../config/firebaseConfig";
+import { getDownloadURL, ref } from "firebase/storage";
 
 const colorCode = {
   Black: "#000000",
@@ -25,15 +27,31 @@ const colorCode = {
     "repeating-linear-gradient(45deg, #000, #000 10px, #fff 10px, #fff 20px)",
 };
 
-const ProductCard = ({ colors, name, price, img, id }) => {
+const ProductCard = ({ colors, name, price, img, id , gender}) => {
   const [selectedColor, setColor] = useState(colors[0]);
+  const [image, setImage] = useState(null);
   const navigate = useNavigate();
 
   const handleNavigateToDressPage = (e) => {
     window.scrollTo(0,0);
     e.stopPropagation();
-    navigate(`/public/dress/men/${id}`);
+    navigate(`/public/dress/${gender}/${id}/${selectedColor}`);
   };
+
+  useEffect(()=>{
+    const changeImage = async () => {
+      try{
+        const images = ref(storage , `productImages/${id}${selectedColor}/img0`);
+        const url = await getDownloadURL(images);
+        setImage(url);
+      }catch(error){
+        console.error("Error fetching image from Firebase", error);
+      }
+      
+    }
+
+    changeImage();
+  } , [img , selectedColor])
 
   return (
     <Box
@@ -49,7 +67,7 @@ const ProductCard = ({ colors, name, price, img, id }) => {
     >
       <Box
         component="img"
-        src={img}
+        src={image}
         sx={{
           backgroundColor: "#e0e0e0",
           height: "400px",

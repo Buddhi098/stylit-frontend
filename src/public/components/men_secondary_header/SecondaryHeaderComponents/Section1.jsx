@@ -5,12 +5,13 @@ const categories = [
   {
     title: "Shirts",
     items: [
-      "Shop All Shirts",
-      "Casual Shirts",
-      "Dress Shirts",
-      "Polos",
-      "T-Shirts",
-      "Henleys",
+      "Short Sleeve T-Shirts",
+      "Long Sleeve T-Shirts",
+      "Polo Shirts",
+      "Shirts",
+      "Henley Shirts",
+      "Sweatshirts",
+      "Hoodies",
     ],
   },
   {
@@ -18,32 +19,32 @@ const categories = [
     subcategories: [
       {
         subtitle: "Pants",
-        items: ["Shop All Pants", "Jeans", "Chinos", "Trousers"],
+        items: ["Slim-fit Jeans", "Chinos", "Cargo Pants", "Dress Trousers"],
       },
       {
         subtitle: "Shorts",
-        items: ["Shop All Shorts", "Casual Shorts", "Dress Shorts"],
+        items: ["Shorts", "Denim Shorts", "Chinos"],
       },
     ],
     items: ["Shop All Trousers"],
   },
   {
     title: "Outerwear",
-    items: ["Shop All Outerwear", "Jackets", "Coats", "Vest"],
+    items: ["Jackets", "Coats", "Blazers", "Puffer Jackets" , "Bomber Jackets"],
   },
   {
     title: "Suits",
-    items: ["Shop All Suits", "Business Suits", "Blazers", "Sport Coats"],
+    items: ["Two-Piece Suits", "Three-Piece Suits", "Tuxedos", "Blazer & Trouser Suits"],
   },
   {
-    title: "Activewear",
+    title: "Outerwear",
     items: [
-      "Shop All Activewear",
-      "Athletic Shirts",
-      "Workout Shorts",
-      "Track Pants",
-      "Sports Jackets",
-      "Compression Wear",
+      "Jackets",
+      "Coats",
+      "Blazers",
+      "Puffer Jackets",
+      "Bomber Jackets",
+      "Trench Coats",
     ],
   },
 ];

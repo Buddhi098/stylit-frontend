@@ -1,38 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, Box } from "@mui/material";
-import img from "../../../../../../temp_images/Women/with_women/img (6).jpeg";
-import img1 from "../../../../../../temp_images/Women/with_women/img (7).jpeg";
-import img2 from "../../../../../../temp_images/Women/with_women/img (8).jpeg";
-import img3 from "../../../../../../temp_images/Women/with_women/img (9).jpeg";
 
-const images = [
-  {
-    src: img, // Replace with the actual path
-    alt: "Main Image",
-  },
-  {
-    src: img1, // Replace with the actual path
-    alt: "Small Image 1",
-  },
-  {
-    src: img2, // Replace with the actual path
-    alt: "Small Image 2",
-  },
-  {
-    src: img3, // Replace with the actual path
-    alt: "Small Image 3",
-  },
-];
+import NotFound from "../../../../assets/images/product_page/not_found.jpg"
 
-const ProductImage = () => {
-  const [mainImage, setMainImage] = React.useState(images[0].src);
+const ProductImage = ({images}) => {
+  const [mainImage, setMainImage] = React.useState(null);
+
+  useEffect(()=>{
+    if(images.length>0){
+      setMainImage(images[1]);
+    }else{
+      setMainImage(NotFound);
+    }
+  },[images])
 
   const handleImage = (image) => () => {
     setMainImage(image);
   };
 
   return (
-    <Box sx={{ height: "600px", width: "100%" }}>
+    <Box sx={{ height: "600px", width: "700px" }}>
       <Grid container spacing={2} sx={{ height: "100%" }}>
         <Grid
           item
@@ -47,7 +34,7 @@ const ProductImage = () => {
           <Box
             component="img"
             src={mainImage}
-            alt={images[0].alt}
+            alt="Not Found"
             sx={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
         </Grid>
@@ -63,12 +50,12 @@ const ProductImage = () => {
                   alignItems: "center",
                   cursor: "pointer",
                 }}
-                onMouseEnter={handleImage(image.src)}
+                onMouseEnter={handleImage(image)}
               >
                 <Box
                   component={"img"}
-                  src={image.src}
-                  alt={image.alt}
+                  src={image || NotFound}
+                  alt=""
                   sx={{ width: "90%", height: "100px", objectFit: "cover" , "&:hover":{filter:"brightness(0.8)"} }}
                 />
               </Grid>

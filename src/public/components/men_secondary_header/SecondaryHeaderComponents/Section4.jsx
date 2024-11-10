@@ -6,30 +6,31 @@ const categories = [
   {
     title: "BAGS",
     items: [
-      "Shop All Bags",
       "Backpacks",
       "Messenger Bags",
-      "Duffel Bags",
-      "Tote Bags",
+      "Briefcases",
+      "Crossbody Bags",
+      "Belt Bags",
     ],
   },
   {
     title: "ACCESSORIES",
     items: [
-      "Shop All Accessories",
       "Belts",
-      "Watches",
-      "Sunglasses",
       "Hats",
+      "Watches",
+      "Scarves",
+      "Sunglasses",
     ],
   },
   {
-    title: "SCARVES & GLOVES",
+    title: "FOOTWEAR",
     items: [
-      "Shop All Scarves & Gloves",
-      "Scarves",
-      "Gloves",
-      "Beanies",
+      "Sneakers",
+      "Slip-on Shoes",
+      "Canvas Shoes",
+      "Boots",
+      "Loafers"
     ],
   },
 ];

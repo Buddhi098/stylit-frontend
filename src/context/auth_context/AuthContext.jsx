@@ -1,6 +1,6 @@
 // AuthContext.js
 import React, { createContext, useState, useEffect } from "react";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import Request from "../../api_component/Request";
 
 const AuthContext = createContext();
@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log("buddhi")
+
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
           setUser(decodedToken);
           logExpirationTime(decodedToken);
           scheduleTokenRefresh(decodedToken.exp);
-          setupInactivityTimeout(); 
+          setupInactivityTimeout();
         } else {
           logout();
         }
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  const login = async (username, password, userRole) => {
+  const login = async (username, password, userRole, setError) => {
     const data = {
       userName: username,
       password: password,
@@ -48,10 +48,10 @@ export const AuthProvider = ({ children }) => {
 
     try {
       const response = await Request.post("/public/user/login", data);
-      const { access_token, refresh_token , id } = response.data;
+      const { access_token, refresh_token, id } = response.data;
       localStorage.setItem("token", access_token);
       localStorage.setItem("refresh_token", refresh_token);
-      localStorage.setItem("id" , id);
+      localStorage.setItem("id", id);
 
       const decodedToken = jwtDecode(access_token);
       setUser(decodedToken);
@@ -60,8 +60,48 @@ export const AuthProvider = ({ children }) => {
       logExpirationTime(decodedToken);
       scheduleTokenRefresh(decodedToken.exp);
       setupInactivityTimeout();
+
+      if(access_token){
+        return true;
+      }else{
+        setError("Invalid email or password.");
+        return false;
+      }
+      
     } catch (error) {
-      console.error("Login failed:", error);
+      if (error.response) {
+        
+        const statusCode = error.response.status;
+        switch (statusCode) {
+          case 400:
+            setError("Invalid email or password.");
+            break;
+          case 403:
+            setError("Forbidden: You don't have access to this resource.");
+            break;
+          case 404:
+            setError("Not Found: The requested resource was not found.");
+            break;
+          case 500:
+            setError("Internal Server Error: Please try again later.");
+            break;
+          case 503:
+            setError("Server Not Found: Please try again later.");
+            break;
+          default:
+            setError("An unexpected error occurred. Please try again.");
+            break;
+        }
+      } else {
+        // Handle errors without a response (e.g., network errors)
+        setError("Network error: Please check your connection and try again.");
+      }
+      console.error(
+        "There was an error adding the user:",
+        error.response?.data
+      );
+
+      return false;
     }
   };
 
@@ -100,7 +140,9 @@ export const AuthProvider = ({ children }) => {
 
     clearTimeout(refreshTimeout);
     refreshTimeout = setTimeout(refreshAccessToken, refreshTime);
-    console.log(`Token refresh scheduled in ${Math.floor(refreshTime / 1000)} seconds`);
+    console.log(
+      `Token refresh scheduled in ${Math.floor(refreshTime / 1000)} seconds`
+    );
   };
 
   const logExpirationTime = (token) => {
@@ -145,7 +187,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading, refreshAccessToken }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, loading, refreshAccessToken }}
+    >
       {children}
     </AuthContext.Provider>
   );
