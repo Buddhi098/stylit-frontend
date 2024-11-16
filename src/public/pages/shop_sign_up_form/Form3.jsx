@@ -79,7 +79,7 @@ const Form3 = (props, ref) => {
   });
 
   const handleSearch = async () => {
-    const apiKey = process.env.REACT_APP_MAP_API_KEY; // Replace with your LocationIQ API key
+    const apiKey = process.env.REACT_APP_MAP_API_KEY || "pk.deaabc5f7e222fc12bf5eb165280fbc7"; // Replace with your LocationIQ API key
     try {
       const response = await axios.get(
         `https://us1.locationiq.com/v1/search.php?key=${apiKey}&q=${searchQuery}&format=json`

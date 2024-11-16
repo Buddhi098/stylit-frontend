@@ -28,7 +28,7 @@ import DialogBox from "./DialogBox";
 import { Stack } from "@mui/system";
 import WebApi from "../../../api/WebApi";
 import { storage } from "../../../../config/firebaseConfig";
-import { ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getDownloadURL, listAll, ref, uploadBytes } from "firebase/storage";
 import ProductUpdateResult from "./ProductUpdateResult";
 
 const ProductForm = ({ id }) => {
@@ -70,51 +70,92 @@ const ProductForm = ({ id }) => {
   }, []); // Dependency array to run effect when 'id' changes
 
 
-  useEffect(() => {
-    if (initialData) {
-      const { generalInformation, pricing, additionalInfo } = initialData;
-
-      setGender(generalInformation?.gender);
-      setCategory(generalInformation?.category);
-      setSubcategory(generalInformation?.subcategory);
-
-      let discountType = pricing?.discountType || "No Discount";
-
-      formik.setFieldValue('pricing.discountType', discountType);
-      // formik.setFieldValue('additionalInfo.occasions', additionalInfo?.occasions);
-
-      if (initialData?.variantBoxes?.length > 0) {
-        setVariantBoxes(
-          initialData.variantBoxes.map(variant => ({
-            colorVariant: variant.colorVariant || "",
-            sizeQuantityChart: variant.sizeQuantityChart?.map(size => ({
-              size: size.size || "",
-              quantity: size.quantity || 0,
-            })) || [{ size: "", quantity: 0 }],
-            sizeChartImage: variant.sizeChartImage || null,
-            productImages: variant.productImages || [],
-            status: variant.status || "Active",
-          }))
-        );
-      } else {
-        setVariantBoxes([
-          {
-            colorVariant: "",
-            sizeQuantityChart: [{ size: "", quantity: 0 }],
-            sizeChartImage: null,
-            productImages: [],
-            status: "Active",
-          },
-        ]);
-      }
-
-      console.log("Occasions:", additionalInfo?.occasions);
+  // Load size chart image URL from Firebase with error handling
+  async function loadSizeChart(productId, color) {
+    try {
+      console.log(`${productId}${color}chart`)
+      const imageRef = ref(storage, `sizeChartImages/${productId}${color}chart`);
+      const url = await getDownloadURL(imageRef);
+      return url;
+    } catch (error) {
+      console.error(`Error fetching size chart image for color: ${color}, productId: ${productId}`, error);
+      return null; // Return null if fetching fails
     }
+  }
+
+  // Load product images URLs from Firebase with error handling
+  async function loadProductImages(productId, color) {
+    const folderRef = ref(storage, `productImages/${productId}${color}`);
+    const urls = [];
+
+    try {
+      const result = await listAll(folderRef);
+      const urlPromises = result.items.map((itemRef) => getDownloadURL(itemRef));
+      const urlArray = await Promise.all(urlPromises);
+      urls.push(...urlArray);
+    } catch (error) {
+      console.error(`Error fetching product images for color: ${color}, productId: ${productId}`, error);
+    }
+
+    return urls; // Return empty array if fetching fails
+  }
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (initialData) {
+        const { generalInformation, pricing, additionalInfo } = initialData;
+
+        setGender(generalInformation?.gender);
+        setCategory(generalInformation?.category);
+        setSubcategory(generalInformation?.subcategory);
+
+        let discountType = pricing?.discountType || "No Discount";
+        formik.setFieldValue('pricing.discountType', discountType);
+        // formik.setFieldValue('additionalInfo.occasions', additionalInfo?.occasions);
+
+        if (initialData?.variantBoxes?.length > 0) {
+          // Use Promise.all to handle async operations in map
+          const updatedVariantBoxes = await Promise.all(
+            initialData.variantBoxes.map(async (variant) => ({
+              colorVariant: variant.colorVariant || "",
+              sizeQuantityChart:
+                variant.sizeQuantityChart?.map((size) => ({
+                  size: size.size || "",
+                  quantity: size.quantity || 0,
+                })) || [{ size: "", quantity: 0 }],
+              sizeChartImage: await loadSizeChart(id, variant.colorVariant) || null,
+              productImages: await loadProductImages(id, variant.colorVariant) || [],
+              status: variant.status || "Active",
+            }))
+          );
+
+          setVariantBoxes(updatedVariantBoxes);
+        } else {
+          setVariantBoxes([
+            {
+              colorVariant: "",
+              sizeQuantityChart: [{ size: "", quantity: 0 }],
+              sizeChartImage: null,
+              productImages: [],
+              status: "Active",
+            },
+          ]);
+        }
+      }
+    };
+    fetchData();
   }, [initialData]);
 
 
-  console.log("pusjs", initialData);
-  console.log("form", initialData.additionalInfo?.occasions)
+  useEffect(() => {
+    console.log("Variant Boxes:", variantBoxes);
+  }, [variantBoxes]);
+
+
+  // console.log("pusjs", initialData);
+  // console.log("form", initialData.additionalInfo?.occasions)
 
   const formik = useFormik({
     initialValues: {
@@ -201,11 +242,12 @@ const ProductForm = ({ id }) => {
     enableReinitialize: true,
     onSubmit: async (values) => {
       values["shopId"] = localStorage.getItem("id");
+      values["variantBoxes"] = variantBoxes
       console.log("Form Data", values);
       setLoading(true);
       console.log(id)
       try {
-        const response = await WebApi.post(
+        const response = await WebApi.put(
           `/shop/product/update_product/${id}`,
           values
         );
@@ -213,22 +255,35 @@ const ProductForm = ({ id }) => {
 
         const productId = response.data.data.ProductId;
 
-        console.log(variantBoxes);
+        console.log("hi", variantBoxes);
 
         // Create an array of promises for uploading images
         const uploadPromises = variantBoxes.map(async (box) => {
-          const imgRef = ref(storage, `sizeChartImages/${productId}chart`);
-          await uploadBytes(imgRef, box.sizeChartImage);
-          console.log("Uploaded size chart image");
+          const imgRef = ref(storage, `sizeChartImages/${productId}${box.colorVariant}chart`);
+
+          // Check if sizeChartImage is a file and not a URL
+          if (box.sizeChartImage instanceof File) {
+            await uploadBytes(imgRef, box.sizeChartImage);
+            console.log("Uploaded size chart image");
+          } else {
+            console.log("Size chart image is a URL; skipping upload");
+          }
 
           const imgPromises = box.productImages.map(async (image, index) => {
-            const imgRef = ref(storage, `productImages/${productId}${box.colorVariant}/img${index}`);
-            await uploadBytes(imgRef, image);
-            console.log(`Uploaded product image ${index}`);
+            // Check if product image is a file and not a URL
+            if (image instanceof File) {
+              // Use the original file name from the image
+              const imgRef = ref(storage, `productImages/${productId}${box.colorVariant}/${image.name}`);
+              await uploadBytes(imgRef, image);
+              console.log(`Uploaded product image with name: ${image.name}`);
+            } else {
+              console.log(`Product image ${index} is a URL; skipping upload`);
+            }
           });
 
           await Promise.all(imgPromises);
         });
+
 
         // Wait for all image uploads to complete
         await Promise.all(uploadPromises);
@@ -965,14 +1020,30 @@ const ProductForm = ({ id }) => {
                           <Grid item xs={4}>
                             <Box sx={{ position: "relative" }}>
                               <img
-                                src={URL.createObjectURL(box.sizeChartImage)}
+                                src={box.sizeChartImage ? (
+                                  typeof box.sizeChartImage === 'string' && box.sizeChartImage.startsWith('http') ? box.sizeChartImage : URL.createObjectURL(box.sizeChartImage)
+                                ) : ''}
                                 alt="Size Chart"
                                 width="100%"
                                 height="auto"
                               />
                               <IconButton
-                                onClick={() => {
+                                onClick={async () => {
                                   const newVariantBoxes = [...variantBoxes];
+
+                                  const imageUrlToDelete = newVariantBoxes[boxIndex].sizeChartImage;
+
+                                  if (typeof imageUrlToDelete === "string" && imageUrlToDelete.startsWith("https://")) {
+                                    const imgRef = ref(storage, imageUrlToDelete);
+
+                                    try {
+                                      await deleteObject(imgRef);
+                                      console.log(`Deleted Size chart image`);
+                                    } catch (error) {
+                                      console.error("Error deleting image from Firebase:", error);
+                                    }
+                                  }
+
                                   newVariantBoxes[boxIndex].sizeChartImage =
                                     null;
                                   setVariantBoxes(newVariantBoxes);
@@ -1011,24 +1082,40 @@ const ProductForm = ({ id }) => {
                         <Grid item xs={4} key={index}>
                           <Box sx={{ position: "relative" }}>
                             <img
-                              src={URL.createObjectURL(image)}
+                              src={image ? (
+                                typeof image === 'string' && image.startsWith('http') ? image : URL.createObjectURL(image)
+                              ) : ''}
                               alt={`Product ${index}`}
                               width="100%"
                               height="auto"
                             />
                             <IconButton
-                              onClick={() => {
+                              onClick={async () => {
                                 const newVariantBoxes = [...variantBoxes];
-                                const newImages = [
-                                  ...newVariantBoxes[boxIndex].productImages,
-                                ];
+                                const newImages = [...newVariantBoxes[boxIndex].productImages];
 
-                                // Remove the image at the specified index
+                                const imageUrlToDelete = newImages[index];
+
+                                // Check if imageUrlToDelete is a URL
+                                if (typeof imageUrlToDelete === "string" && imageUrlToDelete.startsWith("https://")) {
+                                  const imgRef = ref(storage, imageUrlToDelete);
+
+                                  try {
+                                    // Attempt to delete the image from Firebase
+                                    await deleteObject(imgRef);
+                                    console.log(`Deleted product image ${index} from Firebase`);
+                                  } catch (error) {
+                                    console.error("Error deleting image from Firebase:", error);
+                                  }
+                                } else {
+                                  console.log("Image is not a URL; skipping Firebase deletion");
+                                }
+
+                                // Remove the image at the specified index from the local state
                                 newImages.splice(index, 1);
 
                                 // Update the productImages for the specific variant box
-                                newVariantBoxes[boxIndex].productImages =
-                                  newImages;
+                                newVariantBoxes[boxIndex].productImages = newImages;
 
                                 // Update the state with the modified variant boxes
                                 setVariantBoxes(newVariantBoxes);
@@ -1037,6 +1124,7 @@ const ProductForm = ({ id }) => {
                             >
                               <DeleteIcon />
                             </IconButton>
+
                           </Box>
                         </Grid>
                       )

@@ -9,7 +9,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   let refreshTimeout;
-  let inactivityTimeout;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -21,7 +20,6 @@ export const AuthProvider = ({ children }) => {
           setUser(decodedToken);
           logExpirationTime(decodedToken);
           scheduleTokenRefresh(decodedToken.exp);
-          setupInactivityTimeout();
         } else {
           logout();
         }
@@ -34,8 +32,6 @@ export const AuthProvider = ({ children }) => {
 
     return () => {
       clearTimeout(refreshTimeout);
-      clearTimeout(inactivityTimeout);
-      removeEventListeners();
     };
   }, []);
 
@@ -56,21 +52,17 @@ export const AuthProvider = ({ children }) => {
       const decodedToken = jwtDecode(access_token);
       setUser(decodedToken);
 
-      // console.log("Login successful", decodedToken);
       logExpirationTime(decodedToken);
       scheduleTokenRefresh(decodedToken.exp);
-      setupInactivityTimeout();
 
-      if(access_token){
+      if (access_token) {
         return true;
-      }else{
+      } else {
         setError("Invalid email or password.");
         return false;
       }
-      
     } catch (error) {
       if (error.response) {
-        
         const statusCode = error.response.status;
         switch (statusCode) {
           case 400:
@@ -93,13 +85,9 @@ export const AuthProvider = ({ children }) => {
             break;
         }
       } else {
-        // Handle errors without a response (e.g., network errors)
         setError("Network error: Please check your connection and try again.");
       }
-      console.error(
-        "There was an error adding the user:",
-        error.response?.data
-      );
+      console.error("There was an error adding the user:", error.response?.data);
 
       return false;
     }
@@ -120,7 +108,6 @@ export const AuthProvider = ({ children }) => {
         const decodedToken = jwtDecode(access_token);
         setUser(decodedToken);
 
-        // console.log("Token refreshed", decodedToken);
         logExpirationTime(decodedToken);
         scheduleTokenRefresh(decodedToken.exp);
       } else {
@@ -136,13 +123,11 @@ export const AuthProvider = ({ children }) => {
     const currentTime = Date.now();
     const expirationTime = exp * 1000;
     const timeUntilExpiry = expirationTime - currentTime;
-    const refreshTime = Math.max(timeUntilExpiry - 60000, 0); // Refresh 1 minute before expiry, but not less than 0
+    const refreshTime = Math.max(timeUntilExpiry - 30000, 0); // Refresh 30 seconds before expiry, but not less than 0
 
     clearTimeout(refreshTimeout);
     refreshTimeout = setTimeout(refreshAccessToken, refreshTime);
-    console.log(
-      `Token refresh scheduled in ${Math.floor(refreshTime / 1000)} seconds`
-    );
+    console.log(`Token refresh scheduled in ${Math.floor(refreshTime / 1000)} seconds`);
   };
 
   const logExpirationTime = (token) => {
@@ -155,35 +140,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("refresh_token");
     clearTimeout(refreshTimeout);
-    clearTimeout(inactivityTimeout);
-    removeEventListeners(); // Remove event listeners on logout
     setUser(null);
-  };
-
-  const setupInactivityTimeout = () => {
-    clearTimeout(inactivityTimeout);
-
-    inactivityTimeout = setTimeout(() => {
-      console.log("User has been inactive for 14 minutes. Logging out...");
-      logout();
-    }, 840000); // 14 minutes in milliseconds
-
-    addEventListeners();
-  };
-
-  const resetInactivityTimeout = () => {
-    clearTimeout(inactivityTimeout);
-    setupInactivityTimeout(); // Reset the inactivity timer
-  };
-
-  const addEventListeners = () => {
-    window.addEventListener("mousemove", resetInactivityTimeout);
-    window.addEventListener("keypress", resetInactivityTimeout);
-  };
-
-  const removeEventListeners = () => {
-    window.removeEventListener("mousemove", resetInactivityTimeout);
-    window.removeEventListener("keypress", resetInactivityTimeout);
   };
 
   return (

@@ -67,6 +67,7 @@ const DataTable = () => {
   } else {
     finalData = filteredRows;
   }
+  finalData.reverse()
 
   return (
     <Stack sx={{ p: { xs: 2, sm: 3 } }}>
