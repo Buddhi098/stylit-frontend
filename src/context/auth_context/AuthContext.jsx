@@ -1,6 +1,6 @@
 // AuthContext.js
 import React, { createContext, useState, useEffect } from "react";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import Request from "../../api_component/Request";
 
 const AuthContext = createContext();
@@ -9,11 +9,10 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   let refreshTimeout;
-  let inactivityTimeout;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log("buddhi")
+
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
@@ -21,7 +20,6 @@ export const AuthProvider = ({ children }) => {
           setUser(decodedToken);
           logExpirationTime(decodedToken);
           scheduleTokenRefresh(decodedToken.exp);
-          setupInactivityTimeout(); 
         } else {
           logout();
         }
@@ -34,12 +32,10 @@ export const AuthProvider = ({ children }) => {
 
     return () => {
       clearTimeout(refreshTimeout);
-      clearTimeout(inactivityTimeout);
-      removeEventListeners();
     };
   }, []);
 
-  const login = async (username, password, userRole) => {
+  const login = async (username, password, userRole, setError) => {
     const data = {
       userName: username,
       password: password,
@@ -48,20 +44,52 @@ export const AuthProvider = ({ children }) => {
 
     try {
       const response = await Request.post("/public/user/login", data);
-      const { access_token, refresh_token , id } = response.data;
+      const { access_token, refresh_token, id } = response.data;
       localStorage.setItem("token", access_token);
       localStorage.setItem("refresh_token", refresh_token);
-      localStorage.setItem("id" , id);
+      localStorage.setItem("id", id);
 
       const decodedToken = jwtDecode(access_token);
       setUser(decodedToken);
 
-      // console.log("Login successful", decodedToken);
       logExpirationTime(decodedToken);
       scheduleTokenRefresh(decodedToken.exp);
-      setupInactivityTimeout();
+
+      if (access_token) {
+        return true;
+      } else {
+        setError("Invalid email or password.");
+        return false;
+      }
     } catch (error) {
-      console.error("Login failed:", error);
+      if (error.response) {
+        const statusCode = error.response.status;
+        switch (statusCode) {
+          case 400:
+            setError("Invalid email or password.");
+            break;
+          case 403:
+            setError("Forbidden: You don't have access to this resource.");
+            break;
+          case 404:
+            setError("Not Found: The requested resource was not found.");
+            break;
+          case 500:
+            setError("Internal Server Error: Please try again later.");
+            break;
+          case 503:
+            setError("Server Not Found: Please try again later.");
+            break;
+          default:
+            setError("An unexpected error occurred. Please try again.");
+            break;
+        }
+      } else {
+        setError("Network error: Please check your connection and try again.");
+      }
+      console.error("There was an error adding the user:", error.response?.data);
+
+      return false;
     }
   };
 
@@ -80,7 +108,6 @@ export const AuthProvider = ({ children }) => {
         const decodedToken = jwtDecode(access_token);
         setUser(decodedToken);
 
-        // console.log("Token refreshed", decodedToken);
         logExpirationTime(decodedToken);
         scheduleTokenRefresh(decodedToken.exp);
       } else {
@@ -96,7 +123,7 @@ export const AuthProvider = ({ children }) => {
     const currentTime = Date.now();
     const expirationTime = exp * 1000;
     const timeUntilExpiry = expirationTime - currentTime;
-    const refreshTime = Math.max(timeUntilExpiry - 60000, 0); // Refresh 1 minute before expiry, but not less than 0
+    const refreshTime = Math.max(timeUntilExpiry - 30000, 0); // Refresh 30 seconds before expiry, but not less than 0
 
     clearTimeout(refreshTimeout);
     refreshTimeout = setTimeout(refreshAccessToken, refreshTime);
@@ -113,39 +140,13 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("refresh_token");
     clearTimeout(refreshTimeout);
-    clearTimeout(inactivityTimeout);
-    removeEventListeners(); // Remove event listeners on logout
     setUser(null);
   };
 
-  const setupInactivityTimeout = () => {
-    clearTimeout(inactivityTimeout);
-
-    inactivityTimeout = setTimeout(() => {
-      console.log("User has been inactive for 14 minutes. Logging out...");
-      logout();
-    }, 840000); // 14 minutes in milliseconds
-
-    addEventListeners();
-  };
-
-  const resetInactivityTimeout = () => {
-    clearTimeout(inactivityTimeout);
-    setupInactivityTimeout(); // Reset the inactivity timer
-  };
-
-  const addEventListeners = () => {
-    window.addEventListener("mousemove", resetInactivityTimeout);
-    window.addEventListener("keypress", resetInactivityTimeout);
-  };
-
-  const removeEventListeners = () => {
-    window.removeEventListener("mousemove", resetInactivityTimeout);
-    window.removeEventListener("keypress", resetInactivityTimeout);
-  };
-
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading, refreshAccessToken }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, loading, refreshAccessToken }}
+    >
       {children}
     </AuthContext.Provider>
   );

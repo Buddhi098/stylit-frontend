@@ -140,7 +140,7 @@ const ProductForm = () => {
 
         // Create an array of promises for uploading images
         const uploadPromises = variantBoxes.map(async (box) => {
-          const imgRef = ref(storage, `sizeChartImages/${productId}chart`);
+          const imgRef = ref(storage, `sizeChartImages/${productId}${box.colorVariant}chart`);
           await uploadBytes(imgRef, box.sizeChartImage);
           console.log("Uploaded size chart image");
 

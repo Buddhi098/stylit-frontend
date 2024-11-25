@@ -17,10 +17,11 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CancelIcon from '@mui/icons-material/Cancel';
 import { visuallyHidden } from "@mui/utils";
-import { headCellsPendingRequests, headCellsRejectedDeliveries, rejectedDeliveries } from "./TableConfig";
+import { fetchTableData, headCellsPendingRequests, headCellsRejectedDeliveries } from "./TableConfig";
 import PendingShopDialog from "./PendingShopDialog";
 import RejectedShopDialog from "./RejectedShopDialog";
 import ViewLocation from "./ViewLocation";
+import Popmodal from "./Popmodal";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -103,6 +104,23 @@ export default function TableComponent({ rows }) {
   const [selectedRow, setSelectedRow] = React.useState(null);
   const [tab, setTab] = React.useState(0);
 
+  const [toggle , setToggle] = React.useState(0);
+
+  const triggerParentUpdate = () => {
+    console.log("triggered");
+    setToggle((prev)=>prev+1);
+  }
+
+  const [rejectedDeliveries, setRejectedDeliveries] = React.useState([]);
+
+  React.useEffect(() => {
+    const getData = async () => {
+         setRejectedDeliveries(await fetchTableData({ mode: "reject" }));
+    };
+
+    getData()
+  }, []);
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -154,7 +172,7 @@ export default function TableComponent({ rows }) {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%" }} >
       <Paper sx={{ width: "100%", mb: 2 }}>
         <Tabs value={tab} onChange={handleTabChange}
           sx={{
@@ -209,27 +227,13 @@ export default function TableComponent({ rows }) {
                           <TableCell align="right">{row.shopContactNumber}</TableCell>
                           <TableCell align="right">{row.shopBusinessData.businessType}</TableCell>
                           <TableCell align="center"
-                            onClick={(event) => event.stopPropagation()}><ViewLocation/></TableCell>
+                            onClick={(event) => event.stopPropagation()}><ViewLocation lat={row.shopLocation.latitude} lon={row.shopLocation.longitude}/></TableCell>
                           <TableCell
                             align="center"
                             onClick={(event) => event.stopPropagation()}
                           >
-                            <Button
-                              variant="contained"
-                              color="success"
-                              sx={{ margin: "3px" }}
-                              size="small"
-                            >
-                              Accept
-                            </Button>
-                            <Button
-                              variant="contained"
-                              color="error"
-                              sx={{ margin: "3px" }}
-                              size="small"
-                            >
-                              Reject
-                            </Button>
+                            <Popmodal id={row.id} status={"active"} button={"accept"} triggerParentUpdate={triggerParentUpdate}></Popmodal>
+                            <Popmodal id={row.id} status={"reject"} button={"reject"} triggerParentUpdate={triggerParentUpdate}></Popmodal>
                           </TableCell>
                         </TableRow>
                       );
@@ -281,7 +285,7 @@ export default function TableComponent({ rows }) {
                           <TableCell align="right">{row.shopContactNumber}</TableCell>
                           <TableCell align="right">{row.shopBusinessData.businessType}</TableCell>
                           <TableCell align="center"
-                            onClick={(event) => event.stopPropagation()}><ViewLocation/></TableCell>
+                            onClick={(event) => event.stopPropagation()}><ViewLocation ViewLocation lat={row.shopLocation.latitude} lon={row.shopLocation.longitude}/></TableCell>
                           <TableCell
                             align="center"
                           >

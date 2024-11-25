@@ -6,20 +6,20 @@ const categories = [
   {
     title: "CLOTHING NEW ARRIVALS",
     items: [
-      "Shop All Clothing New Arrivals",
-      "Dresses",
       "Tops",
       "Bottoms",
+      "Dresses",
       "Outerwear",
+      "Suits",
     ],
   },
   {
     title: "ACCESSORIES NEW ARRIVALS",
     items: [
-      "Shop All Accessories New Arrivals",
+      "Footwear",
+      "Suits",
       "Bags",
-      "Jewelry",
-      "Scarves & Hats",
+      "Accessories",
     ],
   },
 ];

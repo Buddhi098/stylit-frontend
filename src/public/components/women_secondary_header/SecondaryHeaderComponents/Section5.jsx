@@ -4,24 +4,24 @@ import img from "../../../assets/images/women_page/s22.png";
 
 const categories = [
   {
-    title: "CLOTHING SALE ITEMS",
+    title: "CLOTHING NEW ARRIVALS",
     items: [
-      "Shop All Sale Items",
-      "Dresses",
-      "Tops",
       "Bottoms",
-      "Outerwear"
+      "Tops",
+      "Outerwear",
+      "Dresses",
+      "Suits",
     ],
   },
   {
-    title: "ACCESSORIES SALE ITEMS",
+    title: "ACCESSORIES NEW ARRIVALS",
     items: [
-      "Shop All Accessories Sale Items",
-      "Bags",
-      "Jewelry",
-      "Scarves & Hats",
+      "Accessories",
+      "Footwear",
+      "Suits",
+      "Bags"
     ],
-  }
+  },
 ];
 
 const Section5 = () => {

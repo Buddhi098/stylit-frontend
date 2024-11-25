@@ -17,10 +17,11 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CancelIcon from '@mui/icons-material/Cancel';
 import { visuallyHidden } from "@mui/utils";
-import { headCellsPendingRequests, headCellsRejectedDeliveries, rejectedDeliveries } from "./TableConfig";
+import { fetchTableData, headCellsPendingRequests, headCellsRejectedDeliveries } from "./TableConfig";
 import PendingShopDialog from "./PendingShopDialog";
 import RejectedShopDialog from "./RejectedShopDialog";
 import ViewLocation from "./ViewLocation";
+import Popmodal from "./Popmodal";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -102,6 +103,16 @@ export default function TableComponent({ rows }) {
   const [openDialog, setOpenDialog] = React.useState(null); // null, "pending", or "reject"
   const [selectedRow, setSelectedRow] = React.useState(null);
   const [tab, setTab] = React.useState(0);
+
+  const [rejectedDeliveries, setRejectedDeliveries] = React.useState([]);
+
+  React.useEffect(() => {
+    const getData = async () => {
+         setRejectedDeliveries(await fetchTableData({ mode: "reject" }));
+    };
+
+    getData()
+  }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -209,27 +220,13 @@ export default function TableComponent({ rows }) {
                           <TableCell align="right">{row.courierContactNumber}</TableCell>
                           <TableCell align="right">{row.courierBusinessData.businessType}</TableCell>
                           <TableCell align="center"
-                            onClick={(event) => event.stopPropagation()}><ViewLocation/></TableCell>
+                            onClick={(event) => event.stopPropagation()}><ViewLocation lat={row.courierLocation.latitude} lon={row.courierLocation.longitude}/></TableCell>
                           <TableCell
                             align="center"
                             onClick={(event) => event.stopPropagation()}
                           >
-                            <Button
-                              variant="contained"
-                              color="success"
-                              sx={{ margin: "3px" }}
-                              size="small"
-                            >
-                              Accept
-                            </Button>
-                            <Button
-                              variant="contained"
-                              color="error"
-                              sx={{ margin: "3px" }}
-                              size="small"
-                            >
-                              Reject
-                            </Button>
+                            <Popmodal id={row.id} status={"active"} button={"accept"}></Popmodal>
+                            <Popmodal id={row.id} status={"reject"} button={"reject"} ></Popmodal>
                           </TableCell>
                         </TableRow>
                       );
@@ -281,7 +278,7 @@ export default function TableComponent({ rows }) {
                           <TableCell align="right">{row.courierContactNumber}</TableCell>
                           <TableCell align="right">{row.courierBusinessData.businessType}</TableCell>
                           <TableCell align="center"
-                            onClick={(event) => event.stopPropagation()}><ViewLocation/></TableCell>
+                            onClick={(event) => event.stopPropagation()}><ViewLocation lat={row.courierLocation.latitude} lon={row.courierLocation.longitude}/></TableCell>
                           <TableCell
                             align="center"
                           >
