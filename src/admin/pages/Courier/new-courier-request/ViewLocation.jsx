@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Typography, Stack, Button } from '@mui/material';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -19,9 +19,15 @@ const markerIcon = new L.Icon({
 
 
 
-const ViewLocation = () => {
+const ViewLocation = ({lat , lon}) => {
   const [open, setOpen] = useState(false);
-  const position = [7.4818, 80.3609];
+  // const position = [7.4818, 80.3609];
+
+  const [position, setPosition] = useState([]); 
+
+  useEffect(()=>{
+    setPosition([lat, lon])
+  })
 
   const LocationMarker = () => {
 

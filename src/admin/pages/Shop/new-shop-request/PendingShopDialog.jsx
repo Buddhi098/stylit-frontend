@@ -26,7 +26,7 @@ import Chip from '@mui/material/Chip';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
-  console.log( "shop: ", selectedRow);
+  console.log("shop: ", selectedRow);
   const selectedShop = selectedRow;
 
   const markerIcon = new L.Icon({
@@ -47,7 +47,7 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
       </Marker>
     );
   };
-  const position = [selectedRow.shopLocation.latitude , selectedRow.shopLocation.longitude];
+  const position = [selectedRow.shopLocation.latitude, selectedRow.shopLocation.longitude];
 
 
   return (
@@ -55,7 +55,7 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
       <DialogTitle sx={{ backgroundColor: '#C0A888' }}>
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" alignItems="center">
-            
+
             {selectedShop && (
               <>
                 <img
@@ -104,7 +104,7 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
             </Box>
             {selectedShop && (
               <>
-              <Grid container spacing={1} ml={3} mt={0.25}>
+                <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Shop Name</strong></Typography></Grid>
                   <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopName}</Typography></Grid>
                 </Grid>
@@ -137,18 +137,18 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
             {selectedShop && (
               <>
                 <Stack>
-          <MapContainer
-          center={position}
-          zoom={13}
-          style={{ height: "50vh", marginTop: "20px" }}
-        >
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
-          <LocationMarker />
-        </MapContainer>
-          </Stack>
+                  <MapContainer
+                    center={position}
+                    zoom={13}
+                    style={{ height: "50vh", marginTop: "20px" }}
+                  >
+                    <TileLayer
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    />
+                    <LocationMarker />
+                  </MapContainer>
+                </Stack>
               </>
             )}
           </Box>
@@ -230,63 +230,63 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
                   </Typography></Grid>
                 </Grid>
                 <Grid container spacing={1} ml={3} mt={0.25}>
-              <Grid item xs={4}>
-                <Typography variant="body2" component="span">
-                  <strong>Facebook</strong>
-                </Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <Link
-                  href={selectedShop.shopInformation.facebookLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{ textAlign: 'right', color: 'black' }}
-                >
-                  {selectedShop.shopInformation.facebookLink}
-                </Link>
-              </Grid>
-            </Grid>
-            <Grid container spacing={1} ml={3} mt={0.25}>
-              <Grid item xs={4}>
-                <Typography variant="body2" component="span">
-                  <strong>Instagram</strong>
-                </Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <Link
-                  href={selectedShop.shopInformation.instagramLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{ textAlign: 'right', color: 'black' }}
-                >
-                  {selectedShop.shopInformation.instagramLink}
-                </Link>
-              </Grid>
-            </Grid>
+                  <Grid item xs={4}>
+                    <Typography variant="body2" component="span">
+                      <strong>Facebook</strong>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Link
+                      href={selectedShop.shopInformation.facebookLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{ textAlign: 'right', color: 'black' }}
+                    >
+                      {selectedShop.shopInformation.facebookLink}
+                    </Link>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}>
+                    <Typography variant="body2" component="span">
+                      <strong>Instagram</strong>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Link
+                      href={selectedShop.shopInformation.instagramLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{ textAlign: 'right', color: 'black' }}
+                    >
+                      {selectedShop.shopInformation.instagramLink}
+                    </Link>
+                  </Grid>
+                </Grid>
               </>
             )}
           </Box>
         </Box>
       </DialogContent>
       <DialogActions>
-      <Button
-                              variant="contained"
-                              color="success"
-                              sx={{ margin: "3px" }}
-                              size="small"
-                              onClick={handleClose}
-      >
-                              Accept
-                            </Button>
-                            <Button
-                              variant="contained"
-                              color="error"
-                              sx={{ margin: "3px" }}
-                              size="small"
-                              onClick={handleClose}
-                            >
-                              Reject
-                            </Button>
+        <Button
+          variant="contained"
+          color="success"
+          sx={{ margin: "3px" }}
+          size="small"
+          onClick={handleClose}
+        >
+          Accept
+        </Button>
+        <Button
+          variant="contained"
+          color="error"
+          sx={{ margin: "3px" }}
+          size="small"
+          onClick={handleClose}
+        >
+          Reject
+        </Button>
       </DialogActions>
     </Dialog>
   );

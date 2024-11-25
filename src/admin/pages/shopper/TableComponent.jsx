@@ -298,18 +298,11 @@ export default function TableComponent({ rows }) {
                         scope="row"
                         padding="none"
                       >
-                        {row.name}
+                        {row.id}
                       </TableCell>
-                      <TableCell align="right">{row.id}</TableCell>
-                      <TableCell align="right">{row.mobile}</TableCell>
                       <TableCell align="right">{row.email}</TableCell>
-                      <TableCell align="right">{row.status}</TableCell>
-                      <TableCell align="right">{row.change}</TableCell>
-                      <TableCell align="right">{row.delete}</TableCell>
-                      <TableCell align="right">{row.chat}</TableCell>
-                
-                      
-
+                      <TableCell align="right">{row.addresses}</TableCell>
+                      <TableCell align="right">{row.stylePreference}</TableCell>
                       <TableCell><CustomizedSwitches/></TableCell>
 
                       <TableCell

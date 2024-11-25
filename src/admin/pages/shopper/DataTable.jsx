@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TableComponent from "./TableComponent";
 import FilterComponent from "./FilterComponent";
 import { Stack } from "@mui/material";
-import { filterOptions, tableData, headCells } from "./TableConfig";
+import { filterOptions, headCells, fetchShopperData } from "./TableConfig";
 
 const DataTable = () => {
   // implement search feature
   const [search, setSearch] = useState("");
 
   const columnIdArray = headCells.map((column) => column.id);
+
+  const [tableData, setTableData] = useState([]);
+
+  useEffect(()=>{
+     const setData = async () => {
+      setTableData(await fetchShopperData())
+     }
+
+     setData()
+  } , [])
 
   let filteredRows = tableData.filter((row) => {
     for (let columnId of columnIdArray) {

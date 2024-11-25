@@ -1,6 +1,7 @@
 import givenchy from "../../../assets/images/stores/givenchy.png"
 import ebony from "../../../assets/images/stores/ebony.png"
 import bearappeal from "../../../assets/images/stores/bearappeal.png"
+import WebApi from "../../../api/WebApi";
 
 
 // headCells.js
@@ -39,6 +40,26 @@ export const headCellsPendingRequests = [
   export const filterOptions = [
    
   ];
+
+  export const fetchTableData = async ({ mode }) => {
+    try {
+      const response = await WebApi.get(`/public/user/getAllcourier`); 
+      console.log(response.data.courier)
+      const data = mode === "pending" 
+        ? response.data.courier.filter((courier) => courier.status === "pending") 
+        : response.data.courier.filter((courier) => courier.status === "reject");
+      
+      console.log(data); 
+      
+      return data;
+  
+    } catch (error) {
+      console.error("Error fetching table data:", error);
+      throw error;
+    }
+  };
+
+
   
   
   // tableData.js
