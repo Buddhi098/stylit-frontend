@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Checkbox from '@mui/material/Checkbox';
@@ -10,14 +8,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-
-// project import
 import MainCard from '../../components/MainCard';
-
-// third-party
 import ReactApexChart from 'react-apexcharts';
 
-// chart options
 const columnChartOptions = {
   chart: {
     type: 'bar',
@@ -45,7 +38,7 @@ const columnChartOptions = {
   },
   yaxis: {
     title: {
-      text: '$ (thousands)'
+      text: 'Orders'
     }
   },
   fill: {
@@ -54,7 +47,7 @@ const columnChartOptions = {
   tooltip: {
     y: {
       formatter(val) {
-        return `$ ${val} thousands`;
+        return `${val} orders`;
       }
     }
   },
@@ -75,26 +68,28 @@ const columnChartOptions = {
 
 const initialSeries = [
   {
-    name: 'Income',
+    name: 'Accepted Orders',
     data: [180, 90, 135, 114, 120, 145]
   },
   {
-    name: 'Cost Of Sales',
+    name: 'Ongoing Orders',
     data: [120, 45, 78, 150, 168, 99]
+  },
+  {
+    name: 'Completed Orders',
+    data: [90, 60, 120, 180, 75, 50]
   }
 ];
 
-// ==============================|| SALES COLUMN CHART ||============================== //
-
-export default function SalesChart() {
+export default function OrdersChart() {
   const theme = useTheme();
-
   const [legend, setLegend] = useState({
-    income: true,
-    cos: true
+    accepted: true,
+    ongoing: true,
+    completed: true
   });
 
-  const { income, cos } = legend;
+  const { accepted, ongoing, completed } = legend;
 
   const { primary, secondary } = theme.palette.text;
   const line = theme.palette.divider;
@@ -113,31 +108,24 @@ export default function SalesChart() {
   const [options, setOptions] = useState(columnChartOptions);
 
   useEffect(() => {
-    if (income && cos) {
-      setSeries(initialSeries);
-    } else if (income) {
-      setSeries([
-        {
-          name: 'Income',
-          data: [180, 90, 135, 114, 120, 145]
-        }
-      ]);
-    } else if (cos) {
-      setSeries([
-        {
-          name: 'Cost Of Sales',
-          data: [120, 45, 78, 150, 168, 99]
-        }
-      ]);
-    } else {
-      setSeries([]);
+    const updatedSeries = [];
+    const colors = [];
+    if (accepted) {
+      updatedSeries.push(initialSeries[0]);
+      colors.push(warning);
     }
-  }, [income, cos]);
-
-  useEffect(() => {
+    if (ongoing) {
+      updatedSeries.push(initialSeries[1]);
+      colors.push(primaryMain);
+    }
+    if (completed) {
+      updatedSeries.push(initialSeries[2]);
+      colors.push(successDark);
+    }
+    setSeries(updatedSeries);
     setOptions((prevState) => ({
       ...prevState,
-      colors: !(income && cos) && cos ? [primaryMain] : [warning, primaryMain],
+      colors,
       xaxis: {
         labels: {
           style: {
@@ -161,7 +149,7 @@ export default function SalesChart() {
         }
       }
     }));
-  }, [primary, secondary, line, warning, primaryMain, successDark, income, cos, xsDown]);
+  }, [accepted, ongoing, completed, primary, secondary, line, warning, primaryMain, successDark, xsDown]);
 
   return (
     <MainCard sx={{ mt: 1 }} content={false}>
@@ -169,17 +157,24 @@ export default function SalesChart() {
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Stack spacing={1.5}>
             <Typography variant="h6" color="secondary">
-              Net Profit
+              Order States
             </Typography>
-            <Typography variant="h4">$1560</Typography>
+            <Typography variant="h4">Monthly Overview</Typography>
           </Stack>
           <FormControl component="fieldset">
             <FormGroup row>
               <FormControlLabel
-                control={<Checkbox color="warning" checked={income} onChange={handleLegendChange} name="income" />}
-                label="Income"
+                control={<Checkbox color="warning" checked={accepted} onChange={handleLegendChange} name="accepted" />}
+                label="Accepted Orders"
               />
-              <FormControlLabel control={<Checkbox checked={cos} onChange={handleLegendChange} name="cos" />} label="Cost of Sales" />
+              <FormControlLabel
+                control={<Checkbox checked={ongoing} onChange={handleLegendChange} name="ongoing" />}
+                label="Ongoing Orders"
+              />
+              <FormControlLabel
+                control={<Checkbox color="success" checked={completed} onChange={handleLegendChange} name="completed" />}
+                label="Completed Orders"
+              />
             </FormGroup>
           </FormControl>
         </Stack>

@@ -1,21 +1,19 @@
-import { RouterProvider } from "react-router-dom";
-import AppRouter from "./router/AppRouter";
-import React from "react";
-import router from "./router";
-import ScrollTop from "./components/ScrollTop";
+import React from 'react';
+import { RouterProvider } from 'react-router-dom';
+import AppRouter from './router/AppRouter';
+import router from './router';
+import ScrollTop from './components/ScrollTop';
+import { AuthProvider } from './context/auth_context/AuthContext'; // Ensure AuthProvider is imported
 
 function App() {
   return (
-    <div>
-      {/* <React.StrictMode>
-      <AppRouter/>
-      </React.StrictMode> */}
-      <React.StrictMode>
+    <React.StrictMode>
+      <AuthProvider> {/* Ensure AuthProvider is used here */}
         <ScrollTop>
           <RouterProvider router={router} />
         </ScrollTop>
-      </React.StrictMode>
-    </div>
+      </AuthProvider>
+    </React.StrictMode>
   );
 }
 

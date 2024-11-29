@@ -267,38 +267,6 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
               </>
             )}
           </Box>
-          <Box mt={2}>
-            <Box display="flex" alignItems="center">
-              <Box sx={{
-                width: "35px",
-                height: "35px",
-                borderRadius: "50%",
-                backgroundColor: "#D9D9D9",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}>
-                <AccountBalanceIcon fontSize="small" sx={{ color: "black" }} />
-              </Box>
-              <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Bank Details</Typography>
-            </Box>
-            {selectedShop && (
-              <>
-                <Grid container spacing={1} ml={3} mt={0.25}>
-                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Bank Name</strong></Typography></Grid>
-                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopBankDetails.bankName}</Typography></Grid>
-                </Grid>
-                <Grid container spacing={1} ml={3} mt={0.25}>
-                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Account Number</strong></Typography></Grid>
-                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopBankDetails.accountNo}</Typography></Grid>
-                </Grid>
-                <Grid container spacing={1} ml={3} mt={0.25}>
-                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Branch</strong></Typography></Grid>
-                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedShop.shopBankDetails.branchName}</Typography></Grid>
-                </Grid>
-              </>
-            )}
-          </Box>
         </Box>
       </DialogContent>
     </Dialog>

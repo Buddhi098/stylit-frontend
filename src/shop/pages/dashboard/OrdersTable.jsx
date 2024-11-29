@@ -17,21 +17,21 @@ import { NumericFormat } from 'react-number-format';
 // project import
 import Dot from '../../components/@extended/Dot';
 
-function createData(tracking_no, name, fat, carbs, protein) {
-  return { tracking_no, name, fat, carbs, protein };
+function createData(orderId, info, order, status, price) {
+  return { orderId, info, order, status, price };
 }
 
 const rows = [
-  createData(84564564, 'Camera Lens', 40, 2, 40570),
-  createData(98764564, 'Laptop', 300, 0, 180139),
-  createData(98756325, 'Mobile', 355, 1, 90989),
-  createData(98652366, 'Handset', 50, 1, 10239),
-  createData(13286564, 'Computer Accessories', 100, 1, 83348),
-  createData(86739658, 'TV', 99, 0, 410780),
-  createData(13256498, 'Keyboard', 125, 2, 70999),
-  createData(98753263, 'Mouse', 89, 2, 10570),
-  createData(98753275, 'Desktop', 185, 1, 98063),
-  createData(98753291, 'Chair', 100, 0, 14001)
+  createData(84564564, 'Running Shoes', 40, 2, 40570),
+  // createData(98764564, 'Woolen Scarf', 300, 0, 180139),
+  createData(98756325, 'Leather Jacket', 355, 1, 90989),
+  createData(98652366, 'Casual Shirt', 50, 1, 10239),
+  createData(13286564, 'Baseball Cap', 100, 1, 83348),
+  createData(86739658, 'Slim Fit Jeans', 99, 0, 410780),
+  createData(13256498, 'Casual T-Shirts', 125, 2, 70999),
+  createData(98753263, 'Formal Shirt', 89, 2, 10570),
+  createData(98753275, 'Yoga Pants', 185, 1, 98063),
+  createData(98753291, 'Backpack ', 100, 0, 14001)
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -62,32 +62,31 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'tracking_no',
+    id: 'orderId',
     align: 'left',
     disablePadding: false,
-    label: 'Tracking No.'
+    label: 'Order ID'
   },
   {
-    id: 'name',
+    id: 'info',
     align: 'left',
     disablePadding: true,
     label: 'Product Name'
   },
   {
-    id: 'fat',
+    id: 'order',
     align: 'right',
     disablePadding: false,
     label: 'Total Order'
   },
   {
-    id: 'carbs',
+    id: 'status',
     align: 'left',
     disablePadding: false,
-
     label: 'Status'
   },
   {
-    id: 'protein',
+    id: 'price',
     align: 'right',
     disablePadding: false,
     label: 'Total Amount'
@@ -130,11 +129,11 @@ function OrderStatus({ status }) {
       break;
     case 2:
       color = 'error';
-      title = 'Rejected';
+      title = 'Completed';
       break;
     default:
       color = 'primary';
-      title = 'None';
+      title = 'Ongoing';
   }
 
   return (
@@ -149,7 +148,7 @@ function OrderStatus({ status }) {
 
 export default function OrderTable() {
   const order = 'asc';
-  const orderBy = 'tracking_no';
+  const orderBy = 'orderId';
 
   return (
     <Box>
@@ -175,18 +174,18 @@ export default function OrderTable() {
                   role="checkbox"
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   tabIndex={-1}
-                  key={row.tracking_no}
+                  key={row.orderId}
                 >
                   <TableCell component="th" id={labelId} scope="row">
-                    <Link color="secondary"> {row.tracking_no}</Link>
+                    <Link color="secondary"> {row.orderId}</Link>
                   </TableCell>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
+                  <TableCell>{row.info}</TableCell>
+                  <TableCell align="right">{row.order}</TableCell>
                   <TableCell>
-                    <OrderStatus status={row.carbs} />
+                    <OrderStatus status={row.status} />
                   </TableCell>
                   <TableCell align="right">
-                    <NumericFormat value={row.protein} displayType="text" thousandSeparator prefix="$" />
+                    <NumericFormat value={row.price} displayType="text" thousandSeparator prefix="$" />
                   </TableCell>
                 </TableRow>
               );

@@ -35,10 +35,10 @@ const product = {
     },
 
     {
-      id: "product-Statistics",
+      id: "product-statistics",
       title: "Product Statistics",
       type: "item",
-      url: "/shop/product_Statistics",
+      url: "/shop/product_statistics",
       icon: icons.QueryStatsIcon,
       breadcrumbs: false,
     },

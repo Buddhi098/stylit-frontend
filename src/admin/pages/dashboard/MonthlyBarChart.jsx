@@ -48,7 +48,7 @@ export default function MonthlyBarChart() {
   const theme = useTheme();
 
   const { primary, secondary } = theme.palette.text;
-  const info = theme.palette.info.light;
+  const info = theme.palette.primary.light;
 
   const [series] = useState([
     {

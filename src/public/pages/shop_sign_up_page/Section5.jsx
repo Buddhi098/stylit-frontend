@@ -12,17 +12,27 @@ const faqData = [
   {
     question: "How do I set up my store on Stylit?",
     answer:
-      "Enjoy the freedom to choose delivery times that fit your schedule,allowing you to balance work with personal commitments effortlessly.",
+      "To set up your store on Stylit, start by creating an account. Once registered, you can list your products, set your prices, and start selling.",
   },
   {
-    question: "How do I set up my store on Stylit?",
+    question: "What payment methods are accepted?",
     answer:
-      "Enjoy the freedom to choose delivery times that fit your schedule, allowing you to balance work with personal commitments effortlessly.",
+      "Stylit accepts a variety of payment methods including credit/debit cards, PayPal, and bank transfers.",
   },
   {
-    question: "How do I set up my store on Stylit?",
+    question: "How can I track my orders?",
     answer:
-      "Enjoy the freedom to choose delivery times that fit your schedule, allowing you to balance work with personal commitments effortlessly.",
+      "You can track your orders through the 'My Orders' section in your account dashboard. You will also receive email updates on the status of your orders.",
+  },
+  {
+    question: "What is the return policy?",
+    answer:
+      "Stylit offers a 30-day return policy for most items. Products must be returned in their original condition. Please refer to our return policy page for more details.",
+  },
+  {
+    question: "How can I contact customer support?",
+    answer:
+      "You can contact our customer support team via the 'Contact Us' page on our website, or email us directly at support@stylit.com.",
   },
 ];
 
@@ -38,15 +48,20 @@ const Faq = () => {
     >
       <Typography variant="subtitle_alata">FAQ</Typography>
       {faqData.map((faq, index) => (
-        <Accordion key={index}>
+        <Accordion
+          key={index}
+          sx={{
+            boxShadow: "none",
+            marginTop: "10px",
+          }}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls={`panel${index}a-content`}
             id={`panel${index}a-header`}
             sx={{
               backgroundColor: "primary.200",
-              border:'none',
-              marginTop: "10px"
+              border: 'none',
             }}
           >
             <Typography variant="body1_alata" color={"black.800"}>

@@ -19,7 +19,7 @@ const Hero = () => {
         spacing={5}
       >
         <Box>
-          <Typography variant="title_nunito" sx={{ textAlign: "center" }}>
+          <Typography variant="subtitle_alata" sx={{ textAlign: "center", color:"#444444"}} >
             Choose a department
           </Typography>
         </Box>
@@ -50,7 +50,7 @@ const Hero = () => {
                 objectFit: "cover",
               }}
             />
-            <Link>
+            <Link to="/public/men">
               <Box
                 sx={{
                   position: "absolute",
@@ -94,7 +94,7 @@ const Hero = () => {
                 objectFit: "cover",
               }}
             />
-            <Link>
+            <Link to="/public/women">
               <Box
                 sx={{
                   position: "absolute",

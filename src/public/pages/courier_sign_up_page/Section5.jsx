@@ -12,7 +12,7 @@ const faqData = [
   {
     question: "How do I set up my store on Stylit?",
     answer:
-      "Enjoy the freedom to choose delivery times that fit your schedule,allowing you to balance work with personal commitments effortlessly.",
+      "Enjoy the freedom to choose delivery times that fit your schedule, allowing you to balance work with personal commitments effortlessly.",
   },
   {
     question: "How do I set up my store on Stylit?",
@@ -38,15 +38,20 @@ const Faq = () => {
     >
       <Typography variant="subtitle_alata">FAQ</Typography>
       {faqData.map((faq, index) => (
-        <Accordion key={index}>
+        <Accordion
+          key={index}
+          sx={{
+            boxShadow: "none",
+            marginTop: "10px"
+          }}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls={`panel${index}a-content`}
             id={`panel${index}a-header`}
             sx={{
               backgroundColor: "primary.200",
-              border:'none',
-              marginTop: "10px"
+              border: 'none'
             }}
           >
             <Typography variant="body1_alata" color={"black.800"}>

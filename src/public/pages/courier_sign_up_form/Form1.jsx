@@ -20,6 +20,7 @@ import * as Yup from "yup";
 import formIllustration from "../../assets/images/courier_sign_up_form/form1.png";
 import api from "../../api/api";
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import { set } from "lodash";
 
 const isEmailALreadyExistFunc = async (email, setIsEmailALreadyExist) => {
   try {
@@ -51,6 +52,7 @@ const isEmailALreadyExistFunc = async (email, setIsEmailALreadyExist) => {
 const Form1 = forwardRef((props, ref) => {
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isEmailALreadyExist, setIsEmailALreadyExist] = useState(false);
+  const [otherError, setOtherError] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -80,7 +82,7 @@ const Form1 = forwardRef((props, ref) => {
       courierEmail: Yup.string()
         .email("Invalid email address")
         .required("Email is required"),
-      courierContactNumber: Yup.string().required("Contact Number is required"),
+      courierContactNumber: Yup.string().required("Contact Number is required").min(9, "Enter Valid Phone Number"),
       password: Yup.string()
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
@@ -92,13 +94,14 @@ const Form1 = forwardRef((props, ref) => {
       // console.log("Form data", values);
       console.log(props.otpStatus, "otpStatus");
 
+      props.setLoading(true);
       const isEmailRegistered = await isEmailALreadyExistFunc(values.courierEmail, setIsEmailALreadyExist);
       if(isEmailRegistered){
+        props.setLoading(false);
         return;
       }
       
       if (!props.otpStatus && !isEmailALreadyExist) {
-        props.setLoading(true);
         try {
           const otpRequestData = {
             email: values.courierEmail,
@@ -128,6 +131,7 @@ const Form1 = forwardRef((props, ref) => {
           } else {
             console.error("Error message:", err.message);
           }
+          setOtherError(true);
         } finally {
           props.setLoading(false);
         }
@@ -187,6 +191,14 @@ const Form1 = forwardRef((props, ref) => {
             severity="warning"
           >
             Email is already registered. Please use a different email address.
+          </Alert>
+        )}
+        {otherError && (
+          <Alert
+            icon={<WarningAmberIcon fontSize="inherit" />}
+            severity="warning"
+          >
+            Something went wrong. Please try again later.
           </Alert>
         )}
 

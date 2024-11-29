@@ -17,21 +17,21 @@ import { NumericFormat } from 'react-number-format';
 // project import
 import Dot from '../../components/@extended/Dot';
 
-function createData(tracking_no, name, fat, carbs, protein) {
-  return { tracking_no, name, fat, carbs, protein };
+function createData(orderId, name, weight, status, delivery_date) {
+  return { orderId, name, weight, status, delivery_date };
 }
 
 const rows = [
-  createData(84564564, 'Camera Lens', 40, 2, 40570),
-  createData(98764564, 'Laptop', 300, 0, 180139),
-  createData(98756325, 'Mobile', 355, 1, 90989),
-  createData(98652366, 'Handset', 50, 1, 10239),
-  createData(13286564, 'Computer Accessories', 100, 1, 83348),
-  createData(86739658, 'TV', 99, 0, 410780),
-  createData(13256498, 'Keyboard', 125, 2, 70999),
-  createData(98753263, 'Mouse', 89, 2, 10570),
-  createData(98753275, 'Desktop', 185, 1, 98063),
-  createData(98753291, 'Chair', 100, 0, 14001)
+  createData(12658456, 'Nolimit', 5.5, 0, '2024-08-15'),
+  createData(13578965, 'Fashion Bug', 2.3, 1, '2024-08-10'),
+  createData(14235789, 'Kelly Felder', 1.2, 2, '2024-08-12'),
+  createData(15987654, 'Givenchy', 3.8, 0, '2024-08-18'),
+  createData(16894523, 'Cool Planet', 4.6, 1, '2024-08-11'),
+  createData(17896542, 'Chik Avenue', 5.0, 2, '2024-08-20'),
+  createData(18987654, 'GFlock', 2.1, 0, '2024-08-14'),
+  createData(19875432, 'Ebony', 6.7, 1, '2024-08-09'),
+  createData(20765498, 'Bear Appeal', 3.4, 2, '2024-08-16'),
+  createData(21789654, 'Tshirt Republic', 1.5, 0, '2024-08-13')
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -62,36 +62,36 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'tracking_no',
+    id: 'orderId',
     align: 'left',
     disablePadding: false,
-    label: 'Tracking No.'
+    label: 'Order ID'
   },
   {
     id: 'name',
     align: 'left',
     disablePadding: true,
-    label: 'Product Name'
+    label: 'Store Name'
   },
   {
-    id: 'fat',
+    id: 'weight',
     align: 'right',
     disablePadding: false,
-    label: 'Total Order'
+    label: 'Weight (Kg)'
   },
   {
-    id: 'carbs',
-    align: 'left',
+    id: 'status',
+    align: 'right',
     disablePadding: false,
-
     label: 'Status'
   },
   {
-    id: 'protein',
+    id: 'delivery_date',
     align: 'right',
     disablePadding: false,
-    label: 'Total Amount'
-  }
+    label: 'Approx. Delivery Date'
+  },
+
 ];
 
 // ==============================|| ORDER TABLE - HEADER ||============================== //
@@ -149,7 +149,7 @@ function OrderStatus({ status }) {
 
 export default function OrderTable() {
   const order = 'asc';
-  const orderBy = 'tracking_no';
+  const orderBy = 'orderId';
 
   return (
     <Box>
@@ -175,19 +175,17 @@ export default function OrderTable() {
                   role="checkbox"
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   tabIndex={-1}
-                  key={row.tracking_no}
+                  key={row.orderId}
                 >
                   <TableCell component="th" id={labelId} scope="row">
-                    <Link color="secondary"> {row.tracking_no}</Link>
+                    <Link color="secondary"> {row.orderId}</Link>
                   </TableCell>
                   <TableCell>{row.name}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
+                  <TableCell align="right">{row.weight}</TableCell>
                   <TableCell>
-                    <OrderStatus status={row.carbs} />
+                    <OrderStatus status={row.status} />
                   </TableCell>
-                  <TableCell align="right">
-                    <NumericFormat value={row.protein} displayType="text" thousandSeparator prefix="$" />
-                  </TableCell>
+                  <TableCell align="right">{row.delivery_date}</TableCell>
                 </TableRow>
               );
             })}

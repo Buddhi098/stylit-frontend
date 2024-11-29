@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TableComponent from "./TableComponent";
 import FilterComponent from "./FilterComponent";
 import { Stack } from "@mui/material";
-import { filterOptions, shopData, headCellsAllShops } from "./TableConfig";
+import { filterOptions, shopData, headCellsAllShops, fetchTableData } from "./TableConfig";
 
 const DataTable = () => {
   const [search, setSearch] = useState("");
@@ -14,11 +14,24 @@ const DataTable = () => {
   const [tab, setTab] = useState(0);
 
   const getHeadCells = () => headCellsAllShops;
-  const getData = () => shopData;
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      setData(await fetchTableData());
+    };
+
+    getData()
+  }, [])
+
+  useEffect(()=>{
+    console.log("Data", data)
+  } , [data])
 
   const columnIdArray = getHeadCells().map((column) => column.id);
 
-  const filteredRows = getData().filter((row) => {
+  const filteredRows = data.filter((row) => {
     for (let columnId of columnIdArray) {
       if (row[columnId]?.toString().toLowerCase().includes(search.toLowerCase())) {
         return true;
@@ -30,7 +43,7 @@ const DataTable = () => {
   const filters = [filter0, filter1, filter2, filter3];
   const filterIdArray = filterOptions.map((filter) => filter.id);
 
-  const filteredData = getData().filter((row) => {
+  const filteredData = data.filter((row) => {
     return filters.every((filter, index) => {
       if (filter === "") {
         return true;
@@ -61,7 +74,7 @@ const DataTable = () => {
       if (checked) {
         return filter === row[filterIdArray[index]];
       }
-      
+
       return value.toString().toLowerCase().includes(filter.toLowerCase());
     });
   });
@@ -73,7 +86,7 @@ const DataTable = () => {
   };
 
   return (
-    <Stack>
+    <Stack sx={{ p: { xs: 2, sm: 3 } }}>
       <FilterComponent
         search={search}
         handleSearch={setSearch}

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 // material-ui
 import List from '@mui/material/List';
@@ -13,11 +13,14 @@ import ProfileOutlined from '@ant-design/icons/ProfileOutlined';
 import LogoutOutlined from '@ant-design/icons/LogoutOutlined';
 import UserOutlined from '@ant-design/icons/UserOutlined';
 import WalletOutlined from '@ant-design/icons/WalletOutlined';
+import AuthContext from '../../../../../../context/auth_context/AuthContext';
 
 // ==============================|| HEADER PROFILE - PROFILE TAB ||============================== //
 
 export default function ProfileTab() {
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const {logout} = useContext(AuthContext)
 
   const handleListItemClick = (index) => {
     setSelectedIndex(index);
@@ -31,26 +34,13 @@ export default function ProfileTab() {
         </ListItemIcon>
         <ListItemText primary="Edit Profile" />
       </ListItemButton>
-      <ListItemButton selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1, '/apps/profiles/account/basic')}>
-        <ListItemIcon>
-          <UserOutlined />
-        </ListItemIcon>
-        <ListItemText primary="View Profile" />
-      </ListItemButton>
-
-      <ListItemButton selected={selectedIndex === 3} onClick={(event) => handleListItemClick(event, 3, 'apps/profiles/account/personal')}>
-        <ListItemIcon>
-          <ProfileOutlined />
-        </ListItemIcon>
-        <ListItemText primary="Social Profile" />
-      </ListItemButton>
       <ListItemButton selected={selectedIndex === 4} onClick={(event) => handleListItemClick(event, 4, '/apps/invoice/details/1')}>
         <ListItemIcon>
           <WalletOutlined />
         </ListItemIcon>
         <ListItemText primary="Billing" />
       </ListItemButton>
-      <ListItemButton selected={selectedIndex === 2}>
+      <ListItemButton selected={selectedIndex === 2} onClick={()=>logout()}>
         <ListItemIcon>
           <LogoutOutlined />
         </ListItemIcon>

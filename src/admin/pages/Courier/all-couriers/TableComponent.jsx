@@ -21,6 +21,7 @@ import { headCellsAllShops, shopData } from "./TableConfig";
 import ShopDetailsDialog from "./ShopDetailsDialog";
 import ViewLocation from "./ViewLocation";
 import { set } from "lodash";
+import WebApi from "../../../api/WebApi";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -101,7 +102,25 @@ export default function TableComponent({ rows }) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [openDialog, setOpenDialog] = React.useState(null); // null, "pending", or "reject"
   const [selectedRow, setSelectedRow] = React.useState(null);
-  
+
+  const updateStatus = async (event, status, id) => {
+    event.stopPropagation();
+    console.log("status", status);
+    try {
+      if (status == "active") {
+        const response = await WebApi.post(`/admin/user/changeCourierStatus`, { id: id, status: "disable" });
+        console.log("Response", response);
+        window.location.reload();
+      } else {
+        const response = await WebApi.post(`/admin/user/changeCourierStatus`, { id: id, status: "active" });
+        console.log("Response", response);
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error updating status", error);
+    }
+  }
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -125,7 +144,7 @@ export default function TableComponent({ rows }) {
   const handleRowClick = (row) => {
     setSelectedRow(row);
     setOpenDialog(true);
-    
+
   };
 
   const handleCloseDialog = () => {
@@ -141,25 +160,26 @@ export default function TableComponent({ rows }) {
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-          <>
-            <TableContainer>
-              <Table
-                sx={{ minWidth: 750 }}
-                aria-labelledby="tableTitle"
-                size={dense ? "small" : "medium"}
-              >
-                <EnhancedTableHead
-                  order={order}
-                  orderBy={orderBy}
-                  onRequestSort={handleRequestSort}
-                  headCells={headCellsAllShops} // Pass headCells dynamically
-                />
-                <TableBody>
-                  {stableSort(filteredRows, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                      const labelId = `enhanced-table-checkbox-${index}`;
+        <>
+          <TableContainer>
+            <Table
+              sx={{ minWidth: 750 }}
+              aria-labelledby="tableTitle"
+              size={dense ? "small" : "medium"}
+            >
+              <EnhancedTableHead
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+                headCells={headCellsAllShops} // Pass headCells dynamically
+              />
+              <TableBody>
+                {stableSort(filteredRows, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
+<<<<<<< HEAD
                       return (
                         <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)}>
                           <TableCell align="right">{row.courierName}</TableCell>
@@ -205,6 +225,51 @@ export default function TableComponent({ rows }) {
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </>
+=======
+                    return (
+                      <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)}>
+                        <TableCell align="right">{row.courierName}</TableCell>
+                        <TableCell align="right">{row.courierEmail}</TableCell>
+                        <TableCell align="right">{row.courierContactNumber}</TableCell>
+                        <TableCell align="right">{row.courierBusinessData.businessType}</TableCell>
+                        <TableCell align="center"
+                          onClick={(event) => event.stopPropagation()}><ViewLocation lat={row.courierLocation.latitude} lon={row.courierLocation.longitude} /></TableCell>
+                        <TableCell align="center">
+                          <Switch
+                            checked={row.status == "active"} // Simplified condition
+                            sx={{
+                              '& .MuiSwitch-switchBase.Mui-checked': {
+                                color: 'green',
+                              },
+                              '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+                                backgroundColor: 'green',
+                              },
+                            }}
+                            onClick={(event) => updateStatus(event, row.status, row.id)} // Prevent click event from bubbling up
+                          />
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={filteredRows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </>
+>>>>>>> 579d610f1e78f1ae13624f4cb01451b71439b772
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
@@ -212,12 +277,12 @@ export default function TableComponent({ rows }) {
       />
       {openDialog && (
         <ShopDetailsDialog
-          open={openDialog }
+          open={openDialog}
           handleClose={handleCloseDialog}
           selectedRow={selectedRow}
         />
       )}
-    
+
     </Box>
   );
 }

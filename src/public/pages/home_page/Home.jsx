@@ -1,7 +1,7 @@
 import React from "react";
 import PrimaryHeader from "../../components/PrimaryHeader";
 import { theme } from "../../assets/themes/MUIThemeProvider";
-import { ThemeProvider, useMediaQuery } from "@mui/material";
+import { Stack, ThemeProvider, useMediaQuery } from "@mui/material";
 import Hero from "./Hero";
 import Footer from "./Footer";
 import "./home.css";
@@ -12,9 +12,11 @@ const Home = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      {isDesktop ? <PrimaryHeader /> : <MobilePrimaryHeader />}
-      <Hero />
-      <Footer />
+      <Stack sx={{ position: "relative" }}>
+        {isDesktop ? <PrimaryHeader /> : <MobilePrimaryHeader />}
+        <Hero />
+        <Footer />
+      </Stack>
     </ThemeProvider>
   );
 };

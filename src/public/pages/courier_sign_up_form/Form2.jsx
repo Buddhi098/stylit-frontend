@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Typography, TextField, Button, Grid, Alert } from "@mui/material";
 import form2 from "../../assets/images/courier_sign_up_form/form2.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import api from "../../api/api";
 import CheckIcon from "@mui/icons-material/Check";
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 
 const Form2 = (props) => {
-
-  const [otpError , setOtpError] = React.useState(false);
-  const [otherError , setOtherError] = React.useState(false);
+  const [otpError, setOtpError] = React.useState(false);
+  const [otherError, setOtherError] = React.useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -34,11 +33,11 @@ const Form2 = (props) => {
 
         const response = await api.post("/public/user/verifyOtp", data);
 
-        if(response.data.data.otpStatus) {
+        if (response.data.data.otpStatus) {
           props.setOtpStatus(response.data.data.otpStatus);
           setOtpError(false);
           setOtherError(false);
-        }else{
+        } else {
           setOtpError(true);
         }
 
@@ -63,12 +62,19 @@ const Form2 = (props) => {
     },
   });
 
+  useEffect(()=>{
+    setOtherError(false);
+    setOtpError(false);
+
+  } , [formik.values.otp])
+
   return (
     <Box
       sx={{
         display: "flex",
         maxHeight: "62vh",
         minHeight: "62vh",
+        padding:"5px 70px"
       }}
     >
       <Box
@@ -96,6 +102,7 @@ const Form2 = (props) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
+          paddingLeft: "100px",
         }}
       >
         {/* Left part with illustration */}
@@ -106,11 +113,14 @@ const Form2 = (props) => {
         )}
         {otpError && (
           <Alert severity="error">
-            The OTP you entered is incorrect. Please try again.
+            The OTP you entered is incorrect or expired. Please try again.
           </Alert>
         )}
         {otherError && (
-          <Alert icon={<WarningAmberIcon fontSize="inherit" />} severity="warning">
+          <Alert
+            icon={<WarningAmberIcon fontSize="inherit" />}
+            severity="warning"
+          >
             Something went wrong. Please try again.
           </Alert>
         )}
@@ -140,7 +150,13 @@ const Form2 = (props) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" color="primary" fullWidth type="submit" disabled={props.otpStatus}>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              type="submit"
+              disabled={props.otpStatus}
+            >
               <Typography variant="body1_nunito" color="black">
                 Verify OTP
               </Typography>
