@@ -61,7 +61,7 @@ export default function DashboardDefault() {
         <AnalyticEcommerce title="Total Orders" count="2,236" percentage={59.3} extra="350" />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Active Users" count="7,825" percentage={70.5} extra="890" />
+        <AnalyticEcommerce title="Total Shoppers" count="7,825" percentage={70.5} extra="890" />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce title="Active Stores" count="180" percentage={27.4} isLoss color="warning" extra="67" />
