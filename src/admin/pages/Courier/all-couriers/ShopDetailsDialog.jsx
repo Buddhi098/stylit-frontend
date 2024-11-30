@@ -28,12 +28,21 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import Switch from '@mui/material/Switch';
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const courierDetailsDialog = ({ open, handleClose, selectedRow }) => {
   const selectedcourier = selectedRow;
 =======
 const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
   const selectedCourier = selectedRow;
 >>>>>>> ae799b2 (all couriers updated.)
+=======
+const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
+  const selectedCourier = selectedRow;
+=======
+const courierDetailsDialog = ({ open, handleClose, selectedRow }) => {
+  const selectedcourier = selectedRow;
+>>>>>>> 579d610f1e78f1ae13624f4cb01451b71439b772
+>>>>>>> a67d9afca2c4a92815a1ef162a2a713e69114643
 
   const markerIcon = new L.Icon({
     iconUrl: require("leaflet/dist/images/marker-icon.png"),
@@ -61,6 +70,14 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" alignItems="center">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            {selectedCourier && (
+              <>
+                <Typography variant="h6" component="span" ml={2} style={{ textTransform: 'uppercase', fontWeight: 'bold', color: 'white' }}>
+                  {selectedCourier.courierName}
+=======
+>>>>>>> a67d9afca2c4a92815a1ef162a2a713e69114643
             {selectedcourier && (
               <>
                 {/* <img
@@ -75,12 +92,16 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
                 /> */}
                 <Typography variant="h6" component="span" ml={2} style={{ textTransform: 'uppercase', fontWeight: 'bold', color: 'white' }}>
                   {selectedcourier.courierName}
+<<<<<<< HEAD
 =======
             {selectedCourier && (
               <>
                 <Typography variant="h6" component="span" ml={2} style={{ textTransform: 'uppercase', fontWeight: 'bold', color: 'white' }}>
                   {selectedCourier.courierName}
 >>>>>>> ae799b2 (all couriers updated.)
+=======
+>>>>>>> 579d610f1e78f1ae13624f4cb01451b71439b772
+>>>>>>> a67d9afca2c4a92815a1ef162a2a713e69114643
                 </Typography>
               </>
             )}
@@ -91,12 +112,21 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
             </Typography>
             <Switch
 <<<<<<< HEAD
+<<<<<<< HEAD
               checked={selectedcourier.isActive}
               // onChange={(event) => handleSwitchChange(event, selectedcourier.id)}
 =======
               checked={selectedCourier.isActive}
               // onChange={(event) => handleSwitchChange(event, selectedShop.id)}
 >>>>>>> ae799b2 (all couriers updated.)
+=======
+              checked={selectedCourier.isActive}
+              // onChange={(event) => handleSwitchChange(event, selectedShop.id)}
+=======
+              checked={selectedcourier.isActive}
+              // onChange={(event) => handleSwitchChange(event, selectedcourier.id)}
+>>>>>>> 579d610f1e78f1ae13624f4cb01451b71439b772
+>>>>>>> a67d9afca2c4a92815a1ef162a2a713e69114643
               sx={{
                 '& .MuiSwitch-switchBase.Mui-checked': {
                   color: 'green',
@@ -129,6 +159,21 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
                 <EmailIcon fontSize="small" sx={{ color: "black" }} />
               </Box>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+              <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Courier Contact Info</Typography>
+            </Box>
+            {selectedCourier && (
+              <>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Email</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierEmail}</Typography></Grid>
+                </Grid>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Contact Number</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierContactNumber}</Typography></Grid>
+=======
+>>>>>>> a67d9afca2c4a92815a1ef162a2a713e69114643
               <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>courier Contact Info</Typography>
             </Box>
             {selectedcourier && (
@@ -144,6 +189,7 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Contact Number</strong></Typography></Grid>
                   <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedcourier.courierContactNumber}</Typography></Grid>
+<<<<<<< HEAD
 =======
               <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Courier Contact Info</Typography>
             </Box>
@@ -157,6 +203,9 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Contact Number</strong></Typography></Grid>
                   <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierContactNumber}</Typography></Grid>
 >>>>>>> ae799b2 (all couriers updated.)
+=======
+>>>>>>> 579d610f1e78f1ae13624f4cb01451b71439b772
+>>>>>>> a67d9afca2c4a92815a1ef162a2a713e69114643
                 </Grid>
               </>
             )}
@@ -177,6 +226,26 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
               <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Courier Location</Typography>
             </Box>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            {selectedCourier && (
+              <>
+                <Stack>
+                  <MapContainer
+                    center={position}
+                    zoom={13}
+                    style={{ height: "50vh", marginTop: "20px" }}
+                  >
+                    <TileLayer
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    />
+                    <LocationMarker />
+                  </MapContainer>
+                </Stack>
+              </>
+=======
+>>>>>>> a67d9afca2c4a92815a1ef162a2a713e69114643
             {selectedcourier && (
               <Stack>
                 <MapContainer
@@ -191,6 +260,7 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
                   <LocationMarker />
                 </MapContainer>
               </Stack>
+<<<<<<< HEAD
 =======
             {selectedCourier && (
               <>
@@ -209,6 +279,9 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
                 </Stack>
               </>
 >>>>>>> ae799b2 (all couriers updated.)
+=======
+>>>>>>> 579d610f1e78f1ae13624f4cb01451b71439b772
+>>>>>>> a67d9afca2c4a92815a1ef162a2a713e69114643
             )}
           </Box>
           <Box>
@@ -227,6 +300,27 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
               <Typography variant="h6" component="span" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Business Information</Typography>
             </Box>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            {selectedCourier && (
+              <>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Registration No.</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBusinessData.businessRegNo}</Typography></Grid>
+                </Grid>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Registration Date</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBusinessData.businessRegDate}</Typography></Grid>
+                </Grid>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Business Type</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBusinessData.businessType}</Typography></Grid>
+                </Grid>
+                <Grid container spacing={1} ml={3} mt={0.25}>
+                  <Grid item xs={4}><Typography variant="body2" component="span"><strong>Business Email</strong></Typography></Grid>
+                  <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBusinessData.businessEmail}</Typography></Grid>
+=======
+>>>>>>> a67d9afca2c4a92815a1ef162a2a713e69114643
             {selectedcourier && (
               <>
                 <Grid container spacing={1} ml={3} mt={0.25}>
@@ -244,6 +338,7 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Business Email</strong></Typography></Grid>
                   <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedcourier.courierBusinessData.businessEmail}</Typography></Grid>
+<<<<<<< HEAD
 =======
             {selectedCourier && (
               <>
@@ -263,6 +358,9 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Business Email</strong></Typography></Grid>
                   <Grid item xs={8}><Typography variant="body2" component="span" sx={{ textAlign: 'right', color: "black" }}>{selectedCourier.courierBusinessData.businessEmail}</Typography></Grid>
 >>>>>>> ae799b2 (all couriers updated.)
+=======
+>>>>>>> 579d610f1e78f1ae13624f4cb01451b71439b772
+>>>>>>> a67d9afca2c4a92815a1ef162a2a713e69114643
                 </Grid>
                 <Grid container spacing={1} ml={3} mt={0.25}>
                   <Grid item xs={4}><Typography variant="body2" component="span"><strong>Business Document</strong></Typography></Grid>
@@ -273,10 +371,17 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
                       color="primary"
                       startIcon={<PictureAsPdfIcon />}
 <<<<<<< HEAD
+<<<<<<< HEAD
                       onClick={() => window.open(selectedcourier.courierBusinessData.businessDocument, '_blank')}
 =======
                       onClick={() => window.open(selectedCourier.courierBusinessData.businessDocument, '_blank')}
 >>>>>>> ae799b2 (all couriers updated.)
+=======
+                      onClick={() => window.open(selectedCourier.courierBusinessData.businessDocument, '_blank')}
+=======
+                      onClick={() => window.open(selectedcourier.courierBusinessData.businessDocument, '_blank')}
+>>>>>>> 579d610f1e78f1ae13624f4cb01451b71439b772
+>>>>>>> a67d9afca2c4a92815a1ef162a2a713e69114643
                     >
                       View PDF
                     </Button>
@@ -286,7 +391,10 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
             )}
           </Box>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> a67d9afca2c4a92815a1ef162a2a713e69114643
           <Box mt={2}>
             <Box display="flex" alignItems="center">
               <Box sx={{
@@ -345,7 +453,12 @@ const ShopDetailsDialog = ({ open, handleClose, selectedRow }) => {
               </>
             )}
           </Box>
+<<<<<<< HEAD
 >>>>>>> ae799b2 (all couriers updated.)
+=======
+=======
+>>>>>>> 579d610f1e78f1ae13624f4cb01451b71439b772
+>>>>>>> a67d9afca2c4a92815a1ef162a2a713e69114643
         </Box>
       
       </DialogContent>

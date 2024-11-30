@@ -180,6 +180,55 @@ export default function TableComponent({ rows }) {
                     const labelId = `enhanced-table-checkbox-${index}`;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+                      return (
+                        <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)}>
+                          <TableCell align="right">{row.courierName}</TableCell>
+                          <TableCell align="right">{row.courierEmail}</TableCell>
+                          <TableCell align="right">{row.courierContactNumber}</TableCell>
+                          <TableCell align="right">{row.courierBusinessData.businessType}</TableCell>
+                          <TableCell align="center"
+                            onClick={(event) => event.stopPropagation()}><ViewLocation/></TableCell>
+                          <TableCell align="right">{row.courierBankDetails.accountNo}</TableCell>
+                          <TableCell align="right">{row.courierBankDetails.branchName}</TableCell>
+                          <TableCell align="center">
+                            <Switch
+                              defaultChecked
+                              sx={{
+                                '& .MuiSwitch-switchBase.Mui-checked': {
+                                  color: 'green',
+                                },
+                                '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+                                  backgroundColor: 'green',
+                                },
+                              }}
+                              onClick={(event) => event.stopPropagation()}
+                            />
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={filteredRows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </>
+=======
+>>>>>>> a67d9afca2c4a92815a1ef162a2a713e69114643
                     return (
                       <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)}>
                         <TableCell align="right">{row.courierName}</TableCell>
@@ -223,6 +272,7 @@ export default function TableComponent({ rows }) {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </>
+<<<<<<< HEAD
 =======
                       return (
                         <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)}>
@@ -270,6 +320,9 @@ export default function TableComponent({ rows }) {
             />
           </>
 >>>>>>> ae799b2 (all couriers updated.)
+=======
+>>>>>>> 579d610f1e78f1ae13624f4cb01451b71439b772
+>>>>>>> a67d9afca2c4a92815a1ef162a2a713e69114643
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
