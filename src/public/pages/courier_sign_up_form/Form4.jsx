@@ -6,11 +6,40 @@ import {
   Button,
   TextField,
   InputLabel,
+  Autocomplete,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const Form4 = (props, ref) => {
+  const sriLankaDistricts = [
+    "Colombo",
+    "Gampaha",
+    "Kalutara",
+    "Kandy",
+    "Matale",
+    "Nuwara Eliya",
+    "Galle",
+    "Matara",
+    "Hambantota",
+    "Jaffna",
+    "Kilinochchi",
+    "Mannar",
+    "Vavuniya",
+    "Mullaitivu",
+    "Batticaloa",
+    "Ampara",
+    "Trincomalee",
+    "Kurunegala",
+    "Puttalam",
+    "Anuradhapura",
+    "Polonnaruwa",
+    "Badulla",
+    "Moneragala",
+    "Ratnapura",
+    "Kegalle",
+  ];
+
   const formik = useFormik({
     initialValues: {
       businessRegNo: props.form4Data.businessRegNo ? props.form4Data.businessRegNo : "",
@@ -18,11 +47,10 @@ const Form4 = (props, ref) => {
       businessType: props.form4Data.businessType ? props.form4Data.businessType : "",
       businessEmail: props.form4Data.businessEmail ? props.form4Data.businessEmail : "",
       businessDocument: props.form4Data.businessDocument ? props.form4Data.businessDocument : null,
+      availableLocations: props.form4Data.courierDistricts ? props.form4Data.courierDistricts : [],
     },
     validationSchema: Yup.object().shape({
-      businessRegNo: Yup.string().required(
-        "Business Registration Number is Required"
-      ),
+      businessRegNo: Yup.string().required("Business Registration Number is Required"),
       businessRegDate: Yup.date()
         .max(new Date(), "Date should be past date")
         .required("Business Registration date is Required"),
@@ -30,7 +58,8 @@ const Form4 = (props, ref) => {
       businessEmail: Yup.string()
         .email("Enter valid email")
         .required("Email is required"),
-      businessDocument: Yup.mixed().required("Business Document is required"), // Validate file
+      businessDocument: Yup.mixed().required("Business Document is required"),
+      availableLocations: Yup.array().min(1, "At least one district is required"),
     }),
     onSubmit: (values) => {
       props.setForm4Data(values);
@@ -145,15 +174,11 @@ const Form4 = (props, ref) => {
             size="small"
             value={formik.values.businessRegNo}
             onChange={formik.handleChange}
-            error={
-              formik.touched.businessRegNo &&
-              Boolean(formik.errors.businessRegNo)
-            }
-            helperText={
-              formik.touched.businessRegNo && formik.errors.businessRegNo
-            }
+            error={formik.touched.businessRegNo && Boolean(formik.errors.businessRegNo)}
+            helperText={formik.touched.businessRegNo && formik.errors.businessRegNo}
             sx={{ marginBottom: "8px", width: "80%" }}
           />
+
           <InputLabel htmlFor="businessRegDate">
             <Typography variant="body1_alata">Registration Date</Typography>
           </InputLabel>
@@ -165,13 +190,8 @@ const Form4 = (props, ref) => {
             size="small"
             value={formik.values.businessRegDate}
             onChange={formik.handleChange}
-            error={
-              formik.touched.businessRegDate &&
-              Boolean(formik.errors.businessRegDate)
-            }
-            helperText={
-              formik.touched.businessRegDate && formik.errors.businessRegDate
-            }
+            error={formik.touched.businessRegDate && Boolean(formik.errors.businessRegDate)}
+            helperText={formik.touched.businessRegDate && formik.errors.businessRegDate}
             sx={{ marginBottom: "8px", width: "80%" }}
           />
 
@@ -187,12 +207,8 @@ const Form4 = (props, ref) => {
             size="small"
             value={formik.values.businessType}
             onChange={formik.handleChange}
-            error={
-              formik.touched.businessType && Boolean(formik.errors.businessType)
-            }
-            helperText={
-              formik.touched.businessType && formik.errors.businessType
-            }
+            error={formik.touched.businessType && Boolean(formik.errors.businessType)}
+            helperText={formik.touched.businessType && formik.errors.businessType}
             sx={{ marginBottom: "8px", width: "80%" }}
           />
 
@@ -208,15 +224,47 @@ const Form4 = (props, ref) => {
             size="small"
             value={formik.values.businessEmail}
             onChange={formik.handleChange}
-            error={
-              formik.touched.businessEmail &&
-              Boolean(formik.errors.businessEmail)
-            }
-            helperText={
-              formik.touched.businessEmail && formik.errors.businessEmail
-            }
+            error={formik.touched.businessEmail && Boolean(formik.errors.businessEmail)}
+            helperText={formik.touched.businessEmail && formik.errors.businessEmail}
             sx={{ marginBottom: "8px", width: "80%" }}
           />
+
+          <InputLabel htmlFor="courierDistricts">
+            <Typography variant="body1_alata">Available Courier Districts</Typography>
+          </InputLabel>
+          <Autocomplete
+            multiple
+            id="courierDistricts"
+            options={sriLankaDistricts}
+            getOptionLabel={(option) => option}
+            value={formik.values.availableLocations}
+            onChange={(event, value) =>
+              formik.setFieldValue("availableLocations", value)
+            }
+            ListboxProps={{
+              style: {
+                maxHeight: "200px", // Set max height for scrolling
+                overflow: "auto", // Enable scrolling
+              },
+            }}
+            sx={{ width: "100%" }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="filled"
+                error={
+                  formik.touched.availableLocations &&
+                  Boolean(formik.errors.availableLocations)
+                }
+                helperText={
+                  formik.touched.availableLocations &&
+                  formik.errors.availableLocations
+                }
+                sx={{ width: "80%", marginTop: "8px" ,maxHeight: "60px" , overflow: "auto"}}
+              />
+            )}
+          />
+
         </Box>
       </Stack>
     </Stack>
