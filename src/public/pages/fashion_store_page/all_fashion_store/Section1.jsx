@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Stack,
@@ -13,6 +13,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import { useNavigate } from "react-router";
 import SearchBox from "./SearchBox";
+import WebApi from "../../../api/WebApi";
 
 import logo1 from "../../../../temp_images/Logo/img (9).png";
 import logo2 from "../../../../temp_images/Logo/img (2).png";
@@ -29,6 +30,8 @@ import cover4 from "../../../../temp_images/Cover/img (7).jpg";
 import cover5 from "../../../../temp_images/Cover/img (8).jpg";
 import cover6 from "../../../../temp_images/Cover/img (4).jpg";
 import cover7 from "../../../../temp_images/Cover/img (3).jpg";
+import api from "../../../api/api";
+import { set } from "lodash";
 
 const categories = [
   "Casual Wear Stores",
@@ -188,6 +191,57 @@ const Section1 = ({title}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
 
+  const [stores, setStores] = useState([]);
+
+  useEffect(() => {
+    const getAllStore = async () => {
+      try {
+        const response = await api.get(`/public/user/getAllshop`); 
+        
+        setStores(response.data.shops);     
+        return response.data.shops;
+    
+      } catch (error) {
+        console.error("Error fetching table data:", error);
+        throw error;
+      }
+    }
+
+    getAllStore();
+  }, []);
+
+  const [logos, setLogos] = useState([]);
+
+  useEffect(() => {
+    const fetchLogos = async () => {
+      const logoPromises = stores.map(async (store) => {
+        const logoUrl = `http://localhost:8081/public/user/logo?path=storage/images/shop/logo/${store.shopEmail}.png`;
+        try {
+          const response = await fetch(logoUrl);
+          if (response.ok) {
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            return { [store.id]: url };
+          } else {
+            return { [store.id]: null };
+          }
+        } catch (error) {
+          console.error("Error fetching logo:", error);
+          return { [store.id]: null };
+        }
+      });
+
+      const logoResults = await Promise.all(logoPromises);
+      const logoMap = logoResults.reduce((acc, logo) => ({ ...acc, ...logo }), {});
+      setLogos(logoMap);
+    };
+
+    if (stores.length > 0) {
+      fetchLogos();
+    }
+  }, [stores]);
+  
+
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.name);
     setCurrentPage(1); // Reset to first page when category changes
@@ -203,9 +257,11 @@ const Section1 = ({title}) => {
 
   const filteredStores = stores.filter(
     (store) =>
-      store.category === selectedCategory &&
-      store.name.toLowerCase().includes(searchQuery.toLowerCase())
+      store.shopInformation.categories.some(
+        (category) => category.title === selectedCategory
+      ) && store.shopName.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  console.log(filteredStores);
 
   const displayedStores = filteredStores.slice(
     (currentPage - 1) * itemsPerPage,
@@ -262,9 +318,9 @@ const Section1 = ({title}) => {
           {displayedStores.map((store, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <ShopBox
-                shopName={store.name}
-                cover={store.cover}
-                logo={store.logo}
+                shopName={store.shopName}
+                cover= {cover6 }
+                logo={logos[store.id]}
                 id={store.id}
                 favorite={store.favorite}
               />

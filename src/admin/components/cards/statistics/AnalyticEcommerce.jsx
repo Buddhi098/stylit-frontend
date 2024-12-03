@@ -49,7 +49,7 @@ export default function AnalyticEcommerce({ color = 'primary', title, count, per
           <Typography variant="caption" sx={{ color: `${color || 'primary'}.main` }}>
             {extra}
           </Typography>{' '}
-          this year
+          this month
         </Typography>
       </Box>
     </MainCard>
