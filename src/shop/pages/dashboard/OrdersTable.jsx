@@ -22,16 +22,16 @@ function createData(orderId, info, order, status, price) {
 }
 
 const rows = [
-  createData(84564564, 'Running Shoes', 40, 2, 40570),
+  createData(84564564, 'Running Shoes', 1, 2, 40570),
   // createData(98764564, 'Woolen Scarf', 300, 0, 180139),
-  createData(98756325, 'Leather Jacket', 355, 1, 90989),
-  createData(98652366, 'Casual Shirt', 50, 1, 10239),
-  createData(13286564, 'Baseball Cap', 100, 1, 83348),
-  createData(86739658, 'Slim Fit Jeans', 99, 0, 410780),
-  createData(13256498, 'Casual T-Shirts', 125, 2, 70999),
-  createData(98753263, 'Formal Shirt', 89, 2, 10570),
-  createData(98753275, 'Yoga Pants', 185, 1, 98063),
-  createData(98753291, 'Backpack ', 100, 0, 14001)
+  createData(98756325, 'Leather Jacket', 2, 1, 909),
+  createData(98652366, 'Casual Shirt', 1, 1, 1023),
+  createData(13286564, 'Baseball Cap', 2, 1, 348),
+  createData(86739658, 'Slim Fit Jeans', 3, 0, 4107),
+  createData(13256498, 'Casual T-Shirts', 1, 2, 999),
+  createData(98753263, 'Formal Shirt', 3, 2, 1057),
+  createData(98753275, 'Yoga Pants', 1, 1, 980),
+  createData(98753291, 'Backpack ', 2, 0, 1400)
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -185,7 +185,7 @@ export default function OrderTable() {
                     <OrderStatus status={row.status} />
                   </TableCell>
                   <TableCell align="right">
-                    <NumericFormat value={row.price} displayType="text" thousandSeparator prefix="$" />
+                    <NumericFormat value={row.price} displayType="text" thousandSeparator prefix="LKR " />
                   </TableCell>
                 </TableRow>
               );

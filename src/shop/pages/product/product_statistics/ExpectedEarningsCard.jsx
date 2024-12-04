@@ -11,7 +11,7 @@ const ExpectedEarningsCard = () => {
           Expected Earnings
         </Typography>
         <Typography variant="h3" sx={{ fontWeight: 'bold', color: '#333', mb: 1 }}>
-          $682.5
+          LKR 12,267
         </Typography>
         <Box sx={{ display: 'inline-flex', alignItems: 'center', backgroundColor: '#D8BCA4', borderRadius: 2, px: 2, py: 0.5 }}>
           <Typography variant="body2" sx={{ color: '#fff' }}>

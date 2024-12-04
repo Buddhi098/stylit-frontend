@@ -30,16 +30,16 @@ export default function DashboardDefault() {
         <Typography variant="h5">Dashboard</Typography>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Total Orders" count="9,284" percentage={9.3} extra="2,985" />
+        <AnalyticEcommerce title="Total Orders" count="25" percentage={9.3} extra="3" />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Total Products" count="8,800" percentage={27.4} isLoss color="warning" extra="1,943" />
+        <AnalyticEcommerce title="Total Products" count="38" percentage={27.4} isLoss color="warning" extra="-7" />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Total Connections" count="10" percentage={2.5} extra="3" />
+        <AnalyticEcommerce title="Total Connections" count="10" percentage={23.5} extra="3" />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Total Sales" count="$35,078" percentage={27.4} isLoss color="warning" extra="$20,395" />
+        <AnalyticEcommerce title="Total Sales" count="LKR 23,512" percentage={12.4} isLoss color="warning" extra="-LKR 305" />
       </Grid>
 
       <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
@@ -69,7 +69,7 @@ export default function DashboardDefault() {
               <Typography variant="h6" color="text.secondary">
                 This Week Statistics
               </Typography>
-              <Typography variant="h3">650</Typography>
+              <Typography variant="h3">9</Typography>
             </Stack>
           </Box>
           <MonthlyBarChart />
