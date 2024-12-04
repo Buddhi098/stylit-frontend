@@ -23,7 +23,7 @@ const OrderDetail = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await WebApi.get('/shopper/order/getAllOrdersByShopperId/9');
+        const response = await WebApi.get(`/shopper/order/getAllOrdersByShopperId/${localStorage.getItem('id')}`);
         const fetchedOrders = response.data.map((order) => ({
           id: order.id,
           date: new Date(order.createdAt).toLocaleDateString(),
