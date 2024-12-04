@@ -186,7 +186,7 @@ export default function OrderTable() {
                     <OrderStatus status={row.carbs} />
                   </TableCell>
                   <TableCell align="left">
-                    <NumericFormat value={row.protein} displayType="text" thousandSeparator prefix="$" />
+                    <NumericFormat value={row.protein} displayType="text" thousandSeparator prefix="LKR " />
                   </TableCell>
                 </TableRow>
               );

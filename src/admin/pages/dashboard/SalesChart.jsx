@@ -45,7 +45,7 @@ const columnChartOptions = {
   },
   yaxis: {
     title: {
-      text: '$ (thousands)'
+      text: 'LKR (thousands)'
     }
   },
   fill: {
@@ -54,7 +54,7 @@ const columnChartOptions = {
   tooltip: {
     y: {
       formatter(val) {
-        return `$ ${val} thousands`;
+        return `LKR LKR {val} thousands`;
       }
     }
   },
@@ -171,7 +171,7 @@ export default function SalesChart() {
             <Typography variant="h6" color="secondary">
               Net Profit
             </Typography>
-            <Typography variant="h4">$1560</Typography>
+            <Typography variant="h4"> LKR1560</Typography>
           </Stack>
           <FormControl component="fieldset">
             <FormGroup row>

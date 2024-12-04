@@ -58,16 +58,16 @@ export default function DashboardDefault() {
         <Typography variant="h5">Dashboard</Typography>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Total Orders" count="2,236" percentage={59.3} extra="350" />
+        <AnalyticEcommerce title="Total Orders" count="25" percentage={9.3} extra="3" />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Total Shoppers" count="7,825" percentage={70.5} extra="890" />
+        <AnalyticEcommerce title="Total Shoppers" count="225" percentage={70.5} extra="140" />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Active Stores" count="180" percentage={27.4} isLoss color="warning" extra="67" />
+        <AnalyticEcommerce title="Active Stores" count="23" percentage={7.4} isLoss color="warning" extra="-4" />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="New Users Today" count="35" percentage={27.4} isLoss color="warning" extra="20" />
+        <AnalyticEcommerce title="New Users Today" count="22" percentage={27.4} isLoss color="warning" extra="12" />
       </Grid>
 
       <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
