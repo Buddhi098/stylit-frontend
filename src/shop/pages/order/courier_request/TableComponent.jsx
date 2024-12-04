@@ -156,14 +156,15 @@ export default function TableComponent({ rows }) {
   
 
   const filterRows = () => {
+    console.log("asas" , rows)
     if (tab === 0) {
-      return rows;
+      return rows.filter((row) => row.courierStatus == null);
     }
     if (tab === 1) {
-      return pendingRequests; 
+      return rows.filter((row) => row.courierStatus === "pending");; 
     }
     if (tab === 2) {
-      return rejectedRequests; 
+      return rows.filter((row) => row.courierStatus === "rejected");; 
     }
     return [];
   };
@@ -227,7 +228,7 @@ export default function TableComponent({ rows }) {
                         const labelId = `enhanced-table-checkbox-${index}`;
   
                         return (
-                          <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)} sx={{ cursor: "pointer" }}>
+                          <TableRow hover tabIndex={-1} key={row.id} sx={{ cursor: "pointer" }}>
                             <TableCell
                               align="left"
                               component="th"
@@ -239,17 +240,17 @@ export default function TableComponent({ rows }) {
                               <div style={{ display: "flex", alignItems: "center" }}>
                                 <img src={row.imageUrl} alt={row.info} width={50} style={{ marginRight: 10, marginLeft: 25}} />
                                 <div>
-                                  {row.info}
+                                  {row.productName}
                                   <div style={{ fontSize: "0.75em", color: "#888" }}>
-                                    Order ID: {row.orderId}
+                                    Order ID: {row.id}
                                   </div>
                                 </div>
                               </div>
                             </TableCell>
-                            <TableCell align="right">{row.courier}</TableCell>
+                            <TableCell align="right">{row.productName}</TableCell>
                             <TableCell align="right">{row.quantity}</TableCell>
                             <TableCell align="right">{row.price}</TableCell>
-                            <TableCell align="right">{row.ordered_date}</TableCell>
+                            <TableCell align="right">{row.createdAt}</TableCell>
                             <TableCell
                               align="center"
                               onClick={(event) => event.stopPropagation()}

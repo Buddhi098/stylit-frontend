@@ -6,13 +6,29 @@ import FormLabel from '@mui/material/FormLabel';
 import Grid from '@mui/material/Grid';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { styled } from '@mui/system';
+import { set } from 'lodash';
 
 const FormGrid = styled(Grid)(() => ({
   display: 'flex',
   flexDirection: 'column',
 }));
 
-export default function AddressForm() {
+export default function AddressForm({setFormValues}) {
+  const [formValuess, setFormValuess] = React.useState({});
+  // Handler for input changes
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormValuess((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  };
+
+  React.useEffect(() => {
+    console.log(formValuess)
+    setFormValues(formValuess)
+  }, [formValuess])
+
   return (
     <Grid container spacing={3}>
       <FormGrid item xs={12} md={6}>
@@ -20,25 +36,27 @@ export default function AddressForm() {
           First name
         </FormLabel>
         <OutlinedInput
-          id="first-name"
-          name="first-name"
-          type="name"
+          id="firstName"
+          name="firstName"
+          type="text"
           placeholder="John"
           autoComplete="first name"
           required
+          onChange={handleChange}
         />
       </FormGrid>
       <FormGrid item xs={12} md={6}>
-        <FormLabel htmlFor="last-name" required>
+        <FormLabel htmlFor="lastName" required>
           Last name
         </FormLabel>
         <OutlinedInput
-          id="last-name"
-          name="last-name"
-          type="last-name"
+          id="lastName"
+          name="lastName"
+          type="text"
           placeholder="Snow"
           autoComplete="last name"
           required
+          onChange={handleChange}
         />
       </FormGrid>
       <FormGrid item xs={12}>
@@ -46,23 +64,24 @@ export default function AddressForm() {
           Address line 1
         </FormLabel>
         <OutlinedInput
-          id="address1"
-          name="address1"
-          type="address1"
+          id="addressLine1"
+          name="addressLine1"
+          type="text"
           placeholder="Street name and number"
           autoComplete="shipping address-line1"
           required
+          onChange={handleChange}
         />
       </FormGrid>
       <FormGrid item xs={12}>
         <FormLabel htmlFor="address2">Address line 2</FormLabel>
         <OutlinedInput
-          id="address2"
-          name="address2"
-          type="address2"
+          id="addressLine2"
+          name="addressLine2"
+          type="text"
           placeholder="Apartment, suite, unit, etc. (optional)"
           autoComplete="shipping address-line2"
-          required
+          onChange={handleChange}
         />
       </FormGrid>
       <FormGrid item xs={6}>
@@ -72,10 +91,11 @@ export default function AddressForm() {
         <OutlinedInput
           id="city"
           name="city"
-          type="city"
+          type="text"
           placeholder="New York"
           autoComplete="City"
           required
+          onChange={handleChange}
         />
       </FormGrid>
       <FormGrid item xs={6}>
@@ -83,12 +103,13 @@ export default function AddressForm() {
           Province
         </FormLabel>
         <OutlinedInput
-          id="state"
-          name="state"
-          type="state"
+          id="province"
+          name="province"
+          type="text"
           placeholder="NY"
           autoComplete="State"
           required
+          onChange={handleChange}
         />
       </FormGrid>
       <FormGrid item xs={6}>
@@ -96,12 +117,13 @@ export default function AddressForm() {
           Zip / Postal code
         </FormLabel>
         <OutlinedInput
-          id="zip"
-          name="zip"
-          type="zip"
+          id="zipCode"
+          name="zipCode"
+          type="text"
           placeholder="12345"
           autoComplete="shipping postal-code"
           required
+          onChange={handleChange}
         />
       </FormGrid>
       <FormGrid item xs={6}>
@@ -111,15 +133,16 @@ export default function AddressForm() {
         <OutlinedInput
           id="country"
           name="country"
-          type="country"
+          type="text"
           placeholder="United States"
           autoComplete="shipping country"
           required
+          onChange={handleChange}
         />
       </FormGrid>
       <FormGrid item xs={12}>
         <FormControlLabel
-          control={<Checkbox name="saveAddress" value="yes" />}
+          control={<Checkbox name="saveAddress" value="yes" onChange={handleChange} />}
           label="Use this address for payment details"
         />
       </FormGrid>

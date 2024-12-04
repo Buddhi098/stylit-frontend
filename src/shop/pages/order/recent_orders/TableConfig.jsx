@@ -10,6 +10,29 @@ import image9 from '../../../assets/images/products/yoga pants.jpg'
 import image10 from '../../../assets/images/products/backpack.jpg'
 import image11 from '../../../assets/images/products/sunglasses.jpg'
 import image12 from '../../../assets/images/products/perfume.jpg'
+import WebApi from '../../../api/WebApi'
+
+
+export const fetchData = async () => {
+  try {
+
+    const response = await WebApi.get(`/shop/order/getOrderByShopId/${localStorage.getItem('id')}`);
+    console.log(response.data)
+    return response.data;
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const changeStatus = async (orderItemId, status) => {
+  try{
+    const response = await WebApi.get(`/shop/order/changeStatusByOrderItemId/${orderItemId}/${status}`)
+    console.log(response.data)
+  }catch(error){
+    console.log(error)
+  }
+}
 
 
 // headCells.js
@@ -21,9 +44,9 @@ export const headCellsRecentOrders = [
     label: "PRODUCT INFO",
   },
   {
-    id: "imageURL", 
+    id: "imageURL",
     numeric: false,
-    disablePadding: true, 
+    disablePadding: true,
   },
   // {
   //   id: "customer",
@@ -35,7 +58,7 @@ export const headCellsRecentOrders = [
     id: "customerName",
     numeric: true,
     disablePadding: false,
-    label: "COURIER",
+    label: "PRODUCT NAME",
   },
   {
     id: "quantity",
@@ -71,9 +94,9 @@ export const headCellsAcceptedOrders = [
     label: "PRODUCT INFO",
   },
   {
-    id: "imageUrl", 
+    id: "imageUrl",
     numeric: false,
-    disablePadding: true, 
+    disablePadding: true,
   },
   // {
   //   id: "courier",
@@ -122,9 +145,9 @@ export const headCellsRejectedOrders = [
     label: "PRODUCT INFO",
   },
   {
-    id: "imageUrl", 
+    id: "imageUrl",
     numeric: false,
-    disablePadding: true, 
+    disablePadding: true,
   },
   // {
   //   id: "courier",
@@ -227,17 +250,17 @@ export const additionalFields = [
 
 // these are filter box options
 export const filterOptions = [
-    {
-      id: "price",
-      label: "Price",
-      options: ["Below 5000", "Below 10000", "Below 15000"]
-    },
-    {
-      id: "ordered_date",
-      label: "Order Date",
-      options: ["Today", "Last Seven Days", "Last Thirty Days"]
-    },
-  ];
+  {
+    id: "price",
+    label: "Price",
+    options: ["Below 5000", "Below 10000", "Below 15000"]
+  },
+  {
+    id: "ordered_date",
+    label: "Order Date",
+    options: ["Today", "Last Seven Days", "Last Thirty Days"]
+  },
+];
 
 
 // tableData.js
@@ -267,8 +290,8 @@ export const tableData = [
     payment_method: "Credit Card",
     orderStatus: "Recent",
     imageUrl: image1,
-},
-{
+  },
+  {
     id: 2,
     info: "Slim Fit Jeans",
     orderId: "081794MT",
@@ -293,8 +316,8 @@ export const tableData = [
     payment_method: "Credit Card",
     orderStatus: "Recent",
     imageUrl: image2,
-},
-{
+  },
+  {
     id: 3,
     info: "Running Shoes",
     orderId: "081794MT",
@@ -319,8 +342,8 @@ export const tableData = [
     payment_method: "Credit Card",
     orderStatus: "Recent",
     imageUrl: image3,
-},
-{
+  },
+  {
     id: 4,
     info: "Woolen Scarf",
     orderId: "081794MT",
@@ -345,8 +368,8 @@ export const tableData = [
     payment_method: "Credit Card",
     orderStatus: "Recent",
     imageUrl: image4,
-},
-{
+  },
+  {
     id: 5,
     info: "Leather Jacket",
     orderId: "081794MT",
@@ -371,8 +394,8 @@ export const tableData = [
     payment_method: "Credit Card",
     orderStatus: "Recent",
     imageUrl: image5,
-},
-{
+  },
+  {
     id: 6,
     info: "Casual Shirt",
     orderId: "081794MT",
@@ -397,8 +420,8 @@ export const tableData = [
     payment_method: "Credit Card",
     orderStatus: "Recent",
     imageUrl: image6,
-},
-{
+  },
+  {
     id: 7,
     info: "Rings",
     orderId: "081794MT",
@@ -423,8 +446,8 @@ export const tableData = [
     payment_method: "Credit Card",
     orderStatus: "Recent",
     imageUrl: image7,
-},
-{
+  },
+  {
     id: 8,
     info: "Formal Shirt",
     orderId: "081794MT",
@@ -449,8 +472,8 @@ export const tableData = [
     payment_method: "Credit Card",
     orderStatus: "Recent",
     imageUrl: image8,
-},
-{
+  },
+  {
     id: 9,
     info: "Yoga Pants",
     orderId: "081794MT",
@@ -475,8 +498,8 @@ export const tableData = [
     payment_method: "Credit Card",
     orderStatus: "Recent",
     imageUrl: image9,
-},
-{
+  },
+  {
     id: 10,
     info: "Backpack",
     orderId: "081794MT",
@@ -501,8 +524,8 @@ export const tableData = [
     payment_method: "Credit Card",
     orderStatus: "Recent",
     imageUrl: image10,
-},
-{
+  },
+  {
     id: 11,
     info: "Sunglasses",
     orderId: "081794MT",
@@ -527,8 +550,8 @@ export const tableData = [
     payment_method: "Credit Card",
     orderStatus: "Recent",
     imageUrl: image11,
-},
-{
+  },
+  {
     id: 12,
     info: "Perfume",
     orderId: "081794MT",
@@ -553,7 +576,7 @@ export const tableData = [
     payment_method: "Credit Card",
     orderStatus: "Recent",
     imageUrl: image12,
-}
+  }
 ];
 
 export const acceptedOrders = [
@@ -582,8 +605,8 @@ export const acceptedOrders = [
     payment_method: "Credit Card",
     orderStatus: "Accepted",
     imageUrl: image1,
-},
-{
+  },
+  {
     id: 2,
     info: "Slim Fit Jeans",
     orderId: "081794MT",
@@ -608,8 +631,8 @@ export const acceptedOrders = [
     payment_method: "Credit Card",
     orderStatus: "Accepted",
     imageUrl: image2,
-},
-{
+  },
+  {
     id: 3,
     info: "Running Shoes",
     orderId: "081794MT",
@@ -634,8 +657,8 @@ export const acceptedOrders = [
     payment_method: "Credit Card",
     orderStatus: "Accepted",
     imageUrl: image3,
-},
-{
+  },
+  {
     id: 4,
     info: "Woolen Scarf",
     orderId: "081794MT",
@@ -660,8 +683,8 @@ export const acceptedOrders = [
     payment_method: "Credit Card",
     orderStatus: "Accepted",
     imageUrl: image4,
-},
-{
+  },
+  {
     id: 5,
     info: "Leather Jacket",
     orderId: "081794MT",
@@ -686,8 +709,8 @@ export const acceptedOrders = [
     payment_method: "Credit Card",
     orderStatus: "Accepted",
     imageUrl: image5,
-},
-{
+  },
+  {
     id: 6,
     info: "Casual Shirt",
     orderId: "081794MT",
@@ -712,11 +735,11 @@ export const acceptedOrders = [
     payment_method: "Credit Card",
     orderStatus: "Accepted",
     imageUrl: image6,
-},
+  },
 ];
 
-export const rejectedOrders =[
-{
+export const rejectedOrders = [
+  {
     id: 1,
     info: "Baseball Cap",
     orderId: "081794MT",
@@ -741,8 +764,8 @@ export const rejectedOrders =[
     payment_method: "Credit Card",
     orderStatus: "Rejected",
     imageUrl: image7,
-},
-{
+  },
+  {
     id: 2,
     info: "Formal Shirt",
     orderId: "081794MT",
@@ -767,8 +790,8 @@ export const rejectedOrders =[
     payment_method: "Credit Card",
     orderStatus: "Rejected",
     imageUrl: image8,
-},
-{
+  },
+  {
     id: 3,
     info: "Yoga Pants",
     orderId: "081794MT",
@@ -793,8 +816,8 @@ export const rejectedOrders =[
     payment_method: "Credit Card",
     orderStatus: "Rejected",
     imageUrl: image9,
-},
-{
+  },
+  {
     id: 4,
     info: "Backpack",
     orderId: "081794MT",
@@ -819,8 +842,8 @@ export const rejectedOrders =[
     payment_method: "Credit Card",
     orderStatus: "Rejected",
     imageUrl: image10,
-},
-{
+  },
+  {
     id: 5,
     info: "Sunglasses",
     orderId: "081794MT",
@@ -845,8 +868,8 @@ export const rejectedOrders =[
     payment_method: "Credit Card",
     orderStatus: "Rejected",
     imageUrl: image11,
-},
-{
+  },
+  {
     id: 6,
     info: "Perfume",
     orderId: "081794MT",
@@ -871,7 +894,6 @@ export const rejectedOrders =[
     payment_method: "Credit Card",
     orderStatus: "Rejected",
     imageUrl: image12,
-}
+  }
 ];
 
-  

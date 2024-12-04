@@ -14,6 +14,7 @@ import {
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import ConnectButton from "./buttons/ConnectButton";
 
 export default function TableComponent({ filteredCouriers }) {
   const [tab, setTab] = useState(0);
@@ -21,6 +22,7 @@ export default function TableComponent({ filteredCouriers }) {
   const [visibleCount, setVisibleCount] = useState(15);
   const [loadMoreEnabled, setLoadMoreEnabled] = useState(true); // Track if load more is enabled
   const [tooltipOpen, setTooltipOpen] = useState({}); // Track tooltip open state for each shop
+  const [flag , setFlag] = useState(false);
 
   useEffect(() => {
     setPage(0); // Reset page when filteredShops changes
@@ -66,9 +68,9 @@ export default function TableComponent({ filteredCouriers }) {
 
   // Filter shops based on the selected tab
   const filterCouriers = () => {
-    if (tab === 0) return filteredCouriers.filter(couriers => couriers.status !== 'following' && couriers.status !== 'requested'); // All Shops
-    if (tab === 1) return filteredCouriers.filter(couriers => couriers.status === 'requested'); // Pending Requests
-    if (tab === 2) return filteredCouriers.filter(couriers => couriers.status === 'following'); // Accepted Requests
+    if (tab === 0) return filteredCouriers.filter(couriers => couriers.status === 'None' || couriers.status === 'REJECTED'); // All Shops
+    if (tab === 1) return filteredCouriers.filter(couriers => couriers.status === 'PENDING'); // Pending Requests
+    if (tab === 2) return filteredCouriers.filter(couriers => couriers.status === 'ACCEPTED'); // Accepted Requests
     return [];
   };
 
@@ -157,22 +159,7 @@ export default function TableComponent({ filteredCouriers }) {
                           </IconButton>}
                         </Box>
                       </Tooltip>
-                      <Button
-                        variant={tab === 1 ? "outlined" : "contained"}
-                        sx={{
-                          backgroundColor: tab === 0 ? "#6CB4EE" : (tab === 2 ? "#4caf50" : "transparent"),
-                          borderColor: tab === 1 ? "#C0A888" : "transparent", 
-                          color: tab === 1 ? "#C0A888" : "#ffffff", 
-                          "&:hover": {
-                            backgroundColor: tab === 0 ? "#A8D8F7" : (tab === 2 ? "#2e7d32" : "transparent"),
-                            borderColor: tab === 1 ? "#A68A6C" : "transparent",
-                            color: tab === 1 ? "#A68A6C" : "#ffffff",
-                          },
-                        }}
-                       
-                      >
-                        {tab === 0 ? "Connect" : (tab === 1 ? "Requested" : "Connected")}
-                      </Button>
+                      <ConnectButton tab={tab} courierId={couriers.courier_id} requestId={couriers.request_id} flag={flag}  setFlag={setFlag}/>
                     </Box>
                   </Grid>
                 );

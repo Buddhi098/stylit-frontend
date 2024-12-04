@@ -11,8 +11,6 @@ import Stack from "@mui/material/Stack";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Typography from "@mui/material/Typography";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -27,10 +25,14 @@ import getCheckoutTheme from "./getCheckoutTheme";
 import Info from "./Info";
 import InfoMobile from "./InfoMobile";
 import PaymentForm from "./PaymentForm";
-import Review from "./Review";
 import { Link } from "react-router-dom";
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import WebApi from "../../api/WebApi";
+import { useState } from "react";
+import { storage } from "../../../config/firebaseConfig";
+import { useEffect } from "react";
 
-const steps = ["Shipping address", "Payment details", "Review your order"];
+const steps = ["Shipping address", "Payment details"];
 
 const logoStyle = {
   width: "140px",
@@ -39,14 +41,12 @@ const logoStyle = {
   marginRight: "-8px",
 };
 
-function getStepContent(step) {
+function getStepContent(step, setFormValues , postOrder) {
   switch (step) {
     case 0:
-      return <AddressForm />;
+      return <AddressForm setFormValues={setFormValues} />;
     case 1:
-      return <PaymentForm />;
-    case 2:
-      return <Review />;
+      return <PaymentForm postOrder={postOrder}/>;
     default:
       throw new Error("Unknown step");
   }
@@ -58,6 +58,104 @@ export default function Checkout() {
   const checkoutTheme = createTheme(getCheckoutTheme(mode));
   const defaultTheme = createTheme({ palette: { mode } });
   const [activeStep, setActiveStep] = React.useState(0);
+
+
+  const [cartItems, setCartItems] = useState([]);
+  const [imageUrls, setImageUrls] = useState({});
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [formValues, setFormValues] = React.useState({});
+  const [loading, setLoading] = useState(true);
+
+  React.useEffect(() => {
+    console.log(formValues);
+  }, [formValues])
+
+  React.useEffect(() => {
+    const fetchCartData = async () => {
+      try {
+        const response = await WebApi.get(`/shopper/order/getCart/${localStorage.getItem('id')}`);
+        const items = response.data.cartItems;
+
+        // Fetch image URLs for each cart item
+        const urls = {};
+
+        for (const item of items) {
+          const filePath = `/productImages/${item.productId}${item.color}/img0`; // Adjust path as needed
+          const fileRef = ref(storage, filePath);
+
+          try {
+            const url = await getDownloadURL(fileRef);
+            urls[item.id] = url;
+          } catch (error) {
+            console.error(`Error fetching image for product ${item.productId}:`, error);
+            urls[item.id] = '/path/to/placeholder.jpg';
+          }
+        }
+
+        setCartItems(items);
+        setImageUrls(urls);
+
+        // Calculate the total price of the cart
+        const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        setTotalPrice(total.toFixed(2));
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchCartData();
+  }, []);
+
+  const [product, setProduct] = React.useState([]);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const products = await Promise.all(
+          cartItems.map(async (cart) => {
+            // Fetch shop ID for each cart item
+            const response = await WebApi.get(`/public/product/getShopIdByProductID/${cart.productId}`);
+            console.log(response.data.shopId);
+            cart.shopId = parseInt(response.data.shopId);
+            cart.status = "pending"
+            return cart
+          })
+        );
+        console.log(products);
+        setProduct(products);
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+      }
+    };
+
+    fetchProduct();
+  }, [cartItems]);
+
+  useEffect(() => {
+    console.log("Product data:", product);
+  }, [product]);
+
+
+
+  const postOrder = async () => {
+    try {
+      console.log("address" , formValues);
+      const responseData = {
+        "userId": localStorage.getItem('id'),
+        "shippingAddress": formValues,
+        "totalCost": totalPrice,
+        "orderItems":product
+      }
+      console.log("finalData" , responseData)
+      const response = await WebApi.post("/shopper/order/createOrder", responseData)
+      console.log("husss", response.data);
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
 
   const toggleColorMode = () => {
     setMode((prev) => (prev === "dark" ? "light" : "dark"));
@@ -124,7 +222,11 @@ export default function Checkout() {
               maxWidth: 500,
             }}
           >
-            <Info totalPrice={activeStep >= 2 ? "$144.97" : "$134.98"} />
+            {loading ? (
+              <Typography>Loading...</Typography>
+            ) : (
+              <Info totalPrice={totalPrice} imageUrls={imageUrls} cartItems={cartItems} />
+            )}
           </Box>
         </Grid>
         <Grid
@@ -295,7 +397,7 @@ export default function Checkout() {
               </Stack>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                {getStepContent(activeStep, setFormValues , postOrder)}
                 <Box
                   sx={{
                     display: "flex",
@@ -340,19 +442,20 @@ export default function Checkout() {
                       Previous
                     </Button>
                   )}
-
-                  <Button
-                    variant="contained"
-                    endIcon={<ChevronRightRoundedIcon />}
-                    onClick={handleNext}
-                    sx={{
-                      width: { xs: "100%", sm: "fit-content" },
-                      borderRadius: 0,
-                      fontFamily: '"Nunito Sans", sans-serif',
-                    }}
-                  >
-                    {activeStep === steps.length - 1 ? "Place order" : "Next"}
-                  </Button>
+                  {activeStep !== 1 && (
+                    <Button
+                      variant="contained"
+                      endIcon={<ChevronRightRoundedIcon />}
+                      onClick={handleNext}
+                      sx={{
+                        width: { xs: "100%", sm: "fit-content" },
+                        borderRadius: 0,
+                        fontFamily: '"Nunito Sans", sans-serif',
+                      }}
+                    >
+                      {activeStep === steps.length - 1 ? "Place order" : "Next"}
+                    </Button>
+                  )}
                 </Box>
               </React.Fragment>
             )}

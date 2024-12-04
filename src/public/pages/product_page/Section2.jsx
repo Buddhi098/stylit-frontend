@@ -14,17 +14,13 @@ import {
   Pagination,
 } from "@mui/material";
 import DressCard from "../../components/dress_component/DressCard";
-import {colors} from "./Color";
-
-import notFoundImg from "../../assets/images/product_page/not_found.jpg"
+import { colors } from "./Color";
+import notFoundImg from "../../assets/images/product_page/not_found.jpg";
 import api from "../../api/api";
 import { storage } from "../../../config/firebaseConfig";
 import { getDownloadURL, ref } from "firebase/storage";
 
-import { set } from "lodash";
-
-
-const Section2 = ({ image  , data}) => {
+const Section2 = ({ image, data }) => {
   const [sort, setSort] = useState("");
   const [selectedColors, setSelectedColors] = useState([]);
   const [selectedSizes, setSelectedSizes] = useState([]);
@@ -33,24 +29,20 @@ const Section2 = ({ image  , data}) => {
   const [appliedSizes, setAppliedSizes] = useState([]);
   const [page, setPage] = useState(1);
   const itemsPerPage = 9; // Adjust this number based on your design
-  const[sampleClothes, setSampleClothes] = useState([]);
-  const[totalCloth , setTotalCloth] = useState(0);
-
-  // const sizes = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
-  console.log(data)
+  const [sampleClothes, setSampleClothes] = useState([]);
+  const [totalCloth, setTotalCloth] = useState(0);
 
   const getImageFromFirebase = async (imagePath) => {
     try {
       const imageRef = ref(storage, imagePath);
       const url = await getDownloadURL(imageRef);
-      console.log(url);
       return url;
     } catch (error) {
       console.error("Error fetching image from Firebase", error);
       return null;
     }
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -61,43 +53,50 @@ const Section2 = ({ image  , data}) => {
           }
         }
         formData.append("page", page - 1);
-        console.log(formData); // This will log the formData entries
-  
+
         const response = await api.post('/public/product/get_filtered_product', formData);
-  
-        console.log("response", response.data);
-  
+
         const productArray = response.data;
-  
+
         // Use Promise.all to handle asynchronous operations in map
-        const mappedProducts = await Promise.all(productArray.map(async (product) => {
-          const imageUrl = await getImageFromFirebase(`productImages/${product.id}${product.variantBoxes[0].colorVariant}/img0`);
-          return {
-            id: product.id,
-            name: product.generalInformation.productName,
-            price: parseInt(product.pricing.basePrice, 10), // Convert price to a number
-            colors: product.variantBoxes.map(variant => variant.colorVariant),
-            image: imageUrl || notFoundImg // Assuming you have a function to determine the image
-          };
-        }));
-  
+        const mappedProducts = await Promise.all(
+          productArray.map(async (product) => {
+            const variantData = await Promise.all(
+              product.variantBoxes.map(async (variant) => {
+                const imageUrl = await getImageFromFirebase(
+                  `productImages/${product.id}${variant.colorVariant}/img0`
+                );
+                return {
+                  variantId: variant.id,
+                  id: product.id,
+                  name: product.generalInformation.productName,
+                  price: parseInt(product.pricing.basePrice, 10),
+                  colors: variant.colorVariant ? [variant.colorVariant] : [],
+                  image: imageUrl || notFoundImg, // Fallback image if not found
+                };
+              })
+            );
+            return variantData; // Return all the variant data for this product
+          })
+        );
+
+        // Flatten the array of arrays if necessary
+        const flattenedMappedProducts = mappedProducts.flat();
+
         if (mappedProducts.length === 9) {
           setTotalCloth((page * 9) + 1);
         } else {
           setTotalCloth(page * 9);
         }
-  
-        setSampleClothes(mappedProducts);
-  
+
+        setSampleClothes(flattenedMappedProducts);
       } catch (error) {
         console.error("Error fetching filtered products:", error);
       }
     };
-  
-    fetchData(); // Call the async function
-  }, [page]); // Dependency array should include 'data' if it's dynamic
-  
 
+    fetchData();
+  }, [page, data]);
 
   const handleSortChange = (event) => {
     setSort(event.target.value);
@@ -108,12 +107,6 @@ const Section2 = ({ image  , data}) => {
       prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]
     );
   };
-
-  // const handleSizeChange = (size) => {
-  //   setSelectedSizes((prev) =>
-  //     prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size]
-  //   );
-  // };
 
   const handleClear = () => {
     setSort("");
@@ -155,15 +148,7 @@ const Section2 = ({ image  , data}) => {
   };
 
   const filteredClothes = filterAndSortClothes();
-
-  // Calculate total number of pages
   const totalPages = Math.ceil(totalCloth / itemsPerPage);
-
-  // Get the current page items
-  // const paginatedClothes = filteredClothes.slice(
-  //   (page - 1) * itemsPerPage,
-  //   page * itemsPerPage
-  // );
 
   const handlePageChange = (event, value) => {
     setPage(value);
@@ -185,38 +170,22 @@ const Section2 = ({ image  , data}) => {
             <FormControlLabel
               value="Featured"
               control={<Radio />}
-              label={
-                <Typography variant="body2_nunito" color={"#444444"}>
-                  Featured (Default)
-                </Typography>
-              }
+              label={<Typography variant="body2_nunito" color={"#444444"}>Featured (Default)</Typography>}
             />
             <FormControlLabel
               value="Newest"
               control={<Radio />}
-              label={
-                <Typography variant="body2_nunito" color={"#444444"}>
-                  Newest
-                </Typography>
-              }
+              label={<Typography variant="body2_nunito" color={"#444444"}>Newest</Typography>}
             />
             <FormControlLabel
               value="Low to High"
               control={<Radio />}
-              label={
-                <Typography variant="body2_nunito" color={"#444444"}>
-                  Price: Low to High
-                </Typography>
-              }
+              label={<Typography variant="body2_nunito" color={"#444444"}>Price: Low to High</Typography>}
             />
             <FormControlLabel
               value="High to Low"
               control={<Radio />}
-              label={
-                <Typography variant="body2_nunito" color={"#444444"}>
-                  Price: High to Low
-                </Typography>
-              }
+              label={<Typography variant="body2_nunito" color={"#444444"}>Price: High to Low</Typography>}
             />
           </RadioGroup>
         </FormControl>
@@ -257,11 +226,9 @@ const Section2 = ({ image  , data}) => {
                       justifyContent: "center",
                     }}
                   >
-                    {selectedColors.includes(color.name) && (
-                      <span>&#10003;</span>
-                    )}
+                    {selectedColors.includes(color.name) && <span>&#10003;</span>}
                   </Box>
-                  <Typography variant="body2_nunito" fontSize={"10px"} color="">
+                  <Typography variant="body2_nunito" fontSize={"10px"}>
                     {color.name}
                   </Typography>
                 </Box>
@@ -269,38 +236,21 @@ const Section2 = ({ image  , data}) => {
             ))}
           </Grid>
         </Box>
-        {/* <Box>
-          <Typography variant="body2_alata" color={"#444444"}>
-            Size
-          </Typography>
-          <Grid container spacing={1} marginTop={1}>
-            {sizes.map((size) => (
-              <Grid item xs={4} key={size}>
-                <Box
-                  sx={{
-                    width: "30px",
-                    height: "30px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    border: selectedSizes.includes(size)
-                      ? "2px solid black"
-                      : "2px solid #f0f0f0",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handleSizeChange(size)}
-                >
-                  <Typography variant="body2_nunito">{size}</Typography>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </Box> */}
         <Stack direction="row" spacing={2}>
-          <Button variant="outlined" size="small" sx={{ borderRadius: "0", color: "#000000", border: "1px solid #000000" }} onClick={handleClear}>
+          <Button
+            variant="outlined"
+            size="small"
+            sx={{ borderRadius: "0", color: "#000000", border: "1px solid #000000" }}
+            onClick={handleClear}
+          >
             <Typography variant="body2_nunito">Clear</Typography>
           </Button>
-          <Button variant="contained" size="small" sx={{ borderRadius: "0", color: "#ffffff", background: "#000000" }} onClick={handleApply}>
+          <Button
+            variant="contained"
+            size="small"
+            sx={{ borderRadius: "0", color: "#ffffff", background: "#000000" }}
+            onClick={handleApply}
+          >
             <Typography variant="body2_nunito">Apply</Typography>
           </Button>
         </Stack>
@@ -309,19 +259,45 @@ const Section2 = ({ image  , data}) => {
         <Grid container spacing={2}>
           {filteredClothes.map((item) => (
             <Grid item xs={4} sx={{ display: "flex", justifyContent: "flex-end" }} key={item.id}>
-              <DressCard colors={item.colors} name={item.name} price={item.price} img={item.image} id={item.id} gender={data.gender}/>
+              <DressCard
+                colors={item.colors}
+                name={item.name}
+                price={item.price}
+                img={item.image}
+                id={item.id}
+                variantId={item.variantId}
+                gender={data.gender}
+              />
             </Grid>
           ))}
         </Grid>
-        <Stack spacing={2} alignItems="center" sx={{ marginTop: 2 }}>
+        {filteredClothes.length === 0 && (
+          <Paper
+            elevation={0}
+            sx={{
+              textAlign: "center",
+              padding: "20px",
+              marginTop: "20px",
+              backgroundColor: "#f9f9f9",
+            }}
+          >
+            <Avatar
+              src={notFoundImg}
+              sx={{ width: 100, height: 100, margin: "0 auto 10px" }}
+            />
+            <Typography variant="h6" color="text.secondary">
+              No products found
+            </Typography>
+          </Paper>
+        )}
+        <Box sx={{ marginTop: "20px", display: "flex", justifyContent: "center" }}>
           <Pagination
             count={totalPages}
             page={page}
             onChange={handlePageChange}
             color="primary"
-            shape="rounded"
           />
-        </Stack>
+        </Box>
       </Stack>
     </Stack>
   );

@@ -17,11 +17,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCartOutlined';
 import LocalShippingIcon from '@mui/icons-material/LocalShippingOutlined';
 import PersonIcon from '@mui/icons-material/Person';
+import WebApi from "../../../api/WebApi";
+import { set } from "lodash";
 
 
 const getStatusColor = (orderStatus) => {
   switch (orderStatus.toLowerCase()) {
-    case 'recent':
+    case 'pending':
       return "#C0A888";
     case 'rejected':
       return 'red';
@@ -32,9 +34,29 @@ const getStatusColor = (orderStatus) => {
   }
 };
 
-const OrderDialog = ({ open, handleClose, selectedRow }) => {
+const OrderDialog = ({ open, handleClose, selectedRow , order }) => {
   const [qrCodeValue, setQrCodeValue] = useState(null);
   const [showQrCode, setShowQrCode] = useState(false);
+
+  // const [order , setOrder] = useState({});
+
+
+  // useEffect(()=>{
+  //   const fetchOrder = async () => {
+  //     try {
+  //       const response = await WebApi.get(`/shop/order/getOrderDetailsByOrderId/${selectedRow.orderId}`);
+  //       console.log("Bu fetched: ", response.data);
+  //       setOrder(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching data: ", error);
+  //     }
+  //   }
+  //   fetchOrder();
+  // } , [])
+
+  useEffect(()=>{
+    console.log("selectedRow",selectedRow);
+  } , [selectedRow])
 
   useEffect(() => {
     if (!open) {
@@ -54,7 +76,7 @@ const OrderDialog = ({ open, handleClose, selectedRow }) => {
   };
 
   // Conditionally render the button based on the order status
-  const showGenerateQRButton = selectedRow?.orderStatus.toLowerCase() === 'accepted';
+  const showGenerateQRButton = selectedRow?.status.toLowerCase() === 'accepted';
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
@@ -63,7 +85,7 @@ const OrderDialog = ({ open, handleClose, selectedRow }) => {
           <Box display="flex" alignItems="center">
             {selectedRow && (
               <Typography variant="h6" component="div" ml={2} style={{ textTransform: 'uppercase', fontWeight: 'bold', color: 'white' }}>
-                {selectedRow.info}
+                {selectedRow.productName}
               </Typography>
             )}
           </Box>
@@ -95,23 +117,23 @@ const OrderDialog = ({ open, handleClose, selectedRow }) => {
                 <>
                   <Grid container spacing={1} ml={3} mt={0.25}>
                     <Grid item xs={3}><Typography variant="body2"><strong>Order ID</strong></Typography></Grid>
-                    <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.orderId}</Typography></Grid>
+                    <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.id}</Typography></Grid>
                   </Grid>
                   <Grid container spacing={1} ml={3} mt={0.25}>
                     <Grid item xs={3}><Typography variant="body2"><strong>Product Name</strong></Typography></Grid>
-                    <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.info}</Typography></Grid>
+                    <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.productName}</Typography></Grid>
                   </Grid>
                   <Grid container spacing={1} ml={3} mt={0.25}>
-                    <Grid item xs={3}><Typography variant="body2"><strong>Category</strong></Typography></Grid>
-                    <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.category}</Typography></Grid>
+                    <Grid item xs={3}><Typography variant="body2"><strong>Color</strong></Typography></Grid>
+                    <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.color}</Typography></Grid>
                   </Grid>
                   <Grid container spacing={1} ml={3} mt={0.25}>
-                    <Grid item xs={3}><Typography variant="body2"><strong>Sub Category</strong></Typography></Grid>
-                    <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.subcategory}</Typography></Grid>
+                    <Grid item xs={3}><Typography variant="body2"><strong>Size</strong></Typography></Grid>
+                    <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.size}</Typography></Grid>
                   </Grid>
                   <Grid container spacing={1} ml={3} mt={0.25}>
                     <Grid item xs={3}><Typography variant="body2"><strong>Brand</strong></Typography></Grid>
-                    <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.brand}</Typography></Grid>
+                    <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.price}</Typography></Grid>
                   </Grid>
                   <Grid container spacing={1} ml={3} mt={0.25}>
                     <Grid item xs={3}><Typography variant="body2"><strong>Color</strong></Typography></Grid>
@@ -151,19 +173,15 @@ const OrderDialog = ({ open, handleClose, selectedRow }) => {
                 <>
                   <Grid container spacing={1} ml={3} mt={0.25}>
                     <Grid item xs={3}><Typography variant="body2"><strong>Ordered Date</strong></Typography></Grid>
-                    <Grid item xs={7}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.ordered_date}</Typography></Grid>
-                  </Grid>
-                  <Grid container spacing={1} ml={3} mt={0.25}>
-                    <Grid item xs={3}><Typography variant="body2"><strong>Approx. Delivery Date</strong></Typography></Grid>
-                    <Grid item xs={7}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.deliveryDate}</Typography></Grid>
+                    <Grid item xs={7}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{order.createdAt}</Typography></Grid>
                   </Grid>
                   <Grid container spacing={1} ml={3} mt={0.25}>
                     <Grid item xs={3}><Typography variant="body2"><strong>Delivery Address</strong></Typography></Grid>
-                    <Grid item xs={7}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.address}</Typography></Grid>
+                    <Grid item xs={7}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{`${order.shippingAddress.addressLine1} , ${order.shippingAddress.addressLine2} \n ${order.shippingAddress.province}`}</Typography></Grid>
                   </Grid>
                   <Grid container spacing={1} ml={3} mt={0.25}>
-                    <Grid item xs={3}><Typography variant="body2"><strong>Courier</strong></Typography></Grid>
-                    <Grid item xs={7}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.courier}</Typography></Grid>
+                    <Grid item xs={3}><Typography variant="body2"><strong>totalCost</strong></Typography></Grid>
+                    <Grid item xs={7}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{order.totalCost}</Typography></Grid>
                   </Grid>
                   <Grid container spacing={1} ml={3} mt={0.25}>
                     <Grid item xs={3}><Typography variant="body2"><strong>Order Status</strong></Typography></Grid>
@@ -172,10 +190,10 @@ const OrderDialog = ({ open, handleClose, selectedRow }) => {
                         variant="body2" 
                         sx={{ 
                           textAlign: 'right', 
-                          color: getStatusColor(selectedRow.orderStatus) // Apply dynamic color based on status
+                          color: getStatusColor(selectedRow.status) // Apply dynamic color based on status
                         }}
                       >
-                        {selectedRow.orderStatus}
+                        {selectedRow.status}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -204,15 +222,7 @@ const OrderDialog = ({ open, handleClose, selectedRow }) => {
                 <>
                   <Grid container spacing={1} ml={3} mt={0.25}>
                     <Grid item xs={3}><Typography variant="body2"><strong>Customer Name</strong></Typography></Grid>
-                    <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.customerName}</Typography></Grid>
-                  </Grid>
-                  <Grid container spacing={1} ml={3} mt={0.25}>
-                    <Grid item xs={3}><Typography variant="body2"><strong>Customer Email</strong></Typography></Grid>
-                    <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.customerEmail}</Typography></Grid>
-                  </Grid>
-                  <Grid container spacing={1} ml={3} mt={0.25}>
-                    <Grid item xs={3}><Typography variant="body2"><strong>Customer Phone</strong></Typography></Grid>
-                    <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.customerPhone}</Typography></Grid>
+                    <Grid item xs={5.5}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{order?.shippingAddress?.customerName}</Typography></Grid>
                   </Grid>
                 </>
               )}
@@ -230,32 +240,8 @@ const OrderDialog = ({ open, handleClose, selectedRow }) => {
                 }}>
                   <LocalShippingIcon fontSize="small" sx={{ color: "black" }} />
                 </Box>
-                <Typography variant="h6" gutterBottom ml={2} mt={1} sx={{ fontWeight: 'bold', color: "black" }}>Billing Info</Typography>
               </Box>
-              {selectedRow && (
-                <>
-                  <Grid container spacing={1} ml={3} mt={0.25}>
-                    <Grid item xs={3}><Typography variant="body2"><strong>Card No</strong></Typography></Grid>
-                    <Grid item xs={7}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.cardNo}</Typography></Grid>
-                  </Grid>
-                  <Grid container spacing={1} ml={3} mt={0.25}>
-                    <Grid item xs={3}><Typography variant="body2"><strong>Store Name</strong></Typography></Grid>
-                    <Grid item xs={7}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.storeName}</Typography></Grid>
-                  </Grid>
-                  <Grid container spacing={1} ml={3} mt={0.25}>
-                    <Grid item xs={3}><Typography variant="body2"><strong>Phone</strong></Typography></Grid>
-                    <Grid item xs={7}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.phone}</Typography></Grid>
-                  </Grid>
-                  <Grid container spacing={1} ml={3} mt={0.25}>
-                    <Grid item xs={3}><Typography variant="body2"><strong>Payment Method</strong></Typography></Grid>
-                    <Grid item xs={7}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.payment_method}</Typography></Grid>
-                  </Grid>
-                  <Grid container spacing={1} ml={3} mt={0.25}>
-                    <Grid item xs={3}><Typography variant="body2"><strong>Total Amount(Rs.)</strong></Typography></Grid>
-                    <Grid item xs={7}><Typography variant="body2" sx={{ textAlign: 'right', color: "black" }}>{selectedRow.price}</Typography></Grid>
-                  </Grid>
-                </>
-              )}
+              
             </Box>
           </Box>
 

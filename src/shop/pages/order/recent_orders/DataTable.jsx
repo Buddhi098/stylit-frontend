@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TableComponent from "./TableComponent";
 import FilterComponent from "./FilterComponent";
 import { Stack } from "@mui/material";
-import { filterOptions, tableData, headCellsRecentOrders, headCellsAcceptedOrders, headCellsRejectedOrders, acceptedOrders, rejectedOrders } from "./TableConfig";
+import { filterOptions, headCellsRecentOrders, headCellsAcceptedOrders, headCellsRejectedOrders, fetchData } from "./TableConfig";
 
 const DataTable = () => {
   const [search, setSearch] = useState("");
@@ -12,6 +12,22 @@ const DataTable = () => {
   const [filter3, setFilter3] = useState("");
   const [checked, setChecked] = useState(false);
   const [tab, setTab] = useState(0);
+
+  const [tableData, setTableData] = useState([]);
+
+  useEffect(() => {
+    const fetchTableData = async () => {
+      try {
+        const response = await fetchData();
+        console.log("Data fetched: ", response.data);
+        setTableData(response.data);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+
+    fetchTableData();
+  }, []);
 
   const getHeadCells = () => {
     switch (tab) {
@@ -27,16 +43,17 @@ const DataTable = () => {
   };
 
   const getData = () => {
-    switch (tab) {
-      case 0:
-        return tableData;
-      case 1:
-        return acceptedOrders;
-      case 2:
-        return rejectedOrders;
-      default:
-        return tableData;
-    }
+    // switch (tab) {
+    //   case 0:
+    //     return tableData.filter((row) => row.status === "pending");
+    //   case 1:
+    //     return tableData.filter((row) => row.status === "accepted");
+    //   case 2:
+    //     return tableData.filter((row) => row.status === "rejected");
+    //   default:
+    //     return tableData;
+    // }
+    return tableData;
   };
 
   const columnIdArray = getHeadCells().map((column) => column.id);
@@ -75,12 +92,11 @@ const DataTable = () => {
         if (filter === "Before End of This Year") return new Date(value) < endOfYear;
       }
 
-
       if (checked) {
         return filter === row[filterIdArray[index]];
       }
-      
-      return value.toString().toLowerCase().includes(filter.toLowerCase());
+
+      return value?.toString().toLowerCase().includes(filter.toLowerCase());
     });
   });
 
@@ -91,7 +107,7 @@ const DataTable = () => {
   };
 
   return (
-    <Stack sx={{p: { xs: 2, sm: 3 }}}>
+    <Stack sx={{ p: { xs: 2, sm: 3 } }}>
       <FilterComponent
         search={search}
         handleSearch={setSearch}

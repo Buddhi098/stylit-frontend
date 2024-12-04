@@ -149,6 +149,16 @@ const PrimaryHeader = ({ topHeaderColor }) => {
               </span>
             </Link>
           )}
+          {user?.resource_access.stylit.roles.includes("shopper") && (
+            <Link to="/shopper/orderPage">
+              {/* <FavoriteBorderOutlinedIcon
+                sx={{ fontSize: "30px", color: "rgba(0, 0, 0, 0.6)" }}
+              /> */}
+              <span class="material-symbols-outlined">
+                list_alt
+              </span>
+            </Link>
+          )}
 
           {user?.resource_access.stylit.roles.includes("shopper") && <Cart />}
         </Stack>

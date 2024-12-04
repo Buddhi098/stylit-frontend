@@ -2,7 +2,7 @@ import React from 'react';
 import { Accordion, AccordionSummary, AccordionDetails, Typography, Stack } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
-const ClothAccordion = () => {
+const ClothAccordion = ({product}) => {
   return (
     <Stack width="450px">
       <Accordion sx={{ boxShadow: 'none' }}>
@@ -15,7 +15,7 @@ const ClothAccordion = () => {
         </AccordionSummary>
         <AccordionDetails>
           <Typography variant='body2_nunito' color="#999999">
-            This product is made from high-quality materials to ensure durability and comfort. It features a sleek design and is perfect for everyday wear.
+            {product?.generalInformation?.description}
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -29,7 +29,7 @@ const ClothAccordion = () => {
         </AccordionSummary>
         <AccordionDetails>
           <Typography Typography variant='body2_nunito' color="#999999">
-            This brand is known for its commitment to quality and style. With years of experience in the fashion industry, it offers products that are both trendy and reliable.
+            {product?.generalInformation?.brand}
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -57,7 +57,7 @@ const ClothAccordion = () => {
         </AccordionSummary>
         <AccordionDetails>
           <Typography Typography variant='body2_nunito' color="#999999">
-            Made from 100% cotton, this product is soft and breathable. It is machine washable for easy care. Please follow the care instructions on the label to maintain its quality.
+            {`Made from ${product?.materialCare?.material}, this product is soft and breathable. It is machine washable for easy care. Please follow the care instructions on the label to maintain its quality.`}
           </Typography>
         </AccordionDetails>
       </Accordion>

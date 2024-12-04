@@ -3,7 +3,7 @@ import { Select, MenuItem, Box, Stack, Typography } from "@mui/material";
 import SizeChartModal from "./SizeChartModal";
 import { Link } from "react-router-dom";
 
-const SizeChart = ({id , sizeChart}) => {
+const SizeChart = ({id , sizeChart , color}) => {
   const [size, setSize] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -69,7 +69,7 @@ const SizeChart = ({id , sizeChart}) => {
           </Select>
         </Stack>
       </Stack>
-      <SizeChartModal open={modalOpen} handleClose={handleModalClose} />
+      <SizeChartModal open={modalOpen} handleClose={handleModalClose} color={color} id={id}/>
     </Box>
   );
 };

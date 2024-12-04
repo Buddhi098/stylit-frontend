@@ -1,19 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TitleComponent from "./TitleComponent";
 import TableComponent from "./TableComponent";
 import { Stack } from "@mui/material";
-import { shops } from "./TableConfig";
+import { fetchData } from "./TableConfig";
 
 const DataTable = () => {
   // Implement search feature
   const [search, setSearch] = useState("");
+  const [shops, setShops] = useState([]);
 
-  const filteredShops = shops.filter((shop) =>
+  useEffect(() => {
+    const fetchDataFrom = async () => {
+      try {
+        const data = await fetchData();
+        setShops(data);
+      } catch (error) {
+        console.error("Error fetching shop data:", error);
+      }
+    }
+    fetchDataFrom();
+  }, []);
+
+  const filteredShops = shops?.filter((shop) =>
     shop.name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <Stack sx={{p: { xs: 2, sm: 3 }}}>
+    <Stack sx={{ p: { xs: 2, sm: 3 } }}>
       <TitleComponent
         search={search}
         handleSearch={setSearch}

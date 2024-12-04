@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TableComponent from "./TableComponent";
 import FilterComponent from "./FilterComponent";
 import { Stack } from "@mui/material";
 import { filterOptions, tableData, headCellsAllRequests, headCellsRejectedDeliveries, rejectedDeliveries } from "./TableConfig";
+import WebApi from "../../api/WebApi";
 
 const DataTable = () => {
   const [search, setSearch] = useState("");
@@ -13,12 +14,23 @@ const DataTable = () => {
   const [checked, setChecked] = useState(false);
   const [tab, setTab] = useState(0);
 
+  const [tableData , setTableData] = useState([]);
+
+  useEffect(()=>{
+    const fetchData = async () => {
+      const response = await WebApi.get(`/courier/order/getAllOrderByCourierId/${localStorage.getItem('id')}`);
+      setTableData(response.data);
+      console.log(response.data);
+    }
+    fetchData();
+  } , [])
+
   const getHeadCells = () => tab === 0 ? headCellsAllRequests : headCellsRejectedDeliveries;
-  const getData = () => tab === 0 ? tableData : rejectedDeliveries;
+  const getData = () => tableData;
 
   const columnIdArray = getHeadCells().map((column) => column.id);
 
-  const filteredRows = getData().filter((row) => {
+  const filteredRows = tableData?.filter((row) => {
     for (let columnId of columnIdArray) {
       if (row[columnId]?.toString().toLowerCase().includes(search.toLowerCase())) {
         return true;
@@ -30,7 +42,7 @@ const DataTable = () => {
   const filters = [filter0, filter1, filter2, filter3];
   const filterIdArray = filterOptions.map((filter) => filter.id);
 
-  const filteredData = getData().filter((row) => {
+  const filteredData =tableData?.filter((row) => {
     return filters.every((filter, index) => {
       if (filter === "") {
         return true;
@@ -91,7 +103,7 @@ const DataTable = () => {
         setTab={setTab}
         handleTabChange={handleTabChange} // Pass the tab change handler
       />
-      <TableComponent rows={finalData} />
+      <TableComponent rows={tableData} />
     </Stack>
   );
 };

@@ -8,6 +8,7 @@ import AuthContext from '../context/auth_context/AuthContext';
 const Account = Loadable(lazy(() => import('../registered_shopper/pages/account/Account')));
 const FavoritePage = Loadable(lazy(() => import('../registered_shopper/pages/favorite_page/FavoritePage')));
 const CheckoutPage = Loadable(lazy(() => import('../registered_shopper/pages/checkout_page/CheckoutPage')));
+const OrderPage = Loadable(lazy(() => import('../registered_shopper/pages/order_detail/OrderPage')));
 
 
 
@@ -25,6 +26,10 @@ const ShopperRoutes = {
     {
       path: 'checkout',
       element: <ActorBasedRoute element={CheckoutPage} requiredRoles={['shopper']} />
+    },
+    {
+      path: 'orderPage',
+      element: <ActorBasedRoute element={OrderPage} requiredRoles={['shopper']} />
     },
   ]
 };

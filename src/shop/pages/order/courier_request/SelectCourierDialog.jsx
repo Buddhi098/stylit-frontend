@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   Dialog,
@@ -17,20 +17,51 @@ import {
   Chip
 } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-
-const courierOptions = ["FedEx", "Domex", "Pronto Lanka", "UPS", "DHL"];
+import WebApi from "../../../api/WebApi";
 
 export default function SelectCourierDialog({ open, handleClose, selectedRow }) {
-  const [selectedCourier, setSelectedCourier] = React.useState("");
+  const [selectedCourier, setSelectedCourier] = React.useState(null);
+  const [courierOptions, setCourierOptions] = React.useState([]);
+
+  useEffect(() => {
+    const fetchCourierOptions = async () => {
+      try {
+        const response = await WebApi.get("/public/user/getAllActiveCourier");
+        const courierOptions = response.data.map((courier) => ({
+          name: courier.courierName,
+          id: courier.id,
+        }));
+        console.log("Courier options:", courierOptions);
+        setCourierOptions(courierOptions); // Store fetched options
+      } catch (error) {
+        console.error("Error fetching courier options:", error);
+      }
+    };
+
+    fetchCourierOptions();
+  }, []);
 
   const handleCourierSelect = (courier) => {
     setSelectedCourier(courier);
   };
 
-  const handleRequest = () => {
-    // Handle the courier request logic here
-    console.log("Requested courier:", selectedCourier);
-    handleClose();
+  const handleRequest = async () => {
+    if (!selectedCourier) {
+      console.error("No courier selected");
+      return;
+    }
+
+    try {
+      // Make API request to select the courier for the order
+      const response = await WebApi.get(
+        `/shop/order/selectCourierForOrder/${selectedRow.id}/${selectedCourier.id}/${encodeURIComponent(selectedCourier.name)}`
+      );
+      console.log("Response from selecting courier:", response.data);
+      window.location.reload(); 
+      handleClose(); 
+    } catch (error) {
+      console.error("Error submitting the courier request:", error);
+    }
   };
 
   return (
@@ -58,10 +89,10 @@ export default function SelectCourierDialog({ open, handleClose, selectedRow }) 
             Please select a courier from the list below:
           </Typography>
           <List>
-            {courierOptions.map((option) => (
+            {courierOptions?.map((option) => (
               <ListItemButton
-                key={option}
-                selected={selectedCourier === option}
+                key={option.id}
+                selected={selectedCourier?.id === option.id}
                 onClick={() => handleCourierSelect(option)}
                 sx={{
                   borderRadius: '8px',
@@ -79,10 +110,10 @@ export default function SelectCourierDialog({ open, handleClose, selectedRow }) 
                 }}
               >
                 <ListItemText
-                  primary={option}
+                  primary={option.name}
                   primaryTypographyProps={{ fontWeight: 'medium' }}
                 />
-                {selectedCourier === option && (
+                {selectedCourier?.id === option.id && (
                   <Chip label="Selected" size="small" color="primary" sx={{ ml: 2 }} />
                 )}
               </ListItemButton>
@@ -114,5 +145,5 @@ export default function SelectCourierDialog({ open, handleClose, selectedRow }) 
 SelectCourierDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  selectedRow: PropTypes.object,
+  selectedRow: PropTypes.object.isRequired,
 };

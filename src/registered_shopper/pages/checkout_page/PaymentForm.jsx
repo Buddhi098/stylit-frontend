@@ -1,212 +1,114 @@
 import * as React from 'react';
-
-import Alert from '@mui/material/Alert';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActionArea from '@mui/material/CardActionArea';
-import CardContent from '@mui/material/CardContent';
-import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import RadioGroup from '@mui/material/RadioGroup';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-
-import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
-import CreditCardRoundedIcon from '@mui/icons-material/CreditCardRounded';
-import SimCardRoundedIcon from '@mui/icons-material/SimCardRounded';
-import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
-
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Box, Button, Typography, Card, CircularProgress } from '@mui/material';
 import { styled } from '@mui/system';
 
-const FormGrid = styled('div')(() => ({
-  display: 'flex',
-  flexDirection: 'column',
+const stripePromise = loadStripe('pk_test_51QRwnZEnS6uFaxwj6Du6K02ntiJilWAk6W1Tdrf4cXl7O3UiRSrBR5SjAg3vKVFAtKYuYo2FI0UksYNUDrnL8kx2009oxmbaG7'); // Replace with your Stripe test API key
+
+const PaymentCard = styled(Card)(({ theme }) => ({
+  width: '100%',
+  padding: theme.spacing(3),
+  boxShadow: theme.shadows[3],
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: theme.palette.background.paper,
 }));
 
-export default function PaymentForm() {
-  const [paymentType, setPaymentType] = React.useState('creditCard');
-  const [cardNumber, setCardNumber] = React.useState('');
-  const [cvv, setCvv] = React.useState('');
-  const [expirationDate, setExpirationDate] = React.useState('');
+const PaymentForm = ({postOrder}) => (
+  <Elements stripe={stripePromise}>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '50vh',
+        padding: 2,
+      }}
+    >
+      <PaymentCard>
+        <Typography variant="h6" gutterBottom>
+          Secure Payment
+        </Typography>
+        <StripeCheckoutForm postOrder={postOrder}/>
+      </PaymentCard>
+    </Box>
+  </Elements>
+);
 
-  const handlePaymentTypeChange = (event) => {
-    setPaymentType(event.target.value);
-  };
+const StripeCheckoutForm = ({postOrder}) => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [loading, setLoading] = React.useState(false);
+  const [paymentSuccess, setPaymentSuccess] = React.useState(false);
 
-  const handleCardNumberChange = (event) => {
-    const value = event.target.value.replace(/\D/g, '');
-    const formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ');
-    if (value.length <= 16) {
-      setCardNumber(formattedValue);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!stripe || !elements) {
+      return;
     }
-  };
+    setLoading(true);
+    postOrder();
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: 'card',
+      card: elements.getElement(CardElement),
+    });
 
-  const handleCvvChange = (event) => {
-    const value = event.target.value.replace(/\D/g, '');
-    if (value.length <= 3) {
-      setCvv(value);
-    }
-  };
+    setLoading(false);
 
-  const handleExpirationDateChange = (event) => {
-    const value = event.target.value.replace(/\D/g, '');
-    const formattedValue = value.replace(/(\d{2})(?=\d{2})/, '$1/');
-    if (value.length <= 4) {
-      setExpirationDate(formattedValue);
+    if (error) {
+      console.error('Payment error:', error);
+      alert('Payment failed. Please try again.');
+    } else {
+      console.log('Payment method created:', paymentMethod);
+      setPaymentSuccess(true);
     }
   };
 
   return (
-    <Stack spacing={{ xs: 3, sm: 6 }} useFlexGap>
-      {paymentType === 'creditCard' && (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 2,
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              p: 3,
-              height: { xs: 300, sm: 350, md: 375 },
-              width: '100%',
-              border: '1px solid ',
-              borderColor: 'divider',
-              backgroundColor: 'background.paper',
-              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.05)',
-              height:"100%"
-            }}
-          >
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Typography variant="subtitle2">Credit card</Typography>
-              <CreditCardRoundedIcon sx={{ color: 'text.secondary' }} />
-            </Box>
-            <SimCardRoundedIcon
-              sx={{
-                fontSize: { xs: 48, sm: 56 },
-                transform: 'rotate(90deg)',
-                color: 'text.secondary',
+    <form onSubmit={handleSubmit}>
+      {paymentSuccess ? (
+        <Typography variant="h6" color="success.main" sx={{ mb: 2, textAlign: 'center' }}>
+          Payment Successful! Thank you for your purchase.
+        </Typography>
+      ) : (
+        <>
+          <Box sx={{ mb: 2 }}>
+            <CardElement
+              options={{
+                style: {
+                  base: {
+                    fontSize: '16px',
+                    color: '#424770',
+                    '::placeholder': {
+                      color: '#aab7c4',
+                    },
+                  },
+                  invalid: {
+                    color: '#9e2146',
+                  },
+                },
               }}
             />
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                width: '100%',
-                gap: 2,
-              }}
-            >
-              <FormGrid sx={{ flexGrow: 1 }}>
-                <FormLabel htmlFor="card-number" required>
-                  Card number
-                </FormLabel>
-                <OutlinedInput
-                  id="card-number"
-                  autoComplete="card-number"
-                  placeholder="0000 0000 0000 0000"
-                  required
-                  value={cardNumber}
-                  onChange={handleCardNumberChange}
-                />
-              </FormGrid>
-              <FormGrid sx={{ maxWidth: '20%' }}>
-                <FormLabel htmlFor="cvv" required>
-                  CVV
-                </FormLabel>
-                <OutlinedInput
-                  id="cvv"
-                  autoComplete="CVV"
-                  placeholder="123"
-                  required
-                  value={cvv}
-                  onChange={handleCvvChange}
-                />
-              </FormGrid>
-            </Box>
-            <Box sx={{ display: 'flex', gap: 2 }}>
-              <FormGrid sx={{ flexGrow: 1 }}>
-                <FormLabel htmlFor="card-name" required>
-                  Name
-                </FormLabel>
-                <OutlinedInput
-                  id="card-name"
-                  autoComplete="card-name"
-                  placeholder="John Smith"
-                  required
-                />
-              </FormGrid>
-              <FormGrid sx={{ flexGrow: 1 }}>
-                <FormLabel htmlFor="card-expiration" required>
-                  Expiration date
-                </FormLabel>
-                <OutlinedInput
-                  id="card-expiration"
-                  autoComplete="card-expiration"
-                  placeholder="MM/YY"
-                  required
-                  value={expirationDate}
-                  onChange={handleExpirationDateChange}
-                />
-              </FormGrid>
-            </Box>
           </Box>
-          <FormControlLabel
-            control={<Checkbox name="saveCard" />}
-            label="Remember credit card details for next time"
-          />
-        </Box>
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            fullWidth
+            disabled={loading || paymentSuccess || !stripe}
+            sx={{
+              py: 1.5,
+              fontFamily: '"Roboto", sans-serif',
+              fontWeight: 'bold',
+              fontSize: '16px',
+            }}
+          >
+            {loading ? <CircularProgress size={24} color="inherit" /> : 'Pay Now'}
+          </Button>
+        </>
       )}
-
-      {paymentType === 'bankTransfer' && (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 2,
-          }}
-        >
-          <Alert severity="warning" icon={<WarningRoundedIcon />}>
-            Your order will be processed once we receive the funds.
-          </Alert>
-          <Typography variant="subtitle1" fontWeight="medium">
-            Bank account
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            Please transfer the payment to the bank account details shown below.
-          </Typography>
-          <Box sx={{ display: 'flex', gap: 1 }}>
-            <Typography variant="body1" color="text.secondary">
-              Bank:
-            </Typography>
-            <Typography variant="body1" fontWeight="medium">
-              Mastercredit
-            </Typography>
-          </Box>
-          <Box sx={{ display: 'flex', gap: 1 }}>
-            <Typography variant="body1" color="text.secondary">
-              Account number:
-            </Typography>
-            <Typography variant="body1" fontWeight="medium">
-              123456789
-            </Typography>
-          </Box>
-          <Box sx={{ display: 'flex', gap: 1 }}>
-            <Typography variant="body1" color="text.secondary">
-              Routing number:
-            </Typography>
-            <Typography variant="body1" fontWeight="medium">
-              987654321
-            </Typography>
-          </Box>
-        </Box>
-      )}
-    </Stack>
+    </form>
   );
-}
+};
+
+export default PaymentForm;

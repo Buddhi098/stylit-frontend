@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TableComponent from "./TableComponent";
 import FilterComponent from "./FilterComponent";
 import { Stack } from "@mui/material";
-import { filterOptions, tableData, headCellsAllRequests, headCellsPendingRequests, headCellsRejectedRequests, pendingRequests, rejectedRequests } from "./TableConfig";
+import {
+  filterOptions,
+  headCellsAllRequests,
+  headCellsPendingRequests,
+  headCellsRejectedRequests,
+  fetchAcceptedOrder,
+} from "./TableConfig";
 
 const DataTable = () => {
   const [search, setSearch] = useState("");
@@ -12,7 +18,22 @@ const DataTable = () => {
   const [filter3, setFilter3] = useState("");
   const [checked, setChecked] = useState(false);
   const [tab, setTab] = useState(0);
+  const [tableData, setTableData] = useState([]);
 
+  // Fetch accepted orders on component mount
+  useEffect(() => {
+    const fetchAcceptedOrderDetails = async () => {
+      try {
+        const response = await fetchAcceptedOrder();
+        setTableData(response);
+      } catch (error) {
+        console.error("Error fetching accepted orders:", error);
+      }
+    };
+    fetchAcceptedOrderDetails();
+  }, []);
+
+  // Get the appropriate head cells based on the active tab
   const getHeadCells = () => {
     switch (tab) {
       case 0:
@@ -26,38 +47,23 @@ const DataTable = () => {
     }
   };
 
-  const getData = () => {
-    switch (tab) {
-      case 0:
-        return tableData;
-      case 1:
-        return pendingRequests;
-      case 2:
-        return rejectedRequests;
-      default:
-        return tableData;
-    }
-  };
-
   const columnIdArray = getHeadCells().map((column) => column.id);
 
-  const filteredRows = getData().filter((row) => {
-    for (let columnId of columnIdArray) {
-      if (row[columnId]?.toString().toLowerCase().includes(search.toLowerCase())) {
-        return true;
-      }
-    }
-    return false;
+  // Filter rows based on the search query
+  const filteredRows = tableData?.filter((row) => {
+    return columnIdArray.some((columnId) =>
+      row[columnId]?.toString().toLowerCase().includes(search.toLowerCase())
+    );
   });
 
+  // Apply advanced filters
   const filters = [filter0, filter1, filter2, filter3];
   const filterIdArray = filterOptions.map((filter) => filter.id);
 
-  const filteredData = getData().filter((row) => {
+  const filteredData = tableData?.filter((row) => {
     return filters.every((filter, index) => {
-      if (filter === "") {
-        return true;
-      }
+      if (!filter) return true; // Skip empty filters
+
       const value = row[filterIdArray[index]];
 
       if (filterIdArray[index] === "price") {
@@ -75,23 +81,24 @@ const DataTable = () => {
         if (filter === "Before End of This Year") return new Date(value) < endOfYear;
       }
 
-
       if (checked) {
         return filter === row[filterIdArray[index]];
       }
-      
-      return value.toString().toLowerCase().includes(filter.toLowerCase());
+
+      return value?.toString().toLowerCase().includes(filter.toLowerCase());
     });
   });
 
+  // Final data to display in the table
   const finalData = checked ? filteredData : filteredRows;
 
+  // Handle tab change
   const handleTabChange = (newTab) => {
     setTab(newTab);
   };
 
   return (
-    <Stack sx={{p: { xs: 2, sm: 3 }}}>
+    <Stack sx={{ p: { xs: 2, sm: 3 } }}>
       <FilterComponent
         search={search}
         handleSearch={setSearch}
@@ -107,7 +114,7 @@ const DataTable = () => {
         setChecked={setChecked}
         tab={tab}
         setTab={setTab}
-        handleTabChange={handleTabChange} // Pass the tab change handler
+        handleTabChange={handleTabChange}
       />
       <TableComponent rows={finalData} />
     </Stack>

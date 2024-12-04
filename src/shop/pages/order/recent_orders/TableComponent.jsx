@@ -20,6 +20,9 @@ import { visuallyHidden } from "@mui/utils";
 import { headCellsRecentOrders, headCellsAcceptedOrders, headCellsRejectedOrders, rejectedOrders, acceptedOrders } from "./TableConfig";
 import OrderDialog from "./OrderDialog";
 import AcceptedIcon from '@mui/icons-material/CheckCircleOutline';
+import { useState } from "react";
+import WebApi from "../../../api/WebApi";
+import StatusChangeComponent from "./StatusChangeComponent";
 
 
 
@@ -105,6 +108,22 @@ export default function TableComponent({ rows }) {
   const [selectedRow, setSelectedRow] = React.useState(null);
   const [tab, setTab] = React.useState(0);
 
+  const [orderData , setOrderData] = useState({});
+
+
+  React.useEffect(()=>{
+    const fetchOrder = async () => {
+      try {
+        const response = await WebApi.get(`/shop/order/getOrderDetailsByOrderId/${selectedRow.orderId}`);
+        console.log("Bu fetched: ", response.data);
+        setOrderData(response.data);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    }
+    fetchOrder();
+  } , [])
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -127,11 +146,11 @@ export default function TableComponent({ rows }) {
   const handleRowClick = (row) => {
     setSelectedRow(row);
     if (tab === 0) {
-      setOpenDialog("recent");
+      setOpenDialog("pending");
     } else if (tab === 1) {
-      setOpenDialog("accept");
+      setOpenDialog("accepted");
     } else if (tab === 2) {
-      setOpenDialog("reject");
+      setOpenDialog("rejected");
     }
   };
 
@@ -156,13 +175,13 @@ export default function TableComponent({ rows }) {
   
   const filterRows = () => {
     if (tab === 0) {
-      return rows;
+      return rows.filter((row) => row.status === "pending");
     }
     if (tab === 1) {
-      return acceptedOrders; 
+      return rows.filter((row) => row.status === "accepted"); 
     }
     if (tab === 2) {
-      return rejectedOrders; 
+      return rows.filter((row) => row.status === "rejected"); 
     }
     return [];
   };
@@ -227,7 +246,7 @@ export default function TableComponent({ rows }) {
                       const labelId = `enhanced-table-checkbox-${index}`;
   
                       return (
-                        <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)} sx={{ cursor: "pointer" }}>
+                        <TableRow hover tabIndex={-1} key={row.id} sx={{ cursor: "pointer" }}>
                           <TableCell
                             align="left"
                             component="th"
@@ -239,21 +258,21 @@ export default function TableComponent({ rows }) {
                             <div style={{ display: "flex", alignItems: "center" }}>
                               <img src={row.imageUrl} alt={row.info} width={50} style={{ marginRight: 10, marginLeft: 25}} />
                               <div>
-                                {row.info}
+                                {row.productName}
                                 <div style={{ fontSize: "0.75em", color: "#888" }}>
-                                  Order ID: {row.orderId}
+                                  Order ID: {row.id}
                                 </div>
                               </div>
                             </div>
                           </TableCell>
-                          <TableCell align="right">{row.customerName}</TableCell>
+                          <TableCell align="right">{row.productName}</TableCell>
                           <TableCell align="right">{row.quantity}</TableCell>
                           <TableCell align="right">{row.price}</TableCell>
-                          <TableCell align="right">{row.ordered_date}</TableCell>
+                          <TableCell align="right">{new Date(row.createdAt).toLocaleDateString()}</TableCell>
                           <TableCell align="center">
                             {tabIndex === 0 ? (
                               <>
-                                <Button
+                                {/* <Button
                                   sx={{
                                     backgroundColor: '#4CAF50',
                                     color: 'white',
@@ -265,8 +284,10 @@ export default function TableComponent({ rows }) {
                                   }}
                                 >
                                   Accept
-                                </Button>
-                                <Button
+                                </Button> */}
+                                <StatusChangeComponent id={row.id} newStatus="accepted" />
+                                <StatusChangeComponent id={row.id} newStatus="rejected" />
+                                {/* <Button
                                   sx={{
                                     backgroundColor: '#f44336',
                                     color: 'white',
@@ -278,7 +299,7 @@ export default function TableComponent({ rows }) {
                                   }}
                                 >
                                   Reject
-                                </Button>
+                                </Button> */}
                               </>
                             ) : (
                               tabIndex === 1 ? statusIcons.accepted : statusIcons.rejected
@@ -317,6 +338,7 @@ export default function TableComponent({ rows }) {
         open={dialogOpen}
         handleClose={handleClose}
         selectedRow={selectedRow}
+        order={orderData}
       />
     </Box>
   );

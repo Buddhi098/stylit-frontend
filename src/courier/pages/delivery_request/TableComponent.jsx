@@ -19,7 +19,8 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { visuallyHidden } from "@mui/utils";
 import { headCellsAllRequests, headCellsRejectedDeliveries, rejectedDeliveries } from "./TableConfig";
 import DeliveryDialog from "./DeliveryDialog";
-import RejectedDeliveryDialog from "./RejectedDeliveryDialog"; 
+import RejectedDeliveryDialog from "./RejectedDeliveryDialog";
+import StatusChangeComponent from "./StatusChangeComponent";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -136,11 +137,12 @@ export default function TableComponent({ rows }) {
   };
 
   const filterRows = () => {
+    console.log("nade", rows)
     if (tab === 0) {
-      return rows;
+      return rows.filter((row) => (row.courierStatus === "pending") || (row.courierStatus === "accepted") || (row.courierStatus === "completed"));
     }
     if (tab === 1) {
-      return rejectedDeliveries; 
+      return rows.filter((row) => row.courierStatus === "rejected");
     }
     return [];
   };
@@ -158,16 +160,16 @@ export default function TableComponent({ rows }) {
         <Tabs value={tab} onChange={handleTabChange}
           sx={{
             "& .MuiTabs-indicator": {
-              backgroundColor: "#C0A888", 
+              backgroundColor: "#C0A888",
             },
             "& .MuiTab-root": {
               color: "#000",
             },
             "& .MuiTab-root.Mui-selected": {
-              color: "#C0A888", 
+              color: "#C0A888",
             },
           }}>
-        
+
           <Tab label="All Requests" />
           <Tab label="Rejected Requests" />
         </Tabs>
@@ -193,7 +195,7 @@ export default function TableComponent({ rows }) {
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
-                        <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)} sx={{ cursor: "pointer"}}>
+                        <TableRow hover tabIndex={-1} key={row.id} sx={{ cursor: "pointer" }}>
                           <TableCell
                             component="th"
                             id={labelId}
@@ -201,32 +203,47 @@ export default function TableComponent({ rows }) {
                             padding="none"
                             align="right"
                           >
-                            {row.orderId}
+                            {row.id}
                           </TableCell>
-                          <TableCell align="right">{row.storeName}</TableCell>
-                          <TableCell align="right">{row.weight}</TableCell>
-                          <TableCell align="right">{row.deliveryDate}</TableCell>
-                          <TableCell align="right">{row.amount}</TableCell>
+                          <TableCell align="right">{row.productName}</TableCell>
+                          <TableCell align="right">{row.courierStatus}</TableCell>
+                          <TableCell align="right">
+                            {new Date(row.createdAt).toLocaleDateString('en-US')}
+                          </TableCell>
+                          <TableCell align="right">{row.price}</TableCell>
                           <TableCell
                             align="center"
                             onClick={(event) => event.stopPropagation()}
                           >
-                            <Button
+                            {/* <Button
                               variant="contained"
                               color="success"
                               sx={{ margin: "3px" }}
                               size="small"
                             >
                               Accept
-                            </Button>
-                            <Button
+                            </Button> */}
+                            {row.courierStatus === "pending" ? (
+                              <>
+                                <StatusChangeComponent id={row.id} newStatus="accepted" />
+                                <StatusChangeComponent id={row.id} newStatus="rejected" />
+                              </>
+                            ) : row.courierStatus === "completed" ? (
+                              "Order is Completed"
+                            ) : (
+                              <StatusChangeComponent id={row.id} newStatus="completed" />
+                            )}
+
+
+
+                            {/* <Button
                               variant="contained"
                               color="error"
                               sx={{ margin: "3px" }}
                               size="small"
                             >
                               Reject
-                            </Button>
+                            </Button> */}
                           </TableCell>
                         </TableRow>
                       );
@@ -272,7 +289,7 @@ export default function TableComponent({ rows }) {
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
-                        <TableRow hover tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)} sx={{ cursor: "pointer"}}>
+                        <TableRow hover tabIndex={-1} key={row.id} sx={{ cursor: "pointer" }}>
                           <TableCell
                             component="th"
                             id={labelId}
@@ -280,14 +297,17 @@ export default function TableComponent({ rows }) {
                             padding="none"
                             align="right"
                           >
-                            {row.orderId}
+                            {row.id}
                           </TableCell>
-                          <TableCell align="right">{row.storeName}</TableCell>
-                          <TableCell align="right">{row.weight}</TableCell>
-                          <TableCell align="right">{row.deliveryDate}</TableCell>
-                          <TableCell align="right">{row.amount}</TableCell>
+                          <TableCell align="right">{row.productName}</TableCell>
+                          <TableCell align="right">{row.courierStatus}</TableCell>
+                          <TableCell align="right">
+                            {new Date(row.createdAt).toLocaleDateString('en-US')}
+                          </TableCell>
+                          <TableCell align="right">{row.price}</TableCell>
                           <TableCell
                             align="center"
+                            onClick={(event) => event.stopPropagation()}
                           >
                             <CancelIcon sx={{ color: "#ff1744" }} />
                           </TableCell>

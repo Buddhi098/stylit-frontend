@@ -1,6 +1,16 @@
 import givenchy from "../../assets/images/stores/givenchy.png"
 import ebony from "../../assets/images/stores/ebony.png"
 import bearappeal from "../../assets/images/stores/bearappeal.png"
+import WebApi from "../../api/WebApi"
+
+export const updateOrderStatus = async (orderItemId, status) => {
+  try{
+    const response = await WebApi.get(`/courier/order/changeCourierStatus/${orderItemId}/${status}`);
+    console.log(response.data);
+  }catch(error){
+    console.log(error);
+  }
+}
 
 
 // headCells.js
@@ -15,13 +25,13 @@ export const headCellsAllRequests = [
       id: "storeName",
       numeric: true,
       disablePadding: false,
-      label: "Store Name",
+      label: "PRODUCT NAME",
     },
     {
       id: "weight",
       numeric: true,
       disablePadding: false,
-      label: "Weight (G)",
+      label: "COURIER STATUS",
     },
     {
       id: "deliveryDate",

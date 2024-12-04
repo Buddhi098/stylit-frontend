@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Grid,
@@ -21,11 +21,24 @@ import SearchIcon from "@mui/icons-material/Search";
 import GroupIcon from "@mui/icons-material/Group";
 import CloseIcon from "@mui/icons-material/Close";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
-import { followRequests } from "./TableConfig";
+import { changeRequestStatus, fetchConnectRequest } from "./TableConfig";
 
 const FilterComponent = ({ search, handleSearch }) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [followRequests, setFollowRequests] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchConnectRequest();
+        setFollowRequests(data);
+      } catch (error) {
+        console.error("Error fetching follow requests , error");
+      }
+    }
+    fetchData();
+  }, []);
 
   const handleToggle = () => {
     setOpen(!open);
@@ -39,11 +52,14 @@ const FilterComponent = ({ search, handleSearch }) => {
     setAnchorEl(null);
   };
 
-  const handleAccept = (id) => {
-    // Handle accept follow request logic here
+  const handleAccept =async (id) => {
+    await changeRequestStatus(id, "ACCEPTED");
+    window.location.reload();
   };
 
-  const handleReject = (id) => {
+  const handleReject =async (id) => {
+    await changeRequestStatus(id, "REJECTED");
+    window.location.reload();
     // Handle reject follow request logic here
   };
 
@@ -97,8 +113,8 @@ const FilterComponent = ({ search, handleSearch }) => {
               justifyContent: "flex-end",
             }}
           >
-            <Badge badgeContent={followRequests.length}  
-              max={99} 
+            <Badge badgeContent={followRequests.length}
+              max={99}
               sx={{
                 marginRight: 2,
                 '& .MuiBadge-badge': {

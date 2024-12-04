@@ -10,7 +10,22 @@ import image9 from '../../../assets/images/products/yoga pants.jpg'
 import image10 from '../../../assets/images/products/backpack.jpg'
 import image11 from '../../../assets/images/products/sunglasses.jpg'
 import image12 from '../../../assets/images/products/perfume.jpg'
+import WebApi from '../../../api/WebApi'
 
+
+export const fetchAcceptedOrder = async () => {
+  try {
+
+    const response = await WebApi.get(`/shop/order/getOrderByShopId/${localStorage.getItem('id')}`);
+    console.log(response.data.data)
+    const acceptedOrders = response.data.data.filter(order => order.status === 'accepted');
+    console.log("budd" , acceptedOrders)
+    return acceptedOrders;
+
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 // headCells.js
 export const headCellsAllRequests = [
@@ -35,7 +50,7 @@ export const headCellsAllRequests = [
     id: "customerName",
     numeric: true,
     disablePadding: false,
-    label: "COURIER",
+    label: "PRODUCT NAME",
   },
   {
     id: "quantity",
