@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import PercentIcon from '@mui/icons-material/Percent';
+import WebApi from '../../../api/WebApi';
 
 const data = [
   {
@@ -71,53 +72,72 @@ const data = [
 ];
 
 const ProductAnalytics = () => {
+
+  const [topProducts, setTopProducts] = useState([]);
+  const shopId = localStorage.getItem("id");
+
+  useEffect(() => {
+    const fetchTopProducts = async () => {
+      try {
+        const response = await WebApi.get(`http://localhost:8081/shop/product/topProducts?shopId=${shopId}`);
+        if (response.data && Array.isArray(response.data.topProducts)) {
+          setTopProducts(response.data.topProducts);
+        } else {
+          console.error("Unexpected response format:", response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching top products:", error);
+      }
+    };
+
+    fetchTopProducts();
+  }, [shopId]);
+  console.log("topProducts :",topProducts);
+
   return (
     <Box sx={{ padding: 3, backgroundColor: '#fff', borderRadius: 2, boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-        <Typography variant="h5" sx={{ fontWeight: 'bold' }}>Most Sales</Typography>
+        <Typography variant="h5" sx={{ fontWeight: 'bold' }}>High Quantitiies</Typography>
       </Box>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>Product Name</TableCell>
-              <TableCell>First Stock</TableCell>
-              <TableCell>Sold</TableCell>
-              <TableCell>Date Added</TableCell>
+              <TableCell>Category</TableCell>
+              <TableCell>Brand</TableCell>
+              <TableCell>Gender</TableCell>
               <TableCell>Pricing</TableCell>
-              <TableCell>Conversion Rate</TableCell>
+              <TableCell>Quantity</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row, index) => (
+            {topProducts.map((row, index) => (
               <TableRow key={index}>
                 <TableCell>
-                  <Typography variant="body2">{row.name}</Typography>
+                  <Typography variant="body2">{row.generalInformation.productName}</Typography>
                 </TableCell>
                 <TableCell>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <InventoryIcon sx={{ mr: 1, color: '#6CB4EE' }} />
-                    <Typography variant="body2">{row.firstStock.toLocaleString()}</Typography>
+                    <Typography variant="body2">{row.generalInformation.category}</Typography>
                   </Box>
                 </TableCell>
                 <TableCell>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <ArrowForwardIcon sx={{ mr: 1, color: '#6CB4EE' }} />
-                    <Typography variant="body2">{row.sold.toLocaleString()}</Typography>
+                    <Typography variant="body2">{row.generalInformation.brand}</Typography>
                   </Box>
                 </TableCell>
                 <TableCell>
-                  <Typography variant="body2">{row.dateAdded}</Typography>
+                  <Typography variant="body2">{row.generalInformation.gender}</Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography variant="body2">{row.pricing}</Typography>
+                  <Typography variant="body2">{row.pricing.basePrice}</Typography>
                 </TableCell>
                 <TableCell>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Typography variant="body2" sx={{ color: row.conversionRate.startsWith('+') ? 'green' : 'red', mr: 1 }}>
-                      {row.conversionRate}
-                    </Typography>
-                    <Typography variant="body2">{row.conversionRateValue}%</Typography>
+                    <Typography variant="body2">{row.totalQuantity.toLocaleString()}</Typography>
                   </Box>
                 </TableCell>
               </TableRow>

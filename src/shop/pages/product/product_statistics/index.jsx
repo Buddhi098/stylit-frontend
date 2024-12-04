@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
@@ -13,6 +13,8 @@ import ExpectedEarningsCard from './ExpectedEarningsCard';
 import StockLevelChart from './StockLevel';
 import ProductAnalytics from './ProductAnalytics';
 import PopularBrands from './PopularBrands';
+import WebApi from '../../../api/WebApi';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 
 const AnalyticEcommerce = ({ icon, title, count }) => {
   return (
@@ -35,6 +37,28 @@ const AnalyticEcommerce = ({ icon, title, count }) => {
 };
 
 export default function ProductCards() {
+  const [productStats, setProductStats] = useState({});
+  const id = localStorage.getItem("id");
+
+  useEffect(() => {
+    const fetchProductStats = async () => {
+      try {
+        const response = await WebApi.get(`http://localhost:8081/shop/product/productStats?id=${id}`);
+        console.log("response :",response);
+        setProductStats(response.data);
+      } catch (error) {
+        console.error("Error fetching product stats:", error);
+      }
+    };
+
+    fetchProductStats();
+  }, [id]);
+  useEffect(()=>{
+    console.log("products :",productStats);
+  } , [productStats]);
+  console.log("productStats :",productStats);
+  console.log("productStatsGender :",productStats.genderRate);
+  
   return (
     <Grid container spacing={3} sx={{p: { xs: 2, sm: 3 }}}>
       <Grid item xs={12} sx={{ mb: -2.25 }}>
@@ -50,35 +74,35 @@ export default function ProductCards() {
             <AnalyticEcommerce 
               icon={<InventoryIcon sx={{ fontSize: 30, color: '#1976d2' }} />} 
               title="Total Products" 
-              count="1.5K" 
+              count={productStats.totalProducts}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
             <AnalyticEcommerce 
               icon={<HighlightOffIcon sx={{ fontSize: 30, color: '#ed6c02' }} />} 
               title="Out of Stock" 
-              count="100" 
+              count={productStats.outOfStockProducts}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
             <AnalyticEcommerce 
               icon={<ShoppingBagIcon sx={{ fontSize: 30, color: '#2e7d32' }} />} 
               title="Active Products" 
-              count="1.3K" 
+              count={productStats.activeProducts}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
             <AnalyticEcommerce 
-              icon={<LocalShippingIcon sx={{ fontSize: 30, color: '#9c27b0' }} />} 
-              title="Products Sold" 
-              count="500" 
+              icon={<LocalOfferIcon sx={{ fontSize: 30, color: '#9c27b0' }} />} 
+              title="Discounted Products" 
+              count={productStats.discountedProducts}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
             <AnalyticEcommerce 
               icon={<AutorenewIcon sx={{ fontSize: 30, color: '#ffb74d' }} />}
               title="Products Returned" 
-              count="52" 
+              count="2" 
             />
           </Grid>
         </Grid>
